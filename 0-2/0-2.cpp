@@ -40,10 +40,10 @@ int main() {
 
 
     // Para restablecer entrada. Comentar para acepta el reto
-#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    #ifndef DOMJUDGE // para dejar todo como estaba al principio
     std::cin.rdbuf(cinbuf);
     system("PAUSE");
-#endif
+    #endif
 
     return 0;
 }
