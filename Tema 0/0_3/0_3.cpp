@@ -1,5 +1,5 @@
-// Paula Alemany
-// VJ02
+// Nombre del alumno .....
+// Usuario del Juez ......
 
 
 #include <iostream>
@@ -15,18 +15,24 @@ int resolver(int datos) {
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-void resuelveCaso() {
+bool resuelveCaso() {
     // leer los datos de la entrada
 
+    int especial = 0;
     int datos = 0;
-    std::cin >> datos;
 
-    //resolvemos
+    std::cin >> datos;
+    
+
+    if (datos == especial)
+        return false;
+
     int sol = resolver(datos);
 
     // escribir sol
-
     std::cout << sol << std::endl;
+
+    return true;
 
 }
 
@@ -38,10 +44,9 @@ int main() {
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif 
 
-    int numCasos;
-    std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
-        resuelveCaso();
+
+    while (resuelveCaso())
+        ;
 
 
     // Para restablecer entrada. Comentar para acepta el reto
