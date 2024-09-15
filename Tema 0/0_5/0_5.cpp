@@ -5,32 +5,26 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-
+#include <vector>
 
 
 // función que resuelve el problema
-int resolver(int datos) {
+std::vector<int> resolver(std::vector<int> datos) {
 
-    return datos * 2;
+
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-bool resuelveCaso() {
+void resuelveCaso() {
     // leer los datos de la entrada
-    int datos;
 
-    std::cin >> datos;
+    std::vector<int> datos;
 
-    if (!std::cin)
-        return false;
 
-    int sol = resolver(datos);
-
+    std::vector<int> sol = resolver(datos);
     // escribir sol
-    std::cout << sol << std::endl;
 
-    return true;
 
 }
 
@@ -43,8 +37,10 @@ int main() {
 #endif 
 
 
-    while (resuelveCaso())
-        ;
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
 
 
     // Para restablecer entrada. Comentar para acepta el reto
