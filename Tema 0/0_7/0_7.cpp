@@ -8,6 +8,7 @@
 #include <vector>
 
 
+
 // función que resuelve el problema
 std::vector<int> resolver(std::vector<int> datos) {
 
@@ -16,34 +17,38 @@ std::vector<int> resolver(std::vector<int> datos) {
     }
 
     return datos;
+
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-void resuelveCaso() {
+bool resuelveCaso() {
+
     // leer los datos de la entrada
     std::vector<int> datos;
     int n;
     int dato;
 
     std::cin >> n;
+    if (!std::cin)
+        return false;
 
     for (int i = 0; i < n; i++) {
         std::cin >> dato;
         datos.push_back(dato);
     }
 
-
     std::vector<int> sol = resolver(datos);
 
     // escribir sol
-
     for (int i = 0; i < n; i++) {
         std::cout << sol[i] << " ";
     }
 
     std::cout << std::endl;
 
+
+    return true;
 
 }
 
@@ -56,10 +61,8 @@ int main() {
 #endif 
 
 
-    int numCasos;
-    std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
-        resuelveCaso();
+    while (resuelveCaso())
+        ;
 
 
     // Para restablecer entrada. Comentar para acepta el reto
