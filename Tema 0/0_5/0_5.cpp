@@ -11,15 +11,26 @@
 // función que resuelve el problema
 std::vector<int> resolver(std::vector<int> datos) {
 
+    for (int i = 0; i < datos.size(); i++) {
+        datos[i] *= 2;
+    }
 
+    return datos;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
-
     std::vector<int> datos;
+    int n;
+    int dato;
+
+    std::cin >> n;
+
+    for (int i = 0; i < n; i++) {
+    
+    }
 
 
     std::vector<int> sol = resolver(datos);
