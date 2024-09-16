@@ -17,10 +17,23 @@ bool resolver(std::vector<int> datos) {
     int n = datos[0];   //Primero comparamos con el primer dato
     int i = 1;  //Vamos comparando hacia atrás
 
+    //Esto los tiene en cuenta de menor a mayor
     while (i < datos.size() && n < datos[i]) {
         n = datos[i];
         i++;
     }
+
+    if (i != datos.size()) {
+        //Si se corta miramos al contario que esté ordenado de mayor a menor
+        n = datos[0];   //Primero comparamos con el primer dato
+        i = 1;  //Vamos comparando hacia atrás
+
+        while (i < datos.size() && n > datos[i]) {
+            n = datos[i];
+            i++;
+        }
+    }
+
 
     //Si llega al final del vector, está ordenado
     return i == datos.size();
