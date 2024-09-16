@@ -13,13 +13,37 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de origen\Tema0">
+      <UniqueIdentifier>{990575b1-862c-461e-bbe9-b97cdb46b82d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Tema1">
+      <UniqueIdentifier>{a2bea324-5e22-4382-bcb0-cdeb67297d9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tema0-1.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Tema0</Filter>
     </ClCompile>
     <ClCompile Include="Tema0-2.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Tema0</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema0-3.cpp">
+      <Filter>Archivos de origen\Tema0</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema0-4.cpp">
+      <Filter>Archivos de origen\Tema0</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema0-5.cpp">
+      <Filter>Archivos de origen\Tema0</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema0-6.cpp">
+      <Filter>Archivos de origen\Tema0</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema0-7.cpp">
+      <Filter>Archivos de origen\Tema0</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema1-1.cpp">
+      <Filter>Archivos de origen\Tema1</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

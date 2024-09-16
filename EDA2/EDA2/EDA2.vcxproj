@@ -129,6 +129,12 @@
   <ItemGroup>
     <ClCompile Include="Tema0-1.cpp" />
     <ClCompile Include="Tema0-2.cpp" />
+    <ClCompile Include="Tema0-3.cpp" />
+    <ClCompile Include="Tema0-4.cpp" />
+    <ClCompile Include="Tema0-5.cpp" />
+    <ClCompile Include="Tema0-6.cpp" />
+    <ClCompile Include="Tema0-7.cpp" />
+    <ClCompile Include="Tema1-1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

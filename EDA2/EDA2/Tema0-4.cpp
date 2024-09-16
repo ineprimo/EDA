@@ -1,27 +1,34 @@
 ﻿// Andres Garcia Navarro
-// EDA - GDV27
+// EDA-GDV27
 
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+
 /*
 
 // función que resuelve el problema
-int resolver(int d) {
-    return d * 2;
+int resolver(int datos) {
+    return datos * 2;
+
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-void resuelveCaso() {
+bool resuelveCaso() {
     // leer los datos de la entrada
-    int dato;
-    std::cin >> dato;
+    int d;
+    std::cin >> d;
+    if (!std::cin)
+        return false;
 
     // escribir sol
-    std::cout << resolver(dato) << std::endl;
+    std::cout<< resolver(d)<<std::endl;
 
+
+
+    return true;
 
 }
 
@@ -34,10 +41,8 @@ int main() {
 #endif 
 
 
-    int numCasos;
-    std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
-        resuelveCaso();
+    while (resuelveCaso())
+        ;
 
 
     // Para restablecer entrada. Comentar para acepta el reto
