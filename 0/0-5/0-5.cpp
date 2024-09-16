@@ -1,16 +1,13 @@
-// Nombre del alumno .....
-// Usuario del Juez ......
-
+// Nieves Alonso Gilsanz
+// EDA-GDV03
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 
-
 // función que resuelve el problema
 int resolver(int datos) 
 {
-
 
 }
 
@@ -19,9 +16,12 @@ int resolver(int datos)
 void resuelveCaso() 
 {
     // leer los datos de la entrada
+    std::vector<int> v;
 
-    int sol = resolver(datos);
+    TipoSolucion sol = resolver(datos);
     // escribir sol
+
+
 }
 
 int main() {
@@ -40,10 +40,10 @@ int main() {
 
 
     // Para restablecer entrada. Comentar para acepta el reto
-    #ifndef DOMJUDGE // para dejar todo como estaba al principio
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
     std::cin.rdbuf(cinbuf);
     system("PAUSE");
-    #endif
+#endif
 
     return 0;
 }
