@@ -5,7 +5,7 @@
 
 
 // función que resuelve el problema
-void resolver(vector<int>& v) {
+void resolver(std::vector<int>& v) {
 
     for (int i = 0; i < v.size(); i++) {
         v[i] *= 2;
@@ -20,9 +20,9 @@ void resuelveCaso() {
     std::cin >> n;
 
     //rellenamos el vector
-    vector<int> v(n);
+    std::vector<int> v(n);
     for (int i = 0; i < n; ++i) { 
-        cin >> v[i] 
+        std::cin >> v[i];
     };
 
     resolver(v);
@@ -30,7 +30,7 @@ void resuelveCaso() {
     // escribir sol
     for (int i = 0; i < n; ++i) {
         std::cout << v[i] << " ";
-        std::cout << endl;
+        std::cout << std::endl;
     }
 }
 
