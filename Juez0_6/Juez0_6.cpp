@@ -14,25 +14,30 @@ void resolver(std::vector<int>& v) {
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-void resuelveCaso() {
+bool resuelveCaso() {
     // leer los datos de la entrada
     int n;
     std::cin >> n;
 
+    if (n == -1)
+        return false;
+  
     //rellenamos el vector
     std::vector<int> v(n);
-    for (int i = 0; i < n; ++i) { 
+    for (int i = 0; i < n; ++i) {
         std::cin >> v[i];
     };
 
     resolver(v);
-    
+
     // escribir sol
     for (int i = 0; i < n; ++i) {
         std::cout << v[i] << " ";
     }
 
     std::cout << std::endl;
+
+    return true;
 }
 
 int main() {
@@ -44,10 +49,8 @@ int main() {
 #endif 
 
 
-    int numCasos;
-    std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
-        resuelveCaso();
+    while (resuelveCaso())
+        ;
 
 
     // Para restablecer entrada. Comentar para acepta el reto
