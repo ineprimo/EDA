@@ -6,17 +6,27 @@
 
 
 // función que resuelve el problema
-bool resolver(std::vector<int>& v) {
+bool resolver(std::vector<int> v) {
 
-    
+    //Damos por hecho que inicialmente la secuencia es correcta
+    bool dalton = true;
 
-    return false;
+    //Buscamos algún punto en el que sea incorrecta
+    int indice = 0;
+    while (indice < v.size() - 1 && v[indice] < v[indice + 1]) {
+        indice++;
+    }
+
+    if (indice < v.size() - 1 && v[indice] >= v[indice + 1]) {
+        dalton = false;
+    }
+
+    return dalton;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
-    // leer los datos de la entrada
     // leer los datos de la entrada
     int n;
     std::cin >> n;
@@ -32,10 +42,10 @@ bool resuelveCaso() {
 
     // escribir sol
     if (resolver(v)) {
-        std::cout << "DALTON";
+        std::cout << "DALTON" << std::endl;
     }
     else {
-        std::cout << "DESCONOCIDOS";
+        std::cout << "DESCONOCIDOS" << std::endl;
     }
 
     return true;
