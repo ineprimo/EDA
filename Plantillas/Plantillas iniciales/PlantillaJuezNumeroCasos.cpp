@@ -7,15 +7,17 @@
 #include <fstream>
 
 
-// función que resuelve el problema
-TipoSolucion resolver(TipoDatos datos) {
+// funcioon que resuelve el problema
+TipoSolucion resolver(TipoDatos datos) 
+{
     
     
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
-void resuelveCaso() {
+// configuracion, y escribiendo la respuesta
+void resuelveCaso() 
+{
     // leer los datos de la entrada
     
     
@@ -25,7 +27,8 @@ void resuelveCaso() {
     
 }
 
-int main() {
+int main() 
+{
     // Para la entrada por fichero.
     // Comentar para acepta el reto
     #ifndef DOMJUDGE
@@ -36,8 +39,10 @@ int main() {
     
     int numCasos;
     std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
+    for (int i = 0; i < numCasos; ++i) 
+    {
         resuelveCaso();
+    }
 
     
     // Para restablecer entrada. Comentar para acepta el reto
