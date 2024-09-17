@@ -14,7 +14,7 @@ void resolver(std::vector<int>& datos) {
 
     for (int i = 0; i < datos.size(); i++)
     {
-	    if (datos[i] % 2 == 0) // si es impar
+	    if (datos[i] % 2 == 0) // si es par
 	    {
             datos[n] = datos[i]; 
             n++;
