@@ -1,35 +1,38 @@
 // Pablo Iglesias Rodrigo
 // EDA-GDV35
 
-
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 
 
-// función que resuelve el problema
-TipoSolucion resolver(TipoDatos datos) {
+// funcion que resuelve el problema
+TipoSolucion resolver(TipoDatos datos) 
+{
     
 
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
-bool resuelveCaso() {
+// configuracioon, y escribiendo la respuesta
+bool resuelveCaso() 
+{
     // leer los datos de la entrada
     
-    if (caso especial)
+    if (caso especial) 
+    {
         return false;
+    }
     
     TipoSolucion sol = resolver(datos);
     
     // escribir sol
     
     return true;
-    
 }
 
-int main() {
+int main() 
+{
     // Para la entrada por fichero.
     // Comentar para acepta el reto
     #ifndef DOMJUDGE
