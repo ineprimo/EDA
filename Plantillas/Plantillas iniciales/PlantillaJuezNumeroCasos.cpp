@@ -7,7 +7,7 @@
 #include <fstream>
 
 
-// funcioon que resuelve el problema
+// funcion que resuelve el problema
 TipoSolucion resolver(TipoDatos datos) 
 {
     
