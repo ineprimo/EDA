@@ -37,8 +37,8 @@ bool resuelveCaso()
 {
     // leer los datos de la entrada
     std::vector<int> datos;
-    int pjs; // numero de personajes en viñeta
-    int alturas; // alturas de cada pj
+    int pjs = 0; // numero de personajes en viñeta
+    int alturas = 0; // alturas de cada pj
 
     std::cin >> pjs;
 
