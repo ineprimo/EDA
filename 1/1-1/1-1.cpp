@@ -15,12 +15,12 @@ bool resolver(std::vector<int> datos)
 
     while((i < datos.size() - 1) && (ordenadoMenMay || ordenadoMayMen))
     {
-        if(datos[i] > datos[i + 1])
+        if(datos[i] >= datos[i + 1])
         {
             ordenadoMenMay = false;
         }
 
-        if (datos[i] < datos[i + 1])
+        if (datos[i] <= datos[i + 1])
         {
             ordenadoMayMen = false;
         }
@@ -57,14 +57,12 @@ bool resuelveCaso()
     // escribir sol
     if(sol) // si sol es true -> DALTON
     {
-        std::cout << "DALTON";
+        std::cout << "DALTON" << std::endl;
     }
     else // si sol es false -> DESCONOCIDO
     {
-        std::cout << "DESCONOCIDO";
+        std::cout << "DESCONOCIDOS" << std::endl;
     }
-
-    std::cout << std::endl;
 
     return true;
 }
