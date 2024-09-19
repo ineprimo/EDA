@@ -11,25 +11,23 @@ using namespace std;
 
 
 // función que resuelve el problema
-vector<int> resolver(vector<int> datos, int num) {
+vector<int> resolver(vector<int> datos) {
 
-    vector<int> sol(datos.size());
-    int picos = 0;
-    int valles = 0;
+    vector<int> sol(2);
+    /* sol[0] = 0;
+     sol[1] = 0;*/
 
-    for (int i = 0; i < sol.size() - 2; ++i) {
+     // if (datos.size() >= 3) {
+
+    for (int i = 0; i < datos.size() - 2; ++i) {
         if (datos[i] < datos[i + 1] && datos[i + 1] > datos[i + 2])
-            picos++;
+            sol[0]++;
         else if (datos[i] > datos[i + 1] && datos[i + 1] < datos[i + 2])
-            valles++;
+            sol[1]++;
     }
+    // }
 
-    sol[0] = picos;
-    sol[1] = valles;
-    
- 
 
-    
     return sol;
 
 }
@@ -46,8 +44,8 @@ void resuelveCaso() {
         cin >> v[i];
     }
 
-    vector<int> sol = resolver(v, num);
-    
+    vector<int> sol = resolver(v);
+
     // escribir sol
     cout << sol[0] << " " << sol[1] << endl;
 
