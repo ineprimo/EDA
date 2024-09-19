@@ -4,45 +4,32 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <set>
+#include <unordered_set>
 #include <vector>
 using namespace std;
 
 // función que resuelve el problema
+// La complejidad es O(n * log n) siendo n eda.size + tpv.size
+// la función find tiene complejidad log n:
+// https://en.cppreference.com/w/cpp/container/set/find
 void comparaListados(const vector<string>& eda, const vector<string>& tpv,
                      vector<string>& comunes, vector<string>& soloEda, vector<string>& soloTpv)
 {
-	unsigned int i = 0, j = 0;
-
-	while (i < eda.size() && j < tpv.size())
-	{
-		if (eda[i] < tpv[j])
-		{
-			soloEda.push_back(eda[i]);
-			i++;
-		}
-		else if (eda[i] > tpv[j])
-		{
-			soloTpv.push_back(tpv[j]);
-			j++;
-		}
-		else
-		{
-			comunes.push_back(eda[i]);
-			i++;
-			j++;
-		}
-	}
-
-	while (i < eda.size()) // el restos
-	{
-		soloEda.push_back(eda[i]);
-		i++;
-	}
-	while (j < tpv.size())
-	{
-		soloTpv.push_back(tpv[j]);
-		j++;
-	}
+    set<string> setEda(eda.begin(), eda.end());
+    set<string> setTpv(tpv.begin(), tpv.end());
+    
+    for (const string& alumno : eda) 
+        if (setTpv.find(alumno) != setTpv.end()) 
+            comunes.push_back(alumno);
+    
+    for (const string& alumno : eda)
+        if (setTpv.find(alumno) == setTpv.end()) 
+            soloEda.push_back(alumno);
+    
+    for (const string& alumno : tpv) 
+        if (setEda.find(alumno) == setEda.end()) 
+            soloTpv.push_back(alumno);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
