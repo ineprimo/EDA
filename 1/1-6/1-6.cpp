@@ -6,7 +6,9 @@
 #include <fstream>
 #include <vector>
 
-// Complejidad: 
+// Complejidad: lineal O(n)
+// Cuestion: el algoritmo suponiendo que esta ordenado es lineal, si no lo estuviese solo habria que ordenar el vector
+// antes de trabajar con el por lo que sube a O(n*log(n))
 void comparaListados(std::vector<std::string> const& eda, 
 					 std::vector<std::string> const& tpv,
 					 // estos son los que hay que modificar (push_back)
@@ -14,50 +16,42 @@ void comparaListados(std::vector<std::string> const& eda,
 					 std::vector<std::string>& soloEda, 
 					 std::vector<std::string>& soloTpv)
 {
-    // que devuelva otros tres listados tambien ordenados,
-    // el primero con los elementos presentes en ambos listados,
-    // el segundo con los elementos presentes en el primero y no en el segundo,
-    // y el tercero con los presentes en el segundo y no en el primero
-
-    std::vector<int> abecedario1(26);
-
-    int i = 0;
-    while(i < abecedario1.size())
+    int i = 0, j = 0;
+    while(i < eda.size() && j < tpv.size())
     {
         // ambas
-        if(eda.size() >= i && tpv.size() >= i)
+        if(eda[i] == tpv[j])
         {
-	        if(eda[i] == tpv[i])
-	        {
-	            comunes.push_back(eda[i]);
-	        }
-	        else if()
-	        {
-		        
-	        }
-	        else
-	        {
-		        
-	        }
+            comunes.push_back(eda[i]);
+            i++;
+            j++;
         }
-        // las que sobran de eda
-        else if(eda.size() >= i && tpv.size() < i)
+        // si lo que tenga eda es menor y no lo tiene tpv es que es solo de eda
+        else if(eda[i] < tpv[j])
         {
             soloEda.push_back(eda[i]);
+            i++;
         }
-        // las que sobran de tpv
-        else if(tpv.size() >= i && eda.size() < i)
+        // si lo que tenga tpv es menor y no lo tiene eda es que es solo de tpv
+        else if(tpv[j] < eda[i])
         {
-            soloTpv.push_back(tpv[i]);
+            soloTpv.push_back(tpv[j]);
+            j++;
         }
+    }
 
+    // las que sobran de eda
+    while(i < eda.size())
+    {
+	    soloEda.push_back(eda[i]);
         i++;
     }
 
-    // vas evaluando cada letra del abecedario
-    for(int j = 0; j < abecedario1.size(); i++)
+    // las que sobran de tpv
+    while(j < tpv.size())
     {
-	    
+	    soloTpv.push_back(tpv[j]);
+        j++;
     }
 }
 

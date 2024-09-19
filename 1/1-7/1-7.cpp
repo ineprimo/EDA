@@ -2,15 +2,55 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
-// función que resuelve el problema
-void comparaListados(std::vector<std::string> const& eda, 
-					 std::vector<std::string> const& tpv,
+// Complejidad: lineal O(n*log(n))
+void comparaListados(std::vector<std::string>& eda, 
+					 std::vector<std::string>& tpv,
 					 std::vector<std::string>& comunes, 
 					 std::vector<std::string>& soloEda, 
 					 std::vector<std::string>& soloTpv)
 {
+    sort(eda.begin(), eda.end());
+    sort(tpv.begin(), tpv.end());
 
+    int i = 0, j = 0;
+    while (i < eda.size() && j < tpv.size())
+    {
+        // ambas
+        if (eda[i] == tpv[j])
+        {
+            comunes.push_back(eda[i]);
+            i++;
+            j++;
+        }
+        // si lo que tenga eda es menor y no lo tiene tpv es que es solo de eda
+        else if (eda[i] < tpv[j])
+        {
+            soloEda.push_back(eda[i]);
+            i++;
+        }
+        // si lo que tenga tpv es menor y no lo tiene eda es que es solo de tpv
+        else if (tpv[j] < eda[i])
+        {
+            soloTpv.push_back(tpv[j]);
+            j++;
+        }
+    }
+
+    // las que sobran de eda
+    while (i < eda.size())
+    {
+        soloEda.push_back(eda[i]);
+        i++;
+    }
+
+    // las que sobran de tpv
+    while (j < tpv.size())
+    {
+        soloTpv.push_back(tpv[j]);
+        j++;
+    }
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
