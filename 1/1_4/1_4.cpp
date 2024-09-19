@@ -5,56 +5,71 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <array>
 #include <vector>
 
 
 // función que resuelve el problema
-// complejidad lineal ya que depende de la longitud de las palabras que se comparen
-bool resolver(const std::string w1, const std::string w2) {
-    bool anagramas = false;
+std::vector<int> resolver(std::vector<int> datos) {
 
-    // si no son igual de largas ya esta
-    if (w1.size() != w2.size())
-        return anagramas;
+    int imp = -1;   // indice para el primer impar que encuentre
+    
+    int i = 0;
+    while (i < datos.size()) {
 
+        if (datos[i] % 2 == 1 && imp == -1)    // impar
+        {
+            imp = i;
+            i++;
+        }
+        else if (datos[i] % 2 == 0 && imp != -1)     // par e impar cogido
+        {
+            // intercambia posiciones
+            int aux = datos[imp];
 
-    std::vector<int> p1(26);
-    std::vector<int> p2(26);
+            datos[imp] = datos[i];
+            datos[i] = aux;
 
-    // recuento de las letra que tiene cada palabra en un array,
-    // si los arrays son iguales son anagramas
-    for (int i = 0; i < w1.size(); i++) {
+            i = imp;
 
-        // toupper para hacerlas mayusculas y que funquen los codigos <3
-        int a = toupper(w1[i]) - 65;
-        int b = toupper(w2[i]) - 65;
+            // reinicia indices
+            imp = -1;
 
-        p1[a]++;
-        p2[b]++;
+        }
+        else
+            i++;
     }
 
-    anagramas = (p1 == p2);
+    // resize 
+    if(imp != -1)
+        datos.resize(imp);
 
-    return anagramas;
+    return datos;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
-    std::string word1, word2;
-    std::cin >> word1;
-    std::cin >> word2;
+    int a, b;
+    std::cin >> a;
 
-    bool sol = resolver(word1, word2);
+    std::vector<int> vec;
+
+    for (int i = 0; i < a; i++) {
+        std::cin >> b;
+        vec.push_back(b);
+    }
+
+    std::vector<int> sol = resolver(vec);
+
+
     // escribir sol
+    for (int i = 0; i < sol.size(); i++) {
+        std::cout << sol[i] << " ";
+    }
 
-    if (sol)
-        std::cout << "SI";
-    else
-        std::cout << "NO";
     std::cout << std::endl;
+
 
 }
 
