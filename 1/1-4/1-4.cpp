@@ -5,28 +5,21 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-#include <utility>
 
 // función que resuelve el problema
-std::pair<int,int> resolver(std::vector<int> datos)
+std::vector<int> resolver(std::vector<int> datos)
 {
-    std::pair<int, int> salida = { 0, 0 };
+    std::vector<int> resul;
 
-    for(int i = 1; i < datos.size() - 1; i++) // va de 1 a size-1 para no salirse
+    for(int i = 0; i < datos.size(); i++)
     {
-        // es pico
-	    if(datos[i] > datos[i + 1] && datos[i] > datos[i - 1])
+	    if(datos[i] % 2 == 0)
 	    {
-            salida.first += 1;
+            resul.push_back(datos[i]);
 	    }
-        // es valle
-        else if(datos[i] < datos[i + 1] && datos[i] < datos[i - 1])
-        {
-            salida.second += 1;
-        }
     }
 
-    return salida;
+    return resul;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -35,21 +28,26 @@ void resuelveCaso()
 {
     // leer los datos de la entrada
     std::vector<int> datos;
+    int valores = 0;
     int num = 0;
-    int temperaturas = 0;
 
     std::cin >> num;
 
     for(int i = 0; i < num; i++)
     {
-        std::cin >> temperaturas;
-        datos.push_back(temperaturas);
+        std::cin >> valores;
+        datos.push_back(valores);
     }
 
-    std::pair<int, int> sol = resolver(datos);
+    std::vector<int> sol = resolver(datos);
 
     // escribir sol
-    std::cout << sol.first << " " << sol.second << std::endl;
+    for(int i = 0; i < sol.size(); i++)
+    {
+        std::cout << sol[i] << " ";
+    }
+
+    std::cout << std::endl;
 }
 
 int main() {

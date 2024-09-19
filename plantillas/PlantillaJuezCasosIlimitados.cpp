@@ -1,5 +1,5 @@
-// Nombre del alumno .....
-// Usuario del Juez ......
+// Nieves Alonso Gilsanz
+// EDA-GDV03
 
 
 #include <iostream>

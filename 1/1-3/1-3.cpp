@@ -5,28 +5,36 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-#include <utility>
 
 // función que resuelve el problema
-std::pair<int,int> resolver(std::vector<int> datos)
+bool resolver(std::vector<int> datos, int p)
 {
-    std::pair<int, int> salida = { 0, 0 };
+    if (p >= datos.size() - 1 || p < 0) return true;
 
-    for(int i = 1; i < datos.size() - 1; i++) // va de 1 a size-1 para no salirse
+    // basta con saber si la posicion mas alta de la parte de izq es
+    // estrictamente menor que la menor de la parte mas alta
+
+    int max = datos[0];
+
+    for(int i = 1; i <= p; i++)
     {
-        // es pico
-	    if(datos[i] > datos[i + 1] && datos[i] > datos[i - 1])
+	    if(max < datos[i])
 	    {
-            salida.first += 1;
+            max = datos[i];
 	    }
-        // es valle
-        else if(datos[i] < datos[i + 1] && datos[i] < datos[i - 1])
+    }
+
+    int min = datos[p + 1];
+
+    for(int i = p + 2; i < datos.size(); i++)
+    {
+        if (min > datos[i])
         {
-            salida.second += 1;
+            min = datos[i];
         }
     }
 
-    return salida;
+    return max < min;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -36,9 +44,10 @@ void resuelveCaso()
     // leer los datos de la entrada
     std::vector<int> datos;
     int num = 0;
+    int p = 0;
     int temperaturas = 0;
 
-    std::cin >> num;
+    std::cin >> num >> p;
 
     for(int i = 0; i < num; i++)
     {
@@ -46,10 +55,17 @@ void resuelveCaso()
         datos.push_back(temperaturas);
     }
 
-    std::pair<int, int> sol = resolver(datos);
+    bool sol = resolver(datos, p);
 
     // escribir sol
-    std::cout << sol.first << " " << sol.second << std::endl;
+    if(sol)
+    {
+        std::cout << "SI" << std::endl;
+    }
+    else
+    {
+        std::cout << "NO" << std::endl;
+    }
 }
 
 int main() {
