@@ -4,40 +4,31 @@
 
 #include <iostream>
 #include <fstream>
+
 #include <vector>
 
-
+// COMPLEJIDAD: es de complejidad lineal O(n). Primeero se comprueba si son igual de largas las dos palabras. 
+// En el primer bucle se hacen n iteraciones siendo n la longitud de la palabra 
+// y luego el operador == que comprueba si son iguales los dos vectores (26 iteraciones).
 bool anagramas(const std::string& cad1, const std::string& cad2)
 {
-	bool anagrama = true;
-	int i = 0;
-	int j = 0;
-	int k = 0;
-
-
-
-
-
-
-	while (anagrama && i < cad1.length())
+	// Comprobamos que las palabras son del mismo tamanyo. Si no lo son no pueden ser anagramas.
+	if (cad1.length() != cad2.length())
 	{
-		if (cad1[i] == cad2[j])
-		{
-			i++;
-			j = 0;
-			k++;
-		}
-		else
-		{
-			j++;
-		}
+		return false;
+	}
+	// Hacemos un vector de letras para cada palabra.
+	std::vector<int> letras1(26, 0);
+	std::vector<int> letras2(26, 0);
 
-		
+	// Sumamos las veces que aparece cada letra.
+	for (int i = 0; i < cad1.length(); i++)
+	{
+		letras1[cad1[i] - 'a']++;
+		letras2[cad2[i] - 'a']++;
 	}
 
-	anagrama = k == cad1.length();
-	//std::cout << anagrama;
-	return anagrama;
+	return letras1 == letras2; // Comprobamos que son iguales.
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
