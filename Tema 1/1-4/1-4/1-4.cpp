@@ -10,18 +10,18 @@
 
 
 // función que resuelve el problema
-bool resolver(std::vector<int>& datos)
+void resolver(std::vector<int>& datos)
 {
-	int nexPos = 0;
-	for (int i = 0; i < datos.size(); i++)
+	int newPos = 0;
+	for (int i = 0; i < datos.size(); i++) // Recorremos el vector de inicio a fin.
 	{
 		if ((datos[i] % 2) == 0) // Reordenamos el vector solo con los datos pares.
 		{
-			datos[nexPos] = datos[i];
-			nexPos++;
+			datos[newPos] = datos[i]; // Vamos poniendo los pares uno a uno en las pos 0, 1, 2...
+			newPos++; // Aumentamos la nueva posicion.
 		}
 	}
-	return true;
+	datos.resize(newPos); // Le cambiamos el tamanyo.
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -41,7 +41,7 @@ void resuelveCaso() {
 		datos.push_back(dato);
 	}
 
-	bool sol = resolver(datos);
+	resolver(datos);
 
 	// escribir sol
 
