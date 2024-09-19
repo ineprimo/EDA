@@ -1,20 +1,64 @@
-
-
+// Nieves Alonso Gilsanz
+// EDA-GDV03
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <vector>
 
-
-// función que resuelve el problema
+// Complejidad: 
 void comparaListados(std::vector<std::string> const& eda, 
 					 std::vector<std::string> const& tpv,
+					 // estos son los que hay que modificar (push_back)
 					 std::vector<std::string>& comunes, 
 					 std::vector<std::string>& soloEda, 
 					 std::vector<std::string>& soloTpv)
 {
+    // que devuelva otros tres listados tambien ordenados,
+    // el primero con los elementos presentes en ambos listados,
+    // el segundo con los elementos presentes en el primero y no en el segundo,
+    // y el tercero con los presentes en el segundo y no en el primero
 
+    std::vector<int> abecedario1(26);
+
+    int i = 0;
+    while(i < abecedario1.size())
+    {
+        // ambas
+        if(eda.size() >= i && tpv.size() >= i)
+        {
+	        if(eda[i] == tpv[i])
+	        {
+	            comunes.push_back(eda[i]);
+	        }
+	        else if()
+	        {
+		        
+	        }
+	        else
+	        {
+		        
+	        }
+        }
+        // las que sobran de eda
+        else if(eda.size() >= i && tpv.size() < i)
+        {
+            soloEda.push_back(eda[i]);
+        }
+        // las que sobran de tpv
+        else if(tpv.size() >= i && eda.size() < i)
+        {
+            soloTpv.push_back(tpv[i]);
+        }
+
+        i++;
+    }
+
+    // vas evaluando cada letra del abecedario
+    for(int j = 0; j < abecedario1.size(); i++)
+    {
+	    
+    }
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -24,10 +68,12 @@ void resuelveCaso()
     // leer los datos de la entrada
     int n;
     std::cin >> n;
+
     std::vector<std::string> eda(n);
     std::vector<std::string> comunes;
     std::vector<std::string> soloEda;
     std::vector<std::string> soloTpv;
+
     for (std::string& e : eda) std::cin >> e;
     std::cin >> n;
     std::vector<std::string> tpv(n);
