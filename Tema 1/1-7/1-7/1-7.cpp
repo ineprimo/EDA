@@ -6,52 +6,54 @@
 #include <iomanip>
 #include <fstream>
 
-
+#include <functional>
+#include <algorithm>
 #include <vector>
-//using namespace std;
 
-// COMPLEJIDAD: esto es una prueba, de momento es cuadratico. O(n^2).
-void comparaListados(std::vector<std::string> const& eda,
-	std::vector<std::string> const& tpv,
+// COMPLEJIDAD: es de complejidad O(n log n) que es la complejidad que tiene el std::sort.
+void comparaListados(std::vector<std::string>& eda,
+	std::vector<std::string>& tpv,
 	std::vector<std::string>& comunes,
 	std::vector<std::string>& soloEda,
 	std::vector<std::string>& soloTpv)
 {
-	for (std::string aux : eda)
-	{
-		int i = 0; bool encontrado = false;
-		while (!encontrado && i < tpv.size())
-		{
-			if (aux == tpv[i])
-			{
-				comunes.push_back(aux);
-				encontrado = true;
-				i = 0;
-			}
-			i++;
-		}
+	// Ordenamos primero los vectores para convertirlo en el ejercicio anterior.
+	std::sort(eda.begin(), eda.end());
+	std::sort(tpv.begin(), tpv.end());
 
-		if (!encontrado)
+	int edaI = 0;
+	int tpvI = 0;
+
+	while (edaI < eda.size() && tpvI < tpv.size())
+	{
+		if (eda[edaI] < tpv[tpvI]) // a < b => a esta en EDA solo.
 		{
-			soloEda.push_back(aux);
+			soloEda.push_back(eda[edaI]);
+			edaI++;
+		}
+		else if (eda[edaI] > tpv[tpvI]) // b > a = > a esta en TPV solo.
+		{
+			soloTpv.push_back(tpv[tpvI]);
+			tpvI++;
+		}
+		else // Si son iguales pues esta en ambos.
+		{
+			comunes.push_back(eda[edaI]);
+			edaI++;
+			tpvI++;
 		}
 	}
 
-	for (std::string aux : tpv)
+	while (edaI < eda.size()) // Recorremos lo que nos queda de EDA.
 	{
-		int i = 0; bool valido = true;
-		while (valido && i < comunes.size())
-		{
-			if (aux == comunes[i])
-			{
-				valido = false;
-			}
-			i++;
-		}
-		if (valido)
-		{
-			soloTpv.push_back(aux);
-		}
+		soloEda.push_back(eda[edaI]);
+		edaI++;
+	}
+
+	while (tpvI < tpv.size()) // Recorremos lo que nos queda de TPV.
+	{
+		soloTpv.push_back(tpv[tpvI]);
+		tpvI++;
 	}
 }
 
