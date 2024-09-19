@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-
+/*
 // función que resuelve el problema
 bool resolver(std::vector<int>& vect, int p) {
     int maxIzq = vect[p], minDer = vect[vect.size() - 1];
@@ -74,4 +74,4 @@ int main() {
 #endif
 
     return 0;
-}
+}*/
