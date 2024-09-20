@@ -3,6 +3,7 @@
 #include <vector>
 using namespace std;
 
+//Este algoritmo tiene coste lineal, porque a más letras tengan las palabras a analizar, se mantendrá de forma directamente proporcional la duración del algoritmo
 
 bool anagramas(const string& cad1, const string& cad2) {
     
