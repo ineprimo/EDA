@@ -1,44 +1,39 @@
+
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <vector>
 using namespace std;
 
+// función que resuelve el problema
+void comparaListados(vector<string> const& eda, vector<string> const& tpv,
+                     vector<string>& comunes, vector<string>& soloEda, vector<string>& soloTpv){
 
-bool anagramas(const string& cad1, const string& cad2) {
-    
-    bool anagrama = false;
-    string palabra = cad2;
-
-    for (int i = 0; i < cad1.length(); i++) {
-        int j = 0;
-        //Vamos a buscar las letras de cad1 en cad2 
-        while (j < palabra.length() && palabra[j] != cad1[i]) {
-            
-            j++;
-        }
-
-        //Si la encuentra la borra, y resetea la búsqueda
-        if (palabra[j] == cad1[i] && palabra.length() > 1) {
-            palabra.erase(palabra.begin()+j);
-        }
-        else if (palabra[j] == cad1[i] && palabra.length() == 1)
-        {
-            anagrama = true;
-        }
-
-    }
-
-    return anagrama;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
-    string word1, word2;
-    cin >> word1 >> word2;
-    cout << (anagramas(word1, word2) ? "SI" : "NO") << endl;
+    int n;
+    cin >> n;
+    vector<string> eda(n);
+    vector<string> comunes;
+    vector<string> soloEda;
+    vector<string> soloTpv;
+    for (string& e : eda) cin >> e;
+    cin >> n;
+    vector<string> tpv(n);
+    for (string& e : tpv) cin >> e;
+    comparaListados(eda,tpv,comunes,soloEda,soloTpv);
+    for (string& e : comunes) cout << e << " ";
+    cout << endl;
+    for (string& e : soloEda) cout << e << " ";
+    cout << endl;
+    for (string& e : soloTpv) cout << e << " ";
+    cout << endl;
 }
+
 
 //#define DOMJUDGE
 int main() {
