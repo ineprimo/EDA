@@ -6,20 +6,33 @@
 #include <vector>
 #include <array>
 
-// Complejidad: lineal O(n)
+// Complejidad: lineal O(n), n iteraciones del bucle for en funcion de la
+// longitud de la palabra
 bool anagramas(const std::string& cad1, const std::string& cad2)
 {
+    // primero comprobamos que las dos cadenas tengan el mismo tamaño
+    // ya que si no lo tienen no pueden ser anagramas
     if (cad1.size() != cad2.size()) return false;
 
+    // hacemos dos abecedarios auxiliares para llevar el registro
+    // de que y cuantas letras hay por palabra
     std::vector<int> abecedario1(26);
     std::vector<int> abecedario2(26);
 
+    // recorremos las cadenas
     for(int i = 0; i < cad1.size(); i++)
     {
+        // incrementamos el contador en la posicion del abecedario
+        // correspondiente a la letra que estamos evaluando
+        // sabemos que posicion ocupa en el abecedario (a->z, 0->25)
+        // haciendo la conversion de char a int
         abecedario1[toupper(cad1[i]) - 65]++;
         abecedario2[toupper(cad2[i]) - 65]++;
     }
 
+    // si una a una las posiciones del vector son iguales
+    // significa que es una cadena y otra tienen las mismas letras
+    // el mismo numero de veces por lo que sera anagrama
     return abecedario1 == abecedario2;
 }
 
