@@ -5,30 +5,57 @@
 
 
 // función que resuelve el problema
-void resolver(std::vector<int>& v) {
+bool resolver(std::vector<int>& v, int pos) {
     
+    //Damos por hecho que es menor desde el principio, a menos que se dé el caso contrario
+    bool menor = true;
 
+    //Recorremos el array 
+    int i = pos + 1; 
+
+    while (i < v.size() && menor) {
+
+        int j = 0;
+
+        while (j < pos + 1 && menor) {
+
+            if (v[j] > v[i]) {
+
+                menor = false;
+            }
+
+            j++;
+
+        }
+
+        i++;
+    }
+
+    return menor;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
-    int n;
-    std::cin >> n;
-    int pos;
-    std::cin >> pos;
+    int n, pos;
+    std::cin >> n >> pos;
 
     //rellenamos el vector
     std::vector<int> v(n);
     for (int i = 0; i < n; ++i) {
         std::cin >> v[i];
-    };
+    }
 
-    resolver(v);
     // escribir sol
+    if (resolver(v, pos)) {
+        std::cout << "SI" << std::endl;
 
-
+    }
+    else {
+        std::cout << "NO" << std::endl;
+    }
+      
 }
 
 int main() {
