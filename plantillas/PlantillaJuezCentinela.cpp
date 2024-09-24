@@ -1,5 +1,5 @@
-// Nombre del alumno .....
-// Usuario del Juez ......
+// INES PRIMO
+// GDV61
 
 
 #include <iostream>
