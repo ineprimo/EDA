@@ -49,9 +49,6 @@ int flip(const int& datos, int& cont) {
 
     //
     return sol;
-
-
-
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -74,8 +71,6 @@ void resuelveCaso() {
     int flipped = flip(sol, power);
 
     std::cout << flipped << std::endl;
-
-
 }
 
 int main() {
