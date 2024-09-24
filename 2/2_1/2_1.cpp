@@ -1,5 +1,5 @@
-// Nombre del alumno .....
-// Usuario del Juez ......
+// INES PRIMO
+// GDV61
 
 
 #include <iostream>
@@ -26,25 +26,16 @@ bool resolver(long long dato, int digito) {
     else if (!Divisible(dato, digito)) {
         return false;
     }
-    else if (dato%digito < 9) {
-
-        std::cout << dato << std::endl;
-
-        return resolver(dato+1, digito);
-    }
     else {
 
         std::cout << dato << std::endl;
 
-       return resolver(dato*10, digito + 1);
+       return resolver(dato*10, digito);
     }
 
 }
 
 void escribePolidivisibles(long long raiz, int maxDigitos) {
-
-    // ajusta con 0s
-    
 
     // llama a la funcion recursiva
     resolver(raiz, maxDigitos);
