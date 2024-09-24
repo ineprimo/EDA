@@ -1,10 +1,11 @@
-// Nombre del alumno .....
-// Usuario del Juez ......
+// INES PRIMO
+//  GDV61
 
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <cmath>
 
 
 // función que resuelve el problema
@@ -28,6 +29,31 @@ int resolver(const int& datos) {
 
 }
 
+
+int flip(const int& datos, int& cont) {
+
+    if (cont == 0) {
+        return datos;
+    }
+
+    int cc = cont - 1;
+
+    // ultimos digitos 
+    int a = flip(datos/10, cc);
+
+    // primer digito
+    int b = (datos % 10);
+
+    //
+    int sol = (b * std::pow(10, cont)) + a;
+
+    //
+    return sol;
+
+
+
+}
+
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
@@ -35,12 +61,20 @@ void resuelveCaso() {
     int a;
     std::cin >> a;
 
-    std::pair<int, int> par;
-
     int sol = resolver(a);
     // escribir sol
 
-    std::cout << sol << std::endl;
+    std::cout << sol << " ";
+
+    int power = 0, aux = a;
+    while (aux > 10) {
+        power++;
+        aux = aux / 10;
+    }
+    int flipped = flip(sol, power);
+
+    std::cout << flipped << std::endl;
+
 
 }
 
