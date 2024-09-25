@@ -6,17 +6,20 @@
 #include <iomanip>
 #include <fstream>
 #include <utility>
-#include <vector>
+#include <math.h>
 
-int complementarios(int num, int &final) // esta a la inversa aun
+int complementarios(int num, int &final, int size, int &i)
 {
     int cociente = num / 10;
     int resto = num % 10;
     int digi = 0;
 
-    final *= 10; // amplio el num final
     digi = 9 - resto; // calculo el siguiente digito complementario
-    final += digi; // meto el digito en el num final
+
+    // meto el digito en el num final multiplicado en su posicion
+    final += (digi * std::pow(10, size - (size - i)));
+
+    i += 1; // para pasar a la siguiente posicion en orden ascendente
 
     if (num < 10) // caso base / se llega al final, no hay mas que calcular
     {
@@ -24,7 +27,7 @@ int complementarios(int num, int &final) // esta a la inversa aun
     }
     else // aun queda num que evaluar, se vuelve a llamar
     {
-        complementarios(cociente, final);
+        complementarios(cociente, final, size, i);
     }
 }
 
@@ -53,10 +56,24 @@ std::pair<int, int> resolver(int dato)
 {
     std::pair<int, int> salida = { 0, 0 };
 
+    int size = 0; // longitud del dato
+    int num = dato; // para proteger dato
+
+    // lo calculo aquí porq me dicen que en la otra no puedo trocear
+    while (dato != 0) // mientras haya digitos que evaluar
+    {
+        dato /= 10; // se va reduciendo digito a digito
+        size++; // aumento size
+    }
+
+    size -= 1;
+    dato = num;
+
     int finalC = 0;
     int finalI = 0;
+    int i = 0;
 
-    int comp = complementarios(dato, finalC);
+    int comp = complementarios(dato, finalC, size, i);
     int compInv = complementariosInv(dato, finalI);
 
     salida.first = comp;
