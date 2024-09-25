@@ -5,30 +5,38 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <vector>
 
 
-// función que resuelve el problema
-TipoSolucion resolver(TipoDatos datos) {
-    
-    
+// O(log n) - divide y vencerás
+int resolver(std::vector<int>& datos, int ini, int fin) {
+    int diff = fin - ini;
+
+    if (diff == 0) return 0;
+    if (diff == 1) return datos[ini];
+
+    int mit = (ini + fin) / 2;
+
+    // si a la mitad es menor que el ini el menor estara a la der
+	if (datos[mit] < datos[ini])
+		return resolver(datos, mit, fin);
+	return resolver(datos, ini, mit);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-void resuelveCaso() {
-    // leer los datos de la entrada
-    int n;
+bool resuelveCaso() {
+    int n = 0;
     std::cin >> n;
+    if (! std::cin)
+        return false;
 
-    for (int i = 0; i < n; i++) 
+    std::vector<int> datos(n);
+    for (int& i : datos)
+        std::cin >> i;
 
-
-
-
-    TipoSolucion sol = resolver(datos);
-    // escribir sol
-    
-    
+    std::cout << resolver(datos, 0, datos.size()) << std::endl;
+    return true; 
 }
 
 int main() {
@@ -40,10 +48,8 @@ int main() {
      #endif 
     
     
-    int numCasos;
-    std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
-        resuelveCaso();
+    while (resuelveCaso())
+        ;
 
     
     // Para restablecer entrada. Comentar para acepta el reto

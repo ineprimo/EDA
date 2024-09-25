@@ -1,0 +1,85 @@
+7 12
+8 12 16 20 22 2 4
+7 21
+8 12 16 20 22 2 4
+7 4
+8 12 16 20 22 2 4
+8 20
+20 22 2 3 4 8 12 16
+8 2
+20 22 2 3 4 8 12 16
+8 15
+20 22 2 3 4 8 12 16
+-1
+
+
+
+//
+// Nombre y apellidos del alumno
+// Usuario del juez de clase
+// Usuario del juez de examen que has utilizado en la prueba de hoy
+//
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+
+
+// Explicacion de la solucion del problema
+
+
+
+
+// Coste de la solucion implementada. Se debe justificar indicando 
+// la recurrencia y desplegandola 
+
+
+
+
+
+// Funcion recursiva que resuelve el problema
+
+
+
+
+
+
+
+
+// Funcion que trata cada caso de entrada
+bool resuelveCaso() {
+    // Lectura de los datos
+    int numElem, x;
+    std::cin >> numElem; 
+    if (numElem == -1) return false;
+    std::cin >> x;
+    std::vector<int> v(numElem);
+    for (int& i : v) std::cin >> i;
+    
+    //LLamada a la función recursiva que resuelve el problema
+    ...
+    
+    // Escribir los resultados
+    if (sol) std::cout << "SI\n";
+    else std::cout << "NO\n";
+    return true;
+}
+
+int main() {
+
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); 
+#endif
+ 
+    while (resuelveCaso())
+        ;
+    
+    
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+    
+	return 0;
+}
