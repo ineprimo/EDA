@@ -8,9 +8,24 @@
 #include <utility>
 #include <vector>
 
-int complementarios(int num)
+int complementarios(int num, int &final) // esta a la inversa aun
 {
-    
+    int cociente = num / 10;
+    int resto = num % 10;
+    int digi = 0;
+
+    final *= 10; // amplio el num final
+    digi = 9 - resto; // calculo el siguiente digito complementario
+    final += digi; // meto el digito en el num final
+
+    if (num < 10) // caso base / se llega al final, no hay mas que calcular
+    {
+        return final;
+    }
+    else // aun queda num que evaluar, se vuelve a llamar
+    {
+        complementarios(cociente, final);
+    }
 }
 
 int complementariosInv(int num, int &final)
@@ -38,10 +53,11 @@ std::pair<int, int> resolver(int dato)
 {
     std::pair<int, int> salida = { 0, 0 };
 
-    int final = 0;
+    int finalC = 0;
+    int finalI = 0;
 
-    int comp = complementarios(dato);
-    int compInv = complementariosInv(dato, final);
+    int comp = complementarios(dato, finalC);
+    int compInv = complementariosInv(dato, finalI);
 
     salida.first = comp;
     salida.second = compInv;
