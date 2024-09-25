@@ -9,37 +9,30 @@
 
 using namespace std;
 
-bool complementario(int datos, int& num) {
-
-    int d = 0;
+void complementario(int datos, int& num) {
 
     //Caso base -> Ya solo queda un digito
     if (datos < 10) 
     {
         num = 9 - datos; 
-        //Tener cuidado por si influye si el número empieza en 0
-        return false;
     }
     else {
 
         complementario(datos / 10, num);
-        d = datos % 10;
-        num = num * 10 + (9 - d);
-        return d == 0;
+        num = num * 10 + (9 - (datos % 10));
     }
 }
 
-void inverso(int num, int& inv, bool cero) {
+void inverso(int num, int& inv) {
 
-    if (num < 10 && !cero) {
-        inv += num;
+    if (num < 10 ) {
+        inv = (inv * 10) + (9 - num);
     }
-    else if (num < 10 && cero) inv = (inv + num) * 10;
     else {
 
-        inv += num % 10;
         inv *= 10;
-        inverso(num / 10, inv, cero);
+        inv += 9 - (num % 10);
+        inverso(num / 10, inv);
     }
 
 }
@@ -53,11 +46,11 @@ vector<int> resolver(int datos) {
     int inv = 0;
 
     //sol[0] -> Numeros complementarios al derecho
-    bool cfinal = complementario(datos, num);
+    complementario(datos, num);
     sol.push_back(num);
 
     //sol[1] -> Numeros complementarios inversa
-    inverso(num, inv, cfinal);
+    inverso(datos, inv);
     sol.push_back(inv);
 
     return sol;
