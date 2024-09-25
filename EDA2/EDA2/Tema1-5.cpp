@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 using namespace std;
-
+/*
 //Tiene una complejidad O(n), donde n es el numero de caracteres que tiene cada cadena, 
 //ambas cadenas son recorridas completamente y ademas se hace un for con un numero constante
 //de iteraciones (26)
@@ -60,4 +60,4 @@ int main() {
 #endif
 
     return 0;
-}
+}*/
