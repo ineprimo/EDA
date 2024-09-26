@@ -8,34 +8,31 @@ using namespace std;
 
 bool parcialmenteOrdenado(const vector<int>& v, int ini, int fin, int& min, int& max) {
 
-    int resta = fin - ini;
-
     //Caso base solo hay 2 elementos
-    if (resta == 1) {
+    if (fin - ini == 1) {
+
+        min = v[ini - 1];
+        max = v[fin - 1];
+
         //Si esto se cumple está parcialmente ordenado
-        return v[ini-1] <= v[fin-1];
+        return min <= max;
     }
 
     //Calculamos la mitad del segmento
-    int mitad = resta / 2;
-    if (mitad % 2 != 0) mitad++;
+    int mitad = (ini + fin) / 2;
+    int minI, maxI;
+    int minD, maxD;
 
     //Parte izquierda
-    if (parcialmenteOrdenado(v, ini, fin - mitad, min, max)) {
-        min = v[ini - 1];
-        max = v[fin - mitad - 1];
+    if (parcialmenteOrdenado(v, ini, mitad, minI, maxI) && 
+        parcialmenteOrdenado(v, mitad + 1, fin, minD, maxD) &&
+        minI <= minD && maxI <= maxD) {
+
+        min = minI;
+        max = maxD;
+        return true;
     }
     else return false;
-
-    //Parte derecha
-    if (parcialmenteOrdenado(v, fin - mitad + 1, fin, min, max)) {
-
-        if (min > v[fin - mitad] || max > v[fin - 1]) return false;
-        else max = v[fin - 1];
-    }
-    else return false;
-
-    return min <= max;
 }
 
 bool parcialmenteOrdenado(const vector<int>& v) {
