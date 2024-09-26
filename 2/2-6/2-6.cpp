@@ -6,7 +6,7 @@
 #include <fstream>
 #include <vector>
 
-
+// Divide y vencerás, búsqueda binaria. Complejidad: O(log n)
 bool elemento_situado(const std::vector<int>& v, int ini, int fin)
 {
     const int elems = fin - ini; // num de elems a evaluar entre fin e ini
@@ -26,15 +26,12 @@ bool elemento_situado(const std::vector<int>& v, int ini, int fin)
 
     int mit = (ini + fin) / 2;
 
-    bool sitIzq = false;
-    bool sitDer = false;
-
     // buscar en la mitad izq ->
     // si lo que hay en mit es mayor a su índice ya no va a haber nada a la der bien situado
     // porque está ordenado por lo que será aún más grande
     if (v[mit] > mit)
     {
-		sitIzq = elemento_situado(v, ini, mit);
+		return elemento_situado(v, ini, mit);
     }
 
     // buscar en la mitad der ->
@@ -42,10 +39,8 @@ bool elemento_situado(const std::vector<int>& v, int ini, int fin)
     // porque está ordenado por lo que será aún más pequeño
     if (v[mit] < mit)
     {
-		sitDer = elemento_situado(v, mit, fin);
+		return elemento_situado(v, mit, fin);
     }
-
-    return sitIzq || sitDer;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la

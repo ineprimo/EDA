@@ -27,7 +27,7 @@ int complementarios(int num, int &final, int size, int &i)
     }
     else // aun queda num que evaluar, se vuelve a llamar
     {
-        complementarios(cociente, final, size, i);
+        return complementarios(cociente, final, size, i);
     }
 }
 
@@ -47,7 +47,7 @@ int complementariosInv(int num, int &final)
     }
     else // aun queda num que evaluar, se vuelve a llamar
     {
-        complementariosInv(cociente, final);
+        return complementariosInv(cociente, final);
     }
 }
 
