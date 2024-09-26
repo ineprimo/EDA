@@ -1,43 +1,45 @@
 ﻿// Andres Garcia Navarro
 // EDA-GDV27
 
-
+/*
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <vector>
 
 using namespace std;
-/*
-// El coste de la funcion sera lineal O(n) se recorre una unica vez el array de forma lineal
+
+// El coste de la funcion es lineal O(n) ya que se recorren n elementos del vector
 // función que resuelve el problema
-bool disperso(vector<int>& datos, int ini, int fin, int dispersion) {
-	// Casos base:
-	if (fin - ini == 1)
-		return true;
-	if(fin -ini ==2)
-		return abs(datos[ini] - datos[ini+1]) >= dispersion;
+pair<bool, int> caucasico(vector<int>& datos, int ini, int fin) {
+	int diferencia = fin - ini;
+	if (diferencia == 1) {
+		if(datos[ini] %2 ==0)
+			return { true, 1 };
+		return { true, 0 };
+	}
 
-	int mitad = ((fin + ini) / 2);
+	int mitad = (ini + fin) / 2;
 
-	bool dispersoIzquierda = disperso(datos, ini, mitad, dispersion);
-	bool dispersoDerecha = disperso(datos, mitad, fin, dispersion);
+	pair <bool, int> caucasicoIzq = caucasico(datos, ini, mitad);
+	pair <bool, int> caucasicoDer = caucasico(datos, mitad, fin);
 
-	return (abs(datos[ini] - datos[fin-1]) >= dispersion) && dispersoIzquierda && dispersoDerecha;
+	return{ caucasicoIzq.first && caucasicoDer.first && (abs(caucasicoIzq.second - caucasicoDer.second) <= 2), caucasicoIzq.second + caucasicoDer.second };
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
 	// leer los datos de la entrada
-	int tiradas = 0, dispersion = 0;
+	int size = 0;
 	vector<int> datos;
 
-	cin >> tiradas >> dispersion;
+	cin >> size;
 
-	if (!std::cin)
+	if (size == 0)
 		return false;
-	for (int i = 0; i < tiradas; i++)
+
+	for (int i = 0; i < size; i++)
 	{
 		int e = 0;
 		cin >> e;
@@ -45,11 +47,10 @@ bool resuelveCaso() {
 	}
 
 	// escribir sol
-	if (disperso(datos, 0, tiradas , dispersion))
+	if (caucasico(datos, 0, size).first)
 		cout << "SI" << endl;
 	else
 		cout << "NO" << endl;
-
 
 	return true;
 
@@ -75,4 +76,5 @@ int main() {
 #endif
 
 	return 0;
-}*/
+}
+*/

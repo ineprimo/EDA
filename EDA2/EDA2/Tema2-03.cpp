@@ -8,10 +8,10 @@
 #include <vector>
 
 using namespace std;
-
-// el coste de esta funcion es logaritmico O(n*log(n))
+/*
+// el coste de esta funcion es logaritmico O(n*log(n)) ya que el problema se divide en mitades y cada una de las mitades realiza un trabajo lineal.
 // función que resuelve el problema
-/bool parcialmenteOrdenado(vector<int>& datos, int ini, int fin, int& mayor, int& menor) {
+bool parcialmenteOrdenado(vector<int>& datos, int ini, int fin, int& mayor, int& menor) {
 	// casos base
 	if (fin == ini)
 		return true;
@@ -92,3 +92,4 @@ int main() {
 
 	return 0;
 }
+*/
