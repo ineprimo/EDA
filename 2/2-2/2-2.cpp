@@ -59,7 +59,6 @@ std::pair<int, int> resolver(int dato)
     int size = 0; // longitud del dato
     int num = dato; // para proteger dato
 
-    // lo calculo aquí porq me dicen que en la otra no puedo trocear
     while (dato != 0) // mientras haya digitos que evaluar
     {
         dato /= 10; // se va reduciendo digito a digito
