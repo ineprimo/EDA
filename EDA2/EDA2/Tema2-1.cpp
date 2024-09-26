@@ -1,7 +1,7 @@
 ﻿// Andres Garcia Navarro
 // EDA-GDV27
 
-
+/*
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -12,12 +12,14 @@
 void escribePolidivisibles(long long raiz, int maxDigitos) {
     int size = (std::to_string(raiz)).size();
 
-    recPolidivisible(raiz, size, maxDigitos)
+    recPolidivisible(raiz, size, maxDigitos);
 }
 
 void recPolidivisible(long long raiz, int digitos, int maxdigitos) {
-    if (digitos >= digitos)
+    if (digitos > maxdigitos)
         return;
+    if (raiz %10 == 9)
+        recPolidivisible()
     
     raiz
 }
@@ -59,4 +61,4 @@ int main() {
 #endif
 
     return 0;
-}
+}*/

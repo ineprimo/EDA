@@ -1,11 +1,12 @@
-// Nombre del alumno .....
-// Usuario del Juez ......
+// Andres Garcia Navarro
+// EDA-GDV27
 
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 
+using namespace std;
 
 // función que resuelve el problema
 TipoSolucion resolver(TipoDatos datos) {

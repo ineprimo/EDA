@@ -6,7 +6,7 @@
 #include <functional>
 #include <algorithm>
 using namespace std;
-
+/*
 // La funcion tiene complejidad logaritmica O(n*log(n)), esta es la complejidad del metodo sort.
 // El metodo tiene complejidad lineal igual que en el ejercicio 1-6 sin embargo uso el metodo sort 
 // para ordenar los vectores que tiene coste logaritmico, por lo tanto, la funcion tiene coste logaritmico
@@ -94,3 +94,4 @@ int main() {
 
     return 0;
 }
+*/
