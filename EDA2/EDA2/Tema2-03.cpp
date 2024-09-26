@@ -1,28 +1,27 @@
 ﻿// Andres Garcia Navarro
 // EDA-GDV27
 
-
+/*
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <vector>
 
 using namespace std;
-/*
+
 // el coste de esta funcion es logaritmico O(n*log(n)) ya que el problema se divide en mitades y cada una de las mitades realiza un trabajo lineal.
-// función que resuelve el problema
-bool parcialmenteOrdenado(vector<int>& datos, int ini, int fin, int& mayor, int& menor) {
+bool parcialmenteOrdenado(const vector<int>& v, int ini, int fin, int& min, int& max) {
 	// casos base
 	if (fin == ini)
 		return true;
 	if (fin - ini == 1) {
-		if (datos[fin] >= datos[ini])
+		if (v[fin] >= v[ini])
 		{
-			mayor = datos[fin]; menor = datos[ini];
+			max = v[fin]; min = v[ini];
 			return true;
 		}
 
-		mayor = datos[ini]; menor = datos[fin];
+		max = v[ini]; min = v[fin];
 		return false;
 	}
 
@@ -31,44 +30,35 @@ bool parcialmenteOrdenado(vector<int>& datos, int ini, int fin, int& mayor, int&
 
 	// comprueba los lados derecho e izquierdo
 	int mid = ini + ((fin - ini) / 2);
-	bool ordenadoIzq = parcialmenteOrdenado(datos, ini, mid, mayorI, menorI);
-	bool ordenadoDer = parcialmenteOrdenado(datos, mid + 1, fin, mayorD, menorD);
+	bool ordenadoIzq = parcialmenteOrdenado(v, ini, mid, mayorI, menorI);
+	bool ordenadoDer = parcialmenteOrdenado(v, mid +1, fin, mayorD, menorD);
 
 	// Asigna mayor y menor
-	mayor = mayorD;
-	menor = menorI;
+	max = mayorD;
+	min = menorI;
 
 	return ordenadoIzq && ordenadoDer && (mayorD >= mayorI && menorI <= menorD);
+}
+
+bool parcialmenteOrdenado(const vector<int>& v) {
+	int min, max;
+	return parcialmenteOrdenado(v, 0, v.size()-1, min, max);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
 	// leer los datos de la entrada
-	vector<int> datos;
-	int dato = 0;
-
-	cin >> dato;
-
-	if (dato == 0)
-		return false;
-
-	while (dato != 0)
-	{
-		datos.push_back(dato);
-		cin >> dato;
+	int e;
+	cin >> e;
+	if (e == 0) return false;
+	vector<int> sec;
+	while (e != 0) {
+		sec.push_back(e);
+		cin >> e;
 	}
-
-	int mayor, menor;
-	// escribir sol
-	if (parcialmenteOrdenado(datos, 0, datos.size() - 1, mayor, menor))
-		cout << "SI" << endl;
-	else
-		cout << "NO" << endl;
-
-
+	cout << (parcialmenteOrdenado(sec) ? "SI" : "NO") << endl;
 	return true;
-
 }
 
 int main() {
