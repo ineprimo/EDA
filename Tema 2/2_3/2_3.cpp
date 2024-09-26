@@ -23,16 +23,17 @@ bool parcialmenteOrdenado(const vector<int>& v, int ini, int fin, int& min, int&
     int minI, maxI;
     int minD, maxD;
 
+    bool izq = parcialmenteOrdenado(v, ini, mitad, minI, maxI);
+    bool der = parcialmenteOrdenado(v, mitad + 1, fin, minD, maxD);
+
     //Parte izquierda
-    if (parcialmenteOrdenado(v, ini, mitad, minI, maxI) && 
-        parcialmenteOrdenado(v, mitad + 1, fin, minD, maxD) &&
-        minI <= minD && maxI <= maxD) {
+    if ( izq && der && minI <= minD && maxI <= maxD) {
 
         min = minI;
         max = maxD;
         return true;
     }
-    else return false;
+    return false;
 }
 
 bool parcialmenteOrdenado(const vector<int>& v) {
