@@ -11,14 +11,10 @@ using namespace std;
 
 //Complejidad del algoritmo
 // 
-// La complejidad del logaritmo es O(n) siendo n el número de datos
-// Ya que se recorre el vector una única vez buscando el faltante
+// La complejidad del logaritmo es O(log n) siendo n el número de datos
+// Ya que el problema se va dividiendo a la mitad 
 // función que resuelve el problema
 char resolver(vector<char>& datos, char ini, char fin, int emp, int acb) {
-
-    //No sabemos cual es el que falta
-    if (ini == fin) { return fin++; }
-
     //Comprobamos que el primero y el último sean los correctos
 
     if (ini != datos[emp]) return ini;
@@ -27,18 +23,13 @@ char resolver(vector<char>& datos, char ini, char fin, int emp, int acb) {
     if (acb - emp == 1) {
 
         ini++;
-        if (ini == fin) return ' ';
-        else return ini;
-        
-        /*if (ini < fin) return ' ';
-        else if (ini != datos[emp]) return ini;
-        else return fin;*/
+        if (ini != fin) return ini;
     }
     
 
     //Buscamos la mitad
     char mid = (ini + fin) / 2;
-    int index = emp + (datos.size() / 2);
+    int index = emp + (((acb + 1) - emp) / 2);
 
     
     //Comprobamos que el valor central no es el que estamos buscando
