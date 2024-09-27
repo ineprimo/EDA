@@ -5,47 +5,37 @@
 using namespace std;
 
 // función que resuelve el problema
-bool elemento_situado(const vector<int>& v, int ini, int fin) {
- 
+int minimo(const vector<int>& sec, int ini, int fin) {
+
     int diferencia = fin - ini;
 
-    if (diferencia == 0) {
-        return false;
-    }
-    
     if (diferencia == 1) {
-        if (v[ini] == ini) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return sec[ini];
     }
 
     int mitad = (ini + fin) / 2;
 
-    //Búsqueda de correctos en la primera mitad
-    if (v[mitad] > mitad) {
-        return elemento_situado(v, ini, mitad);
+    //Búsqueda en la primera mitad
+    if (sec[mitad] > sec[mitad - 1]) {
+        return minimo(sec, ini, mitad);
     }
 
-    //Búsqueda en la segunda mitado
-    if (v[mitad] < mitad) {
-        return elemento_situado(v, mitad, fin);
-    }
-
-    return true;
+    //Búsqueda en la segunda mitad
+    return minimo (sec, mitad, fin);
+    
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-void resuelveCaso() {
+bool resuelveCaso() {
     // leer los datos de la entrada
     int n;
     cin >> n;
+    if (!cin) return false;
     vector<int> sec(n);
     for (int& e : sec) cin >> e;
-    cout << (elemento_situado(sec, 0, n) ? "SI" : "NO") << endl;
+    cout << minimo(sec, 0, n) << endl;
+    return true;
 }
 
 int main() {
@@ -56,10 +46,8 @@ int main() {
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 
-    int numCasos;
-    std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
-        resuelveCaso();
+    while (resuelveCaso())
+        ;
 
 
     // Para restablecer entrada. Comentar para acepta el reto
