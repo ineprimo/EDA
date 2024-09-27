@@ -1,8 +1,4 @@
-11
-c h
-d e f g h
-c h
-c e f g h
+9
 c h
 c d f g h
 c h

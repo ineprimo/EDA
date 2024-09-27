@@ -1,13 +1,14 @@
 ﻿// Andres Garcia Navarro
 // EDA-GDV27
 
-
+/*
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <vector>
 using namespace std;
 
+// El coste de esta funcion es lineal O(n), donde n es el numero de elementos del vector que son recorridos una unica vez
 // función que resuelve el problema
 int minimo(const vector<int>& sec, int ini, int fin) {
 	// Casos base
@@ -19,7 +20,7 @@ int minimo(const vector<int>& sec, int ini, int fin) {
 		return sec[ini];
 	}
 	else if (dif == 2) {
-		return (sec[ini] > sec[fin]) ? sec[ini] : sec[fin];
+		return (sec[ini] > sec[fin-1]) ? sec[fin-1] : sec[ini];
 	}
 
 	int mitad = (ini + fin) / 2,
@@ -61,4 +62,4 @@ int main() {
 #endif
 
 	return 0;
-}
+}*/
