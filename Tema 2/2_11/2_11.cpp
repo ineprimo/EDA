@@ -14,25 +14,44 @@ using namespace std;
 // La complejidad del logaritmo es O(n) siendo n el número de datos
 // Ya que se recorre el vector una única vez buscando el faltante
 // función que resuelve el problema
-char resolver(vector<char>& datos, char ini, char fin) {
+char resolver(vector<char>& datos, char ini, char fin, int emp, int acb) {
 
     //No sabemos cual es el que falta
+    if (ini == fin) { return fin++; }
+
     //Comprobamos que el primero y el último sean los correctos
 
-    if (ini != datos[0]) return ini;
-    if (fin != datos[datos.size() - 1]) return fin;
+    if (ini != datos[emp]) return ini;
+    if (fin != datos[acb]) return fin;
 
-    //Hay que buscar el salto que haya
-    char i = ini;
-    int j = 0;
+    if (acb - emp == 1) {
 
-    while (j < datos.size() && i == datos[j]) {
-        i++;
-        j++;
+        ini++;
+        if (ini == fin) return ' ';
+        else return ini;
+        
+        /*if (ini < fin) return ' ';
+        else if (ini != datos[emp]) return ini;
+        else return fin;*/
     }
+    
 
-    //Diría que siempre falta uno
-    return i;
+    //Buscamos la mitad
+    char mid = (ini + fin) / 2;
+    int index = emp + (datos.size() / 2);
+
+    
+    //Comprobamos que el valor central no es el que estamos buscando
+    if (datos[index] == mid) {
+
+        char der = resolver(datos, mid + 1, fin, index + 1, acb);
+        return der;
+
+    }
+    else {
+        char izq = resolver(datos, ini, mid, emp, index - 1);
+        return izq;
+    }
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -42,6 +61,8 @@ void resuelveCaso() {
     char ini = ' ';
     char fin = ' ';
     char letra = ' ';
+    int emp = 0;
+    int acb;
     vector<char> datos;
 
     cin >> ini >> fin;
@@ -51,7 +72,8 @@ void resuelveCaso() {
         datos.push_back(letra);
     }
 
-    char sol = resolver(datos, ini, fin);
+    acb = datos.size() - 1;
+    char sol = resolver(datos, ini, fin, emp, acb);
 
     // escribir sol
     cout << sol << endl;
