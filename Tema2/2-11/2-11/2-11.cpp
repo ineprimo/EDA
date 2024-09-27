@@ -1,7 +1,7 @@
 /*
 Nombre completo: Pablo Iglesias Rodrigo.
 Usuario del juez: EDA-GDV35
-COMPLEJIDAD:
+COMPLEJIDAD: tiene complejidad O(log n) porque es busqueda binaria. n es el numero de elementos del vector sec.
 */
 
 #include <iostream>
@@ -17,31 +17,40 @@ char resolver(const std::vector<char>& sec, char prim, char ult, int ini, int fi
 
 	if (n == 0) // Caso base size 0 nadie se ha escapado.
 	{
-		return ' ';
+		return prim;
 	}
 	else if (n == 1) // Caso base size 1.
 	{
-		if (prim == sec[ini])
+		if (prim == sec[ini]) // Si el caracter es y es y esta en su posicion es el siguiente caracter asci.
 		{
-			return sec[ini + 1];
+			return sec[ini] + 1;
+		}
+		else // Sino es el anterior asci.
+		{
+			return sec[ini] - 1;
 		}
 	}
-	else if (n == 2) // Caso base size 2.
+
+	if (sec[ini] != prim) // Caso de que el primero no sea el primero.
 	{
-		// return
+		return prim;
+	}
+	if (sec[fin - 1] != ult) // Caso de que el ultimo no sea el ultimo.
+	{
+		return ult;
 	}
 
 
 	int med = (ini + fin) / 2;
-	char esperado = prim + (med - ini); // char esperado = prim + (mitad - ini)
+	char esperado = prim + (med - ini); // Numero que se espera que este en la mitad para poder hacer la division de ambos casos. char esperado = prim + (mitad - ini)
 
 	if (esperado == sec[med])
 	{
-		return resolver(sec, prim, ult, med, fin);
+		return resolver(sec, sec[med], sec[fin - 1], med, fin); // Lado derecho del vector.
 	}
 	else
 	{
-		return resolver(sec, prim, ult, ini, med);
+		return resolver(sec, sec[ini], sec[med - 1], ini, med); // Lado izquierdo del vector.
 	}
 
 
