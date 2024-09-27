@@ -3,25 +3,22 @@
 #include <fstream>
 #include <vector>
 
-
-
 // función que resuelve el problema
 bool resolver(std::vector<int> v) {
 
-    //Damos por hecho que inicialmente la secuencia es correcta
-    bool dalton = true;
+    int n = v.size();
+    int i = 0, j = 0, k = 0;
 
-    //Buscamos algún punto en el que sea incorrecta
-    int indice = 0;
-    while (indice < v.size() - 1 && v[indice] < v[indice + 1]) {
-        indice++;
+    while (i < n - 1)
+    {
+        if (v[i] < v[i + 1]) //Menor a mayor
+            j++;
+        else if (v[i] > v[i + 1]) //Mayor a menor
+            k++;
+        i++;
     }
 
-    if (indice < v.size() - 1 && v[indice] >= v[indice + 1]) {
-        dalton = false;
-    }
-
-    return dalton;
+    return k == i || j == i;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -31,8 +28,7 @@ bool resuelveCaso() {
     int n;
     std::cin >> n;
 
-    if (!std::cin)
-        return false;
+    if (n < 1) return false;
 
     //rellenamos el vector
     std::vector<int> v(n);
