@@ -6,7 +6,7 @@
 #include <fstream>
 #include <vector>
 
-// función que resuelve el problema
+// Divide y vencerás, búsqueda binaria. Complejidad: O(log n)
 bool resolver(std::vector<int> datos, int ini, int fin, int valor)
 {
     int elems = fin - ini;
@@ -16,31 +16,39 @@ bool resolver(std::vector<int> datos, int ini, int fin, int valor)
 
     int mit = (ini + fin) / 2;
 
-    // si el de la mitad es menor es que a su izq aun quedan menores
-    if(datos[mit] < datos[ini] && datos[mit] > valor)
+    // si el de la mitad es menor es que a su izq aun pueden quedan menores
+    if(datos[mit] < datos[ini])
     {
-        // busca en la izq
-        return resolver(datos, ini, mit, valor);
-    }
-    if(datos[mit] < datos[ini] && datos[mit] < valor)
-    {
-        // busca en la der
-        return resolver(datos, ini, mit, valor);
+        // si el dato que busco es mayor o igual que la mitad y menor que el inicio -> está a la der
+	    if((datos[mit] <= valor) && (datos[ini] > valor))
+	    {
+	        // busca en la der
+	        return resolver(datos, mit, fin, valor);
+	    }
+        // -> en otro caso estará a la izq
+        else
+	    {
+	        // busca en la izq
+	        return resolver(datos, ini, mit, valor);
+	    }
     }
 
     // si el de la mitad es mayor es que a su der aun quedan menores
-    if(datos[mit] < datos[ini] && datos[mit] > valor)
-    {
-        // busca en la der
-        return resolver(datos, ini, mit, valor);
-    }
-    if(datos[mit] < datos[ini] && datos[mit] < valor)
-    {
-        // busca en la izq
-        return resolver(datos, ini, mit, valor);
-    }
-
-    //return true;
+	if(datos[mit] >= datos[ini])
+	{
+        // si el dato que busco es menor que la mitad y mayor o igual que el inicio -> está a la izq
+		if((datos[mit] > valor) && (datos[ini] <= valor))
+		{
+	        // busca en la izq
+	        return resolver(datos, ini, mit, valor);
+		}
+        // -> en otro caso estará a la der
+        else
+        {
+	        // busca en la der
+	        return resolver(datos, mit, fin, valor);
+        }
+	}
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
