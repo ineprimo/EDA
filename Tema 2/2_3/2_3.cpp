@@ -9,6 +9,10 @@ using namespace std;
 bool parcialmenteOrdenado(const vector<int>& v, int ini, int fin, int& min, int& max) {
 
     //Caso base solo hay 2 elementos
+    if (fin - ini == 0) {
+        return true;
+    }
+
     if (fin - ini == 1) {
 
         min = v[ini - 1];
