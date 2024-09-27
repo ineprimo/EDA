@@ -1,0 +1,25 @@
+12
+a e
+a b c e
+c h
+d e f g h
+c h
+c e f g h
+c h
+c d f g h
+c h
+c d e g h
+c h
+c d e f h
+c h
+c d e f g
+d h
+e f g h
+d h
+d f g h
+d h
+d e g h
+d h
+d e f h
+d h
+d e f g
