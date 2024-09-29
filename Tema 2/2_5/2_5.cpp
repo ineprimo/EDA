@@ -5,26 +5,50 @@
 #include <vector>
 using namespace std;
 
-bool caucasico(vector<int>& sec, int ini, int fin) {
+int caucasico(vector<int>& sec, int ini, int fin, bool& cauc) {
 
-    //Casos base
-    int elemts = fin - ini;
+    if (!cauc) return 0;
+    else {
+        //Casos base
+        int elemts = fin - ini;
+        int parIzq = 0;
+        int parDer = 0;
 
-    if (elemts == 0) return true;
+        //if (elemts == 0)
+        //{
+        //    if (sec[ini] % 2 == 0) parIzq++;
+        //    return parIzq;
+        //}
 
-    if (elemts == 1) {
+        if (elemts == 1) {
 
-        //Si los dos elementos son pares o son impares es caucásico
+            if (sec[ini] % 2 == 0) {
+                parIzq++;    //Si devuelve true es par
+            }
 
-        bool primer = sec[ini - 1] % 2 == 0;    //Si devuelve true es par
-        bool segundo = sec[fin - 1] % 2 == 0;   //Si devuelve true es par
+            if (sec[fin] % 2 == 0) {
+                parDer++;   //Si devuelve true es par
+            }
+            return parIzq + parDer;
+        }
 
-        return (primer && segundo) || (!primer && !segundo);
+        //Hacemos llamadas recursivas
+        int mid = (ini + fin) / 2;
+
+        parIzq = caucasico(sec, ini, mid, cauc);
+
+        if (cauc) {
+            //Si esta mitad no es caucasica no tenemos que hacer el resto
+            parDer = caucasico(sec, mid + 1, fin, cauc);
+
+
+            int resta = parDer - parIzq;
+            cauc = (-2 <= resta) && (resta <= 2);
+        }
+
+        return parIzq + parDer;
+
     }
-
-    //Hay que contar cuantos pares hay en cada lado
-
-
 }
 
 
@@ -34,6 +58,7 @@ bool resuelveCaso() {
 
     // leer los datos de la entrada
     int n;
+    bool cauc = true;
     cin >> n;
 
     if (n == 0) return false;
@@ -41,7 +66,9 @@ bool resuelveCaso() {
     vector<int> sec(n);
     for (int& e : sec) cin >> e;
 
-    cout << (caucasico(sec, 1, n) ? "SI" : "NO") << endl;
+    caucasico(sec, 0, n - 1, cauc);
+
+    cout << ( cauc ? "SI" : "NO") << endl;
     return true;
 }
 
