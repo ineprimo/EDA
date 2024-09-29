@@ -8,47 +8,36 @@ using namespace std;
 int caucasico(vector<int>& sec, int ini, int fin, bool& cauc) {
 
     if (!cauc) return 0;
-    else {
-        //Casos base
-        int elemts = fin - ini;
-        int parIzq = 0;
-        int parDer = 0;
+    
+    //Casos base
+    int parIzq = 0;
+    int parDer = 0;
 
-        //if (elemts == 0)
-        //{
-        //    if (sec[ini] % 2 == 0) parIzq++;
-        //    return parIzq;
-        //}
+    if (fin == ini)
+    {
+        if (sec[ini] % 2 == 0) parIzq++;
+        return parIzq;
+    }
 
-        if (elemts == 1) {
+    if (fin - ini == 1) {
 
-            if (sec[ini] % 2 == 0) {
-                parIzq++;    //Si devuelve true es par
-            }
+        if (sec[ini] % 2 == 0) { parIzq++; }
 
-            if (sec[fin] % 2 == 0) {
-                parDer++;   //Si devuelve true es par
-            }
-            return parIzq + parDer;
-        }
-
-        //Hacemos llamadas recursivas
-        int mid = (ini + fin) / 2;
-
-        parIzq = caucasico(sec, ini, mid, cauc);
-
-        if (cauc) {
-            //Si esta mitad no es caucasica no tenemos que hacer el resto
-            parDer = caucasico(sec, mid + 1, fin, cauc);
-
-
-            int resta = parDer - parIzq;
-            cauc = (-2 <= resta) && (resta <= 2);
-        }
+        if (sec[fin] % 2 == 0) { parDer++; }
 
         return parIzq + parDer;
-
     }
+
+    //Hacemos llamadas recursivas
+    int mid = (ini + fin) / 2;
+    parIzq = caucasico(sec, ini, mid, cauc);
+    parDer = caucasico(sec, mid + 1, fin, cauc);
+
+    //Comprobamos que sea caucásica
+    int resta = parDer - parIzq;
+    cauc = abs(resta) <= 2;
+
+    return parIzq + parDer;
 }
 
 
