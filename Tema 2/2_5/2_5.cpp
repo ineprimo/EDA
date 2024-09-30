@@ -29,15 +29,26 @@ int caucasico(vector<int>& sec, int ini, int fin, bool& cauc) {
     }
 
     //Hacemos llamadas recursivas
-    int mid = (ini + fin) / 2;
+    int mid = 0;
+    mid = (ini + fin) / 2;
     parIzq = caucasico(sec, ini, mid, cauc);
-    parDer = caucasico(sec, mid + 1, fin, cauc);
 
-    //Comprobamos que sea caucásica
-    int resta = parDer - parIzq;
-    cauc = abs(resta) <= 2;
+    if (cauc) {
+        parDer = caucasico(sec, mid + 1, fin, cauc);
 
-    return parIzq + parDer;
+        //Comprobamos que sea caucásica
+        if (cauc) {
+            int resta = 0;
+            resta = parDer - parIzq;
+            cauc = abs(resta) <= 2;
+
+            return parIzq + parDer;
+        }
+        
+    }
+
+    return 0;
+    
 }
 
 
