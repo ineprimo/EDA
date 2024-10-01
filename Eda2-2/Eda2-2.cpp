@@ -12,29 +12,69 @@ using namespace std;
 
 // función que resuelve el problema
 
-// recibe int y devuelve numero formado por digitos complementarios
-//  123 -> 876
-int complementario(const int& num) {
-    int comp = 0;
-    int offset;
+// queremos comp(4563) ... -> comp(456) con r=543 -> comp(45) -> comp(4)
+// 
+// r*10 = 5430 + comp(3) = 5436 (se pone en la derecha)
+
+int complementario(int n) {
+
     // caso base -> solo hay 1 digito
-    if (num < 10) {
-        comp = 9 - num;
-    }
+    if (n <= 9) return 9 - n;
+
     // caso recursivo -> el numero es mayor que 10
-    else if (num >= 10) {
-        comp = complementario(num / 10);
-        offset = 9 - num % 10;
+    else {
+        int r = complementario(n / 10);
+        return r * 10 + 9 - (n % 10);
     }
-    
-    return comp;
 }
 
-vector<int> vectComp(int n) {
-    vector<int> a;
-    a.push_back(n);
+// inverso(4563) -> inverso(345) con r = 345
+// hay q ponerlo por la izquierda
 
-    return a;
+// comp(3) * 1000 + r
+// como sacamos 1000: bucle para q cada num que se encuentre multiplique *10
+
+//int inverso(int n) {
+//    // caso base -> solo hay 1 digito
+//    if (n <= 9) return 9 - n;
+//
+//    // caso recursivo -> el numero es mayor que 10
+//    else {
+//        int r = inverso(n / 10);
+//
+//        // calcula *10^n donde n es el numero de cifras
+//        for (...) ... pot *= 10;
+//
+//
+//        return (9-n%10) * pot + r;
+//    }
+//}
+
+//otra version
+pair<int,int> inverso(int n) {
+
+    // caso base -> solo hay 1 digito
+    if (n <= 9) return {9-n, 10}; 
+
+    // caso recursivo -> el numero es mayor que 10
+    else {
+        pair<int, int> par = inverso(n / 10); // [!] se puede hacer pair<int,int> [r, pot] para evitar usar .first y .second
+        pair<int, int> res;
+        
+        res.first = (9 - n % 10) * par.second + par.first;
+        res.second = par.second * 10;
+
+        return res;
+    }
+}
+
+pair<int, int> resolver(int n) {
+    pair<int, int> sol;
+
+    sol.first = complementario(n);
+    sol.second = inverso(n).first;
+
+    return sol;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -44,10 +84,11 @@ void resuelveCaso() {
     int num;
     cin >> num;
 
-
-    int sol = complementario(num);
+    // resuelvo
+    pair<int,int> sol = resolver(num);
+    
     // escribir sol
-    cout << sol << endl;
+    cout << sol.first << " " << sol.second << endl;
 
 
 }
