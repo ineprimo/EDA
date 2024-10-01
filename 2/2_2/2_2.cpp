@@ -52,16 +52,21 @@ int flip(const int& datos, int& cont) {
 }
 
 
-void flipinv(const int& num, int& inv) {
+void flipinv(const int& datos, int& inv) {
   
-    if (num < 10) {
-        inv = (inv * 10) + (9 - num);
+    if (datos < 10) {
+        //  le suma el ultimo numero
+        int a = inv * 10;
+        int b = 9 - datos;
+
+        inv = a + b;
     }
     else {
 
+        // le quita un numero a datos y se lo añade a inv
         inv *= 10;
-        inv += 9 - (num % 10);
-        flipinv(num / 10, inv);
+        inv += 9 - (datos % 10);
+        flipinv(datos / 10, inv);
     }
 
 }
@@ -78,9 +83,9 @@ void resuelveCaso() {
 
     std::cout << sol << " ";
 
-    int power = 0, aux = a, flipped = 0;
+    int aux = a, flipped = 0;
 
-    flipinv(sol, flipped);
+    flipinv(a, flipped);
 
     std::cout << flipped << std::endl;
 }
