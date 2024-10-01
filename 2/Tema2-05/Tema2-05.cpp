@@ -6,9 +6,6 @@
 #include <cmath>
 using namespace std;
 
-
-
-
 pair<int, bool> caucasico(vector<int> sec, int ini, int fini) {
 
     // caso base, secuencia de dos elementos
@@ -24,19 +21,24 @@ pair<int, bool> caucasico(vector<int> sec, int ini, int fini) {
         return sol;
     }
 
-    // recursion
+    // ----------------- recursion --------------
 
     // der
-    pair<int, bool> cauizq = caucasico(sec, ini, fini/2);
+    pair<int, bool> cauizq = caucasico(sec, ini, (ini+fini)/2);
 
     // izq
-    pair<int, bool> cauder = caucasico(sec, fini/2, fini);
+    pair<int, bool> cauder = caucasico(sec, ((ini+fini)/2) + 1, fini);
 
-    
+    // -------------- prepara la solucion -----------
     pair<int, bool> sol;
 
     sol.first = cauizq.first + cauder.first;
-    sol.second = cauizq.second && cauder.second;
+    if (abs(cauizq.first - cauder.first) <= 2)
+        sol.second = true;
+    else
+        sol.second = false;
+
+
 
     return sol;
 
