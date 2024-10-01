@@ -1,19 +1,67 @@
-// Juez2_9.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
 #include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <vector>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+// función que resuelve el problema
+bool resuelve(const vector<int>& sec, int ini, int fin, int elem) {
+
+    int dif = fin - ini;
+
+    if (dif == 0) {
+        return false;
+    }
+    if (dif == 1) {
+        if ()
+    }
+
+    int mitad = (ini + fin) / 2;
+
+    int min1 = resuelve(sec, ini, mitad);
+    int min2 = resuelve(sec, mitad, fin);
+
+    //Búsqueda en la primera mitad
+    if (min1 <= min2) {
+        return min1;
+    }
+    else {
+        return min2;
+    }
+
+
 }
 
-// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
-// Depurar programa: F5 o menú Depurar > Iniciar depuración
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+bool resuelveCaso() {
+    // leer los datos de la entrada
+    int n, elem;
+    cin >> n >> elem;
+    if (!cin) return false;
+    vector<int> sec(n);
+    for (int& e : sec) cin >> e;
+    cout << resuelve(sec, 0, n, elem) << endl;
+    return true;
+}
 
-// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
-//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
-//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
-//   4. Use la ventana Lista de errores para ver los errores
-//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
-//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    while (resuelveCaso())
+        ;
+
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}

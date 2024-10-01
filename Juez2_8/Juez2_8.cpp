@@ -7,21 +7,26 @@ using namespace std;
 // función que resuelve el problema
 int minimo(const vector<int>& sec, int ini, int fin) {
 
-    int diferencia = fin - ini;
+    int dif = fin - ini;
 
-    if (diferencia == 1) {
+    if (dif == 0) {
+        return 0;
+    }
+    if (dif == 1) {
         return sec[ini];
     }
 
     int mitad = (ini + fin) / 2;
 
+    int min1 = minimo(sec, ini, mitad);
+    int min2 = minimo(sec, mitad, fin);
+
     //Búsqueda en la primera mitad
-    if (sec[mitad] > sec[mitad - 1]) {
-        return minimo(sec, ini, mitad);
+    if (min1 <= min2){
+        return min1;
     }
     else {
-        //Búsqueda en la segunda mitad
-        return minimo(sec, mitad, fin);
+        return min2;
     }
 
 
