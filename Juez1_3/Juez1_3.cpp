@@ -10,25 +10,26 @@ bool resolver(std::vector<int>& v, int pos) {
     //Damos por hecho que es menor desde el principio, a menos que se dé el caso contrario
     bool menor = true;
 
+    //Buscamos el máximo hasta la posición
+    int max = v[0];
+    for (int i = 0; i < pos + 1; i++) {
+        if (max < v[i]) {
+            max = v[i];
+        }
+    }
+
     //Recorremos el array 
     int i = pos + 1; 
 
     while (i < v.size() && menor) {
 
-        int j = 0;
+        if (max >= v[i]) {
 
-        while (j < pos + 1 && menor) {
-
-            if (v[j] > v[i]) {
-
-                menor = false;
-            }
-
-            j++;
-
+            menor = false;
         }
 
         i++;
+
     }
 
     return menor;

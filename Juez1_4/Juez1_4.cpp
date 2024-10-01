@@ -7,14 +7,27 @@
 // función que resuelve el problema
 void resolver(std::vector<int>& v) {
 
-    for (int i = 0; i < v.size() - 1; i++)
-    {
-        if (v[i] % 2 != 0)
+    std::vector<int> aux;
+
+    //Intercambiar, para dejarlos todos a un lado y redimensionar 
+    int i = 0;
+    int newSize = 0;
+
+    while (i < v.size()) {
+
+        if (v[i] % 2 == 0)
         {
-            
+            aux.insert(aux.begin() + newSize, v[i]);
+            newSize++;
         }
+
+        i++;
     }
 
+    v.resize(newSize);
+    for (int i = 0; i < v.size(); i++) {
+        v[i] = aux[i];
+    }
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
