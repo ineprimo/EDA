@@ -51,6 +51,21 @@ int flip(const int& datos, int& cont) {
     return sol;
 }
 
+
+void flipinv(const int& num, int& inv) {
+  
+    if (num < 10) {
+        inv = (inv * 10) + (9 - num);
+    }
+    else {
+
+        inv *= 10;
+        inv += 9 - (num % 10);
+        flipinv(num / 10, inv);
+    }
+
+}
+
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
@@ -63,12 +78,9 @@ void resuelveCaso() {
 
     std::cout << sol << " ";
 
-    int power = 0, aux = a;
-    while (aux > 10) {
-        power++;
-        aux = aux / 10;
-    }
-    int flipped = flip(sol, power);
+    int power = 0, aux = a, flipped = 0;
+
+    flipinv(sol, flipped);
 
     std::cout << flipped << std::endl;
 }
