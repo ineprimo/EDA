@@ -1,23 +1,9 @@
-11
-c h
-d e f g h
-c h
-c e f g h
-c h
-c d f g h
-c h
-c d e g h
-c h
-c d e f h
-c h
-c d e f g
-d h
-e f g h
-d h
-d f g h
-d h
-d e g h
-d h
-d e f h
-d h
-d e f g
+4
+2 6 3 8
+8
+6 12 8 18 10 15 16 40
+8
+6 12 8 18 11 15 17 41
+16
+1 3 2 5 3 1 3 4 4 6 8 2 3 5 7 2
+0

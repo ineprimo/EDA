@@ -6,16 +6,15 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-
-using namespace std;
 /*
-// El coste de la funcion es lineal O(n) ya que se recorren n elementos del vector
-// función que resuelve el problema
+using namespace std;
+
+// El coste de la funcion es logaritmico O(log n) no se recorre el vector entero en todos los casos
 pair<bool, int> caucasico(const vector<int>& datos, int ini, int fin) {
 	int diferencia = fin - ini;
 	// caso base
 	if (diferencia == 1) {
-		if(datos[ini] %2 ==0)
+		if (datos[ini] % 2 == 0)
 			return { true, 1 };
 		return { true, 0 };
 	}
@@ -24,13 +23,19 @@ pair<bool, int> caucasico(const vector<int>& datos, int ini, int fin) {
 	int mitad = (ini + fin) / 2;
 
 	pair <bool, int> caucasicoIzq = caucasico(datos, ini, mitad);
-	pair <bool, int> caucasicoDer = caucasico(datos, mitad, fin);
 
-	return{ 
-		// si el numero de elementos pares a ambos lados del vector se diferencia en 2 o menos y pasa lo mismo en las diferentes mitades de mitades, es caucasico
-		caucasicoIzq.first && caucasicoDer.first && (abs(caucasicoIzq.second - caucasicoDer.second) <= 2), 
-		caucasicoIzq.second + caucasicoDer.second 
-	};
+	if (caucasicoIzq.first) {
+		pair <bool, int> caucasicoDer = caucasico(datos, mitad, fin);
+
+		return{
+			// si el numero de elementos pares a ambos lados del vector se diferencia en 2 o menos y pasa lo mismo en las diferentes mitades de mitades, es caucasico
+			caucasicoIzq.first && caucasicoDer.first && (abs(caucasicoIzq.second - caucasicoDer.second) <= 2),
+			caucasicoIzq.second + caucasicoDer.second
+		};
+
+	}
+	
+	return caucasicoIzq;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
