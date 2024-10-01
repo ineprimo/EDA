@@ -6,39 +6,35 @@
 #include <cmath>
 using namespace std;
 
-pair<int, bool> caucasico(vector<int> sec, int ini, int fini) {
+pair<int, bool> caucasico(const vector<int>& sec, int ini, int fini) {
+ 
+    // caso base
+    if (fini - ini == 1) {
 
-    // caso base, secuencia de dos elementos
-    if (fini - ini <= 2) {
-
-        pair<int, bool> sol;
-        sol.first = 0;      // contador de pares
-        sol.second = true;  // toda secuencia de dos numeros o menos es caucasica
-
-        if (sec[ini] % 2 == 0) sol.first++;
-        if (sec[fini] % 2 == 0) sol.first++;
-
-        return sol;
+        if(sec[ini]%2 == 0)
+            return { 1, true};
+        return { 0, true};
     }
+
 
     // ----------------- recursion --------------
 
     // der
     pair<int, bool> cauizq = caucasico(sec, ini, (ini+fini)/2);
-
     // izq
-    pair<int, bool> cauder = caucasico(sec, ((ini+fini)/2) + 1, fini);
+    pair<int, bool> cauder = caucasico(sec, ((ini+fini)/2), fini);
+
 
     // -------------- prepara la solucion -----------
-    pair<int, bool> sol;
 
+
+    // caucasicoIzq.first && caucasicoDer.first && (abs(caucasicoIzq.second - caucasicoDer.second) <= 2)
+    pair<int, bool> sol;
     sol.first = cauizq.first + cauder.first;
-    if (abs(cauizq.first - cauder.first) <= 2)
+    if (cauizq.second && cauder.second && abs(cauizq.first - cauder.first) <= 2)
         sol.second = true;
     else
         sol.second = false;
-
-
 
     return sol;
 
