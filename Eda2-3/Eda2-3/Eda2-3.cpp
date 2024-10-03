@@ -9,42 +9,52 @@
 
 using namespace std;
 
+// funcion que resuelve el problema
+string resolver(vector<int> datos) {
+    string sol = "SI";
 
-// función que resuelve el problema
-void funcAux(int num, int& ac) {
-    // caso base -> solo hay 1 digito
-    if (num < 10) {
-        
+    // caso base
+    if (datos.size() < 3) {
+
+
+
     }
-    // caso recursivo -> el numero es mayor que 10
-    else if (num >= 10) {
-        
+
+    // caso recursivo
+    else {
+
+
+
     }
-}
-
-
-vector<int> resolver(int n) { // funcion principal
-    vector<int> sol;
-
-    int acumulador = 0;
-    //funcAux(?¿, acumulador);
 
     return sol;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
-void resuelveCaso() {
+// configuracion, y escribiendo la respuesta
+bool resuelveCaso() {
     // leer los datos de la entrada
-    int num;
-    cin >> num;
+    int n;
+    cin >> n;
 
-    // resuelvo
-    vector<int> sol = resolver(num);
+    // si el primer n es 0 salimos
+    if (n == 0)
+        return false;
+
+    // guardamos el vector
+    vector<int> vec;
+    while (n != 0) {
+        vec.push_back(n);
+        cin >> n;
+    }
+
+
+    string sol = resolver(vec);
 
     // escribir sol
-    cout << sol[0] << " " << sol[1] << endl;
+    cout << sol << endl;
 
+    return true;
 
 }
 
@@ -57,10 +67,8 @@ int main() {
 #endif 
 
 
-    int numCasos;
-    std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
-        resuelveCaso();
+    while (resuelveCaso())
+        ;
 
 
     // Para restablecer entrada. Comentar para acepta el reto
