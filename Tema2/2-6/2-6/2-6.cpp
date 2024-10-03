@@ -7,10 +7,32 @@
 #include <vector>
 
 
-// funcioon que resuelve el problema
-bool resolver(const std::vector<int>& v, int ini, int fin)
+// funcion que resuelve el problema
+bool resolver(const std::vector<int>& vec, int ini, int fin)
 {
+	int size = fin - ini;
 
+	// Casos base:
+	if (size == 0)
+	{
+		return false;
+	}
+	else if (size == 1)
+	{
+		return vec[ini] == ini;
+	}
+
+	int mitad = (ini + fin) / 2;
+
+	// Comprobamos la mitad izquierda.
+	if (resolver(vec, ini, mitad))
+	{
+		return true; // Si la mitad izquierda tiene uno bien situado no hace falta mirar la derecha.
+	}
+	else
+	{
+		return resolver(vec, mitad, fin); // Si no esta la izquierda miramos la derecha.
+	}
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
