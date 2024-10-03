@@ -19,24 +19,15 @@
 bool resolver(const std::vector<int>& datos, int k, int ini, int fin)
 {
     int elems = fin - ini;
-    int dif = 0;
 
     if (elems == 0) return true;
-    if (elems == 1)
-    {
-        dif = abs(datos[fin] - datos[ini]);
-
-        return dif >= k;
-    }
+    if (elems == 1) return (abs(datos[fin] - datos[ini])) >= k;
 
     int mit = (ini + fin) / 2;
-
     bool izq = resolver(datos, k, ini, mit);
     bool der = resolver(datos, k, mit + 1, fin);
 
-
-
-    return izq && der;
+    return izq && der && ((abs(datos[fin] - datos[ini])) >= k);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -61,10 +52,13 @@ bool resuelveCaso()
     if (!std::cin)
         return false;
 
-    bool sol = resolver(datos, k, 0, (datos.size())-1);
+    int ini = 0;
+    int fin = datos.size() - 1;
+    bool sol = resolver(datos, k, ini, fin);
 
-    // escribir sol
-    if (sol) {
+    // escribir
+    if (sol) 
+    {
         std::cout << "SI" << std::endl;
     }
     else {
