@@ -24,6 +24,7 @@ bool resolver(const vector<int>& v, int ini, int fin) {
 		return true;
 	else
 		return resolver(v, mitad, fin);
+
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
