@@ -11,13 +11,23 @@ int resolver(const std::vector<int>& sec, int ini, int fin)
 {
     int elems = fin - ini;
 
-    if (elems == 1) return sec[ini]; // caso base / solo un elemento -> se garantiza que siempre hay un impar, es ese
+    if (elems == 1) return sec[ini]; // caso base / se asegura un elemento impar
 
     int mit = (ini + fin) / 2;
 
-    if(sec[mit] % 2 != 0) // si es impar, resto distinto de 0
+    if (sec[ini] % 2 != 0) return sec[ini]; // caso base / ini impar
+    if (sec[mit] % 2 != 0) return sec[mit]; // caso base / mitad impar
+
+    int numMit = sec[ini] + (mit - ini)*2; // el num que debería estar a la mitad
+
+    // si el que está a la mitad es igual que el que debería estar -> buscar derecha
+    if(sec[mit] == numMit)
     {
-	    
+        return resolver(sec, mit, fin);
+    }
+    else
+    {
+        return resolver(sec, ini, mit);
     }
 }
 

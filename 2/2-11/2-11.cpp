@@ -30,7 +30,7 @@ char resolver(const std::vector<char>& sec, int ini, int fin, char prim, char ul
     int mit = (ini + fin) / 2;
     char charMit = prim + (mit - ini);
 
-    // si el que está a la mitad es mayor o igual que el que debería estar -> buscar derecha
+    // si el que está a la mitad es igual que el que debería estar -> buscar derecha
     if (sec[mit] == charMit)
     {
         return resolver(sec, mit, fin, charMit, ult);
