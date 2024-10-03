@@ -33,7 +33,7 @@ char resolver(const std::vector<char>& sec, int ini, int fin, char prim, char ul
     // si el que está a la mitad es igual que el que debería estar -> buscar derecha
     if (sec[mit] == charMit)
     {
-        return resolver(sec, mit, fin, charMit, ult);
+        return resolver(sec, mit, fin, charMit, ult);  
     }
     else  // la mitad izq está ordenada -> busca izq
     {

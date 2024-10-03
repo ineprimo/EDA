@@ -6,7 +6,7 @@
 #include <fstream>
 #include <vector>
 
-// función que resuelve el problema
+// Divide y vencerás. Búsqueda binaria, complejidad -> O(log(n)) siendo n el tamaño del vector
 int resolver(const std::vector<int>& sec, int ini, int fin)
 {
     int elems = fin - ini;
