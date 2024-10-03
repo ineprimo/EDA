@@ -7,17 +7,19 @@
 #include <vector>
 
 
+// funcioon que resuelve el problema
+bool resolver(const std::vector<int>& v, int ini, int fin)
+{
+
+}
+
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
-bool resuelveCaso()
+// configuracion, y escribiendo la respuesta
+void resuelveCaso()
 {
 	// leer los datos de la entrada
 	int n;
 	std::cin >> n;
-	if (n == 0)
-	{
-		return false;
-	}
 
 	std::vector<int> sec(n);
 	for (int& e : sec)
@@ -25,8 +27,7 @@ bool resuelveCaso()
 		std::cin >> e;
 	}
 
-	std::cout << (caucasico(sec, ...) ? "SI" : "NO") << std::endl;
-	return true;
+	std::cout << (resolver(sec, 0, sec.size()) ? "SI" : "NO") << std::endl;
 }
 
 int main()
@@ -38,7 +39,12 @@ int main()
 	auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 
-	while (resuelveCaso());
+	int numCasos;
+	std::cin >> numCasos;
+	for (int i = 0; i < numCasos; ++i)
+	{
+		resuelveCaso();
+	}
 
 
 	// Para restablecer entrada. Comentar para acepta el reto
