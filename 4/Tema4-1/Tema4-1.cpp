@@ -36,47 +36,53 @@ void resolver(int datos) {
         nextnum = 0;
 
 
-        //if (num == 1) {
-        //    found = true;
-        //    gotNextNum = true;
-        //    nextnum = num;
-        //}
-
-        // calcula el siquiente numero 
-        while (!gotNextNum) {
-            // coge los digitos
-       
-            nextnum += pow(num % 10, 2);
-            num = num / 10;
-            if (num == 0) {
-                gotNextNum = true;
-            }
-        }
-        // ----------------------------
-
-
-        // ---------------------------
-        // decide
-        if (nextnum == 1) {
-            std::cout <<  nextnum << " 1" << std::endl; //  nextnum <<
-            esFeliz = true;
+        if (num == 1) {
             found = true;
-
-        }
-        else if (a.contains(nextnum)) {
-            esFeliz = false;
-            found = true;
-
-            std::cout << nextnum << " 0" << std::endl;
+            gotNextNum = true;
+            nextnum = num;
+            std::cout << "1" << std::endl;
 
         }
         else {
 
-            a.add(nextnum);
-            num = nextnum;
-            std::cout << nextnum << " ";
+            // calcula el siquiente numero 
+            while (!gotNextNum) {
+                // coge los digitos
+
+                nextnum += pow(num % 10, 2);
+                num = num / 10;
+                if (num == 0) {
+                    gotNextNum = true;
+                }
+            }
+            // ----------------------------
+
+
+            // ---------------------------
+            // decide
+            if (nextnum == 1) {
+                std::cout << nextnum << " 1" << std::endl; //  nextnum <<
+                esFeliz = true;
+                found = true;
+
+            }
+            else if (a.contains(nextnum)) {
+                esFeliz = false;
+                found = true;
+
+                std::cout << nextnum << " 0" << std::endl;
+
+            }
+            else {
+
+                a.add(nextnum);
+                num = nextnum;
+                std::cout << nextnum << " ";
+
+            }
 
         }
+
 
     }
 
