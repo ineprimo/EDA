@@ -8,9 +8,22 @@
 
 
 // función que resuelve el problema
-int minimo(const std::vector<int>& sec, int ini, int fin)
+int minimo(const std::vector<int>& vec, int ini, int fin)
 {
-	...
+	int size = fin - ini;
+
+	if (size == 1)
+	{
+
+	}
+
+	int mitad = (fin - ini) / 2;
+
+
+
+
+
+
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
