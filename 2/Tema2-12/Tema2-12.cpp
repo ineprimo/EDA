@@ -4,9 +4,54 @@
 #include <vector>
 using namespace std;
 
+int resolver2(int v1, vector<int> const& v2, int ini, int fin) {
+
+    // base
+    if (fin - ini == 1) {
+        if (v2[ini] == v1) return -1;
+        return ini;
+    }
+
+    // 
+    int mid = (ini + fin) / 2;
+    int izq = resolver2(v1, v2, ini, mid);
+    int der = resolver2(v1, v2, mid, fin);
+
+    // return
+
+    if (izq == -1 || der == -1)
+        return -1;
+    else if (izq != -1)
+        return izq;
+    else if (der != -1)
+        return der;
+
+}
+
 // función que resuelve el problema
 int resolver(vector<int> const& v1, vector<int> const& v2, int ini, int fin) {
 
+    // base
+    if (fin - ini == 1) {
+        int a = resolver2(v1[ini], v2, 0, v2.size());
+        if (a != -1)
+            return ini;
+        return -1;
+    }
+
+    // 
+    int mid = (ini + fin) / 2;
+    int izq = resolver(v1, v2, ini, mid);
+    int der = resolver(v1, v2, mid, fin);
+
+
+    // return
+    if (izq == 0 && der == 0)
+        return der;
+    else if (izq != 0)
+        return izq;
+    else
+        return der;
 }
 
 
@@ -27,7 +72,7 @@ int main() {
     // Para la entrada por fichero.
     // Comentar para acepta el reto
 #ifndef DOMJUDGE
-    ifstream in("input2.txt");
+    ifstream in("datos.txt");
     auto cinbuf = cin.rdbuf(in.rdbuf()); //save old buf and redirect cin to casos.txt
 #endif
 
