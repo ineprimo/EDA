@@ -58,14 +58,14 @@ void resolver(int datos) {
         // ---------------------------
         // decide
         if (nextnum == 1) {
-            std::cout << " 1" << std::endl; //  nextnum <<
+            std::cout <<  nextnum << " 1" << std::endl; //  nextnum <<
             esFeliz = true;
             found = true;
 
         }
         else if (a.contains(nextnum)) {
             esFeliz = false;
-            found = false;
+            found = true;
 
             std::cout << nextnum << " 0" << std::endl;
 
