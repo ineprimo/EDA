@@ -8,31 +8,27 @@
 using namespace std;
 
 // función que resuelve el problema
-int resolver(vector<int> const& v1, vector<int> const& v2, int iniV1, int finV1, int iniV2, int finV2)
+int resolver(vector<int> const& v1, vector<int> const& v2, int ini, int fin)
 {
-    int elemsV1 = finV1 - iniV1;
-    int elemsV2 = finV2 - iniV2;
+    int elems = fin - ini;
 
-    if(elemsV2 == 0) return v1[iniV1];
-    if(elemsV1 == 1)
+    if(elems == 0) return v1[ini];
+    if(elems == 1)
     {
-        //if (v1[iniV1] != v2[iniV2]) return v1[iniV1] - 1;
-        //return v1[iniV1] + 1;
+        if (v1[ini] != v2[ini]) return v1[ini];
+        return v1[fin];
     }
-    if (v1[finV1-1] != v2[finV2-1]) return v1[finV1-1];
-    if (v1[iniV1] != v2[iniV2]) return v1[iniV1];
 
-    int mitV1 = (finV1 + iniV1) / 2;
-    int mitV2 = (finV2 + iniV2) / 2;
-
+    int mit = (fin + ini) / 2;
+    
     // si el que está a la mitad es igual que el que debería estar -> buscar derecha
-    if (v2[mitV2] == v1[mitV1])
+    if (v2[mit] == v1[mit])
     {
-        return resolver(v1, v2, mitV1, finV1, mitV2, finV2);
+        return resolver(v1, v2, mit, fin);
     }
     else  // la mitad der está ordenada -> busca izq
     {
-        return resolver(v1, v2, iniV1, mitV1, iniV2, mitV2);
+        return resolver(v1, v2, ini, mit);
     }
 }
 
@@ -46,7 +42,7 @@ void resuelveCaso()
     vector<int> v2(numElementos - 1);
     for (int& e : v1) cin >> e;
     for (int& e : v2) cin >> e;
-    int sol = resolver(v1, v2, 0, v1.size(), 0, v2.size());
+    int sol = resolver(v1, v2, 0, v1.size()-1);
     cout << sol << endl;
 }
 
