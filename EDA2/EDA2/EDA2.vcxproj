@@ -149,6 +149,7 @@
     <ClCompile Include="Tema2-08.cpp" />
     <ClCompile Include="Tema2-09.cpp" />
     <ClCompile Include="Tema2-1.cpp" />
+    <ClCompile Include="Tema2-10.cpp" />
     <ClCompile Include="Tema2-11.cpp" />
     <ClCompile Include="Tema2-2.cpp" />
   </ItemGroup>
