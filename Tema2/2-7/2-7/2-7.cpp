@@ -7,23 +7,31 @@
 #include <vector>
 
 
-// función que resuelve el problema
+// COMPLEJIDAD: logaritmica O(log n) siendo n el numero de elementos del vector.
 int minimo(const std::vector<int>& vec, int ini, int fin)
 {
 	int size = fin - ini;
 
-	if (size == 1)
+	// Casos base:
+	if (size == 0) // Caso base 0 elementos edvolvemos 0.
 	{
-
+		return 0;
+	}
+	if (size == 1) // Caso base 1 elemento devolvemos el elemento.
+	{
+		return vec[ini];
 	}
 
-	int mitad = (fin - ini) / 2;
+	int mitad = (fin + ini) / 2; // Calculamos el inidice de la mitad.
 
-
-
-
-
-
+	if (vec[mitad] > vec[mitad - 1]) // Comprobamos en que lado esta el menor para hacer la busqueda a ese lado.
+	{
+		return minimo(vec, ini, mitad); // Mitad izquierda.
+	}
+	else
+	{
+		return minimo(vec, mitad, fin); // Mitad derecha.
+	}
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
