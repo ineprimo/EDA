@@ -7,9 +7,44 @@
 #include <vector>
 
 // función que resuelve el problema
-int resolver()
+int resolver(std::vector<int>& v, int ini, int fin)
 {
-    
+    int elems = fin - ini;
+
+    if (elems == 0) return ini; // caso base / solo un elemento
+    if (elems == 1)
+    {
+        if (v[ini] != v[ini + 1]) return ini;
+    }
+
+    if ((fin == v.size()-1) && v[fin] != v[fin - 1]) return fin; // si es fin del vector
+
+    int mit = (ini + fin) / 2;
+
+    // -> buscar por la pos de la pareja de mit
+
+    if (v[mit - 1] == v[mit])
+    {
+        // si la pareja esta a la izq y el indice es impar es que esta a la der
+        if(mit % 2 != 0) 
+        {
+            return resolver(v, mit, fin);
+        }
+        // si la pareja esta a la izq y el indice es par es que esta a la izq
+        return resolver(v, ini, mit);
+    }
+    if (v[mit + 1] == v[mit])
+    {
+        // si la pareja esta a la der y el indice es par es que esta a la der
+        if (mit % 2 == 0)
+        {
+            return resolver(v, mit, fin);
+        }
+        // si la pareja esta a la izq y el indice es impar es que esta a la izq
+        return resolver(v, ini, mit);
+    }
+    // si no tiene pareja ni a la izq ni a la der es que es ese
+    return mit;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -23,8 +58,10 @@ void resuelveCaso()
     for (int& e : v) std::cin >> e;
 
     // Llamada a la función resolver
+    int pos = resolver(v, 0, v.size() - 1);
 
     // Mostrar el resultado
+    std::cout << pos << std::endl;
 }
 
 //#define DOMJUDGE
