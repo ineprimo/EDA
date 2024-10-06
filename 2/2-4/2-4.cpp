@@ -38,7 +38,12 @@ bool resuelveCaso()
     int num = 0; // num tiradas que considera
     int k = 0;   // dispersion
 
-    std::cin >> num >> k;
+    std::cin >> num;
+
+    if (!std::cin)
+        return false;
+
+	std::cin >> k;
 
     std::vector<int> datos;
     int tirada = 0;
@@ -49,8 +54,6 @@ bool resuelveCaso()
         datos.push_back(tirada);
     }
 
-    if (!std::cin)
-        return false;
 
     int ini = 0;
     int fin = datos.size() - 1;
