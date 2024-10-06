@@ -41,8 +41,7 @@ int main()
      #endif 
     
     
-    while (resuelveCaso())
-        ;
+    while (resuelveCaso());
 
     
     // Para restablecer entrada. Comentar para acepta el reto
