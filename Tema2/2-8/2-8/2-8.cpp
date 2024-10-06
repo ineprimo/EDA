@@ -8,7 +8,7 @@
 
 
 
-// COMPLEJIDAD: 
+// COMPLEJIDAD: logartimica O(log n) siendo n el numero de elementos del vector, el cual no recorre entero.
 int resolver(std::vector<int>& vec, int ini, int fin)
 {
 	int size = fin - ini;

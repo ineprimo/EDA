@@ -8,8 +8,8 @@
 
 
 
-// COMPLEJIDAD: 
-int resolver(std::vector<int>& vec, int ini, int fin)
+// COMPLEJIDAD: logartimica O(log n) siendo n el numero de elementos del vector, el cual no recorre entero.
+bool buscar(std::vector<int>& vec, int ini, int fin, int elem)
 {
 	int size = fin - ini;
 
@@ -20,21 +20,35 @@ int resolver(std::vector<int>& vec, int ini, int fin)
 	}
 	if (size == 1) // Caso base 1 elemento devolvemos el elemento.
 	{
-		return vec[ini];
+		return vec[ini] == elem;
 	}
 
 	int mitad = (fin + ini) / 2; // Calculamos el indice de la mitad.
 
-	// Comprobamos en que lado esta el menor para hacer la busqueda a ese lado. 
-	// (El vector esta ordenadoa su manera, si mitad > ini el minimo estara a al izquierda y viceversa)
-	if (vec[mitad] > vec[ini])
+	// Comprobamos que la mitad de la izquierda esta ordenada.
+	if (vec[mitad] >= vec[ini])
 	{
-		return resolver(vec, ini, mitad); // Mitad izquierda.
+		if (vec[ini] <= elem && vec[mitad] > elem) // Comprobamos que el valor este en la izquierda.
+		{
+			return buscar(vec, ini, mitad, elem); // Mitad izquierda.
+		}
+		else // Y si no esta en la derecha.
+		{
+			return buscar(vec, mitad, fin, elem); // Mitad derecha.
+		}
 	}
-	else
+	else // Si no esta ordenada la izquierda lo estara la derecha.
 	{
-		return resolver(vec, mitad, fin); // Mitad derecha.
+		if (vec[ini] > elem && vec[mitad] <= elem) // Comprobamos que el valor este en la derecha.
+		{
+			return buscar(vec, mitad, fin, elem); // Mitad derecha.
+		}
+		else // Y si no esta en la izquierda.
+		{
+			return buscar(vec, ini, mitad, elem); // Mitad izquierda.
+		}
 	}
+
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -42,7 +56,8 @@ int resolver(std::vector<int>& vec, int ini, int fin)
 bool resuelveCaso()
 {
 	int n = 0;
-	std::cin >> n;
+	int elem = 0;
+	std::cin >> n >> elem;
 	if (n == -1)
 	{
 		return false;
@@ -54,7 +69,14 @@ bool resuelveCaso()
 		std::cin >> d;
 	}
 
-	std::cout << resolver(datos, 0, datos.size()) << std::endl;
+	if (buscar(datos, 0, datos.size(), elem))
+	{
+		std::cout << "SI" << std::endl;
+	}
+	else
+	{
+		std::cout << "NO" << std::endl;
+	}
 	return true;
 }
 
