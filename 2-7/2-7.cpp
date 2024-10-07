@@ -8,7 +8,7 @@
 #include <vector>
 using namespace std;
 
-// O(log n) - Divide y vencerás
+// O(log n) - busqueda binaria
 // función que resuelve el problema
 int minimo(const vector<int>& sec, int ini, int fin) {
     const int diff = fin - ini;

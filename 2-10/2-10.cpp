@@ -8,6 +8,7 @@
 using namespace std;
 
 // función que resuelve el problema
+// O(log n) busqueda binaria
 int resolver(const vector<int>& sec, int ini, int fin) {
     int dif = fin - ini;
     int mit = (ini + fin) / 2;

@@ -8,7 +8,7 @@
 #include <vector>
 using namespace std;
 
-// O(log n)
+// O(n)
 bool caucasico(const vector<int>& v, int ini, int fin, int& n) {
 	const int diff = fin - ini;
 

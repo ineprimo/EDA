@@ -8,7 +8,7 @@
 #include <vector>
 
 
-// O(log n) - divide y vencerás
+// O(log n) - busqueda binaria
 bool resolver(std::vector<int>& datos, int ini, int fin, int v) {
     int diff = fin - ini;
 

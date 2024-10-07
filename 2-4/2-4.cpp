@@ -8,7 +8,7 @@
 #include <vector>
 
 
-// O(log n) 
+// O(n) 
 bool resolver(std::vector<int>& n, int d, int ini, int fin) {
 	const int cant = fin - ini;
 	if (cant == 1) // unitario

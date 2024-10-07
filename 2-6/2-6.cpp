@@ -8,7 +8,7 @@
 #include <vector>
 using namespace std;
 
-// O(log n) - Divide y vencerás
+// O(log n) - busqueda binaria
 bool elemento_situado(const vector<int>& v, int ini, int fin)
 {
 	int diff = fin - ini;
