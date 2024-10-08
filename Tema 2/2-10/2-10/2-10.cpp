@@ -31,19 +31,20 @@ int buscar(std::vector<int>& vec, int ini, int fin)
 
 	if ((vec[mitad] % 2) != 0) { return vec[mitad]; } // Caso base mitad es el que buscamos.
 
-	if ((buscar(vec, ini, mitad) % 2) != 0)
+	int numIzq = buscar(vec, ini, mitad);
+	int numDer = buscar(vec, mitad, fin);
+
+	if ((numIzq % 2) != 0)
 	{
-		return buscar(vec, ini, mitad);
+		return numIzq;
 	}
 	else
 	{
-		if ((buscar(vec, mitad, fin) % 2) != 0)
+		if ((numDer % 2) != 0)
 		{
-			return buscar(vec, mitad, fin);
+			return numDer;
 		}
-
 	}
-
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
