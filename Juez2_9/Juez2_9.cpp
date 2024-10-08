@@ -9,39 +9,45 @@ bool resuelve(const vector<int>& sec, int ini, int fin, int elem) {
 
     int dif = fin - ini;
 
+    //Casos base
     if (dif == 0) {
         return false;
     }
     if (dif == 1) {
-        if ()
+        if (sec[ini] == elem) {
+            return true;
+        }
+        else return false;
+
     }
 
     int mitad = (ini + fin) / 2;
 
-    int min1 = resuelve(sec, ini, mitad);
-    int min2 = resuelve(sec, mitad, fin);
-
-    //Búsqueda en la primera mitad
-    if (min1 <= min2) {
-        return min1;
+    if (sec[mitad] != elem) {
+        int elemMit1 = resuelve(sec, ini, mitad, elem);
+        int elemMit2 = resuelve(sec, mitad, fin, elem);
     }
-    else {
-        return min2;
-    }
-
+    else return true;
 
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
+
     // leer los datos de la entrada
     int n, elem;
     cin >> n >> elem;
-    if (!cin) return false;
+    if (n == -1) return false;
+
     vector<int> sec(n);
     for (int& e : sec) cin >> e;
-    cout << resuelve(sec, 0, n, elem) << endl;
+
+    if (resuelve(sec, 0, n, elem)) {
+        cout << "SI" << endl;
+    }
+    else cout << "NO" << endl;
+
     return true;
 }
 
@@ -51,7 +57,8 @@ int main() {
 #ifndef DOMJUDGE
     std::ifstream in("datos.txt");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
-#endif
+#endif 
+
 
     while (resuelveCaso())
         ;
@@ -60,7 +67,7 @@ int main() {
     // Para restablecer entrada. Comentar para acepta el reto
 #ifndef DOMJUDGE // para dejar todo como estaba al principio
     std::cin.rdbuf(cinbuf);
-    //system("PAUSE");
+    system("PAUSE");
 #endif
 
     return 0;
