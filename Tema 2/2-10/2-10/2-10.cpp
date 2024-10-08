@@ -27,10 +27,22 @@ int buscar(std::vector<int>& vec, int ini, int fin)
 		return vec[ini];
 	}
 
-
 	int mitad = (fin + ini) / 2; // Calculamos el indice de la mitad.
 
 	if ((vec[mitad] % 2) != 0) { return vec[mitad]; } // Caso base mitad es el que buscamos.
+
+	if ((buscar(vec, ini, mitad) % 2) != 0)
+	{
+		return buscar(vec, ini, mitad);
+	}
+	else
+	{
+		if ((buscar(vec, mitad, fin) % 2) != 0)
+		{
+			return buscar(vec, mitad, fin);
+		}
+
+	}
 
 }
 
@@ -51,14 +63,9 @@ bool resuelveCaso()
 		std::cin >> d;
 	}
 
-	if (buscar(datos, 0, datos.size()))
-	{
-		std::cout << "SI" << std::endl;
-	}
-	else
-	{
-		std::cout << "NO" << std::endl;
-	}
+	int sol = buscar(datos, 0, datos.size());
+	std::cout << sol << std::endl;
+
 	return true;
 }
 
