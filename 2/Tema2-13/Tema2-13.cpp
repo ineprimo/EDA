@@ -12,6 +12,15 @@ int resolver(vector<int> vec, int ini, int fin) {
     if (fin - ini == 0) return ini;
     else if (fin - ini == 1) {
         // TODO
+        if (fin == vec.size() - 1) {
+            if (vec[ini] == vec[ini - 1])
+                return fin;
+            return ini;
+        }
+        
+        if (vec[fin] == vec[fin + 1])
+            return ini;
+        return fin;
     }
     if (fin - ini == 2) {
         if (vec[ini + 1] == vec[fin]) return ini;
@@ -21,21 +30,35 @@ int resolver(vector<int> vec, int ini, int fin) {
 
     // rec
     int mid = (ini + fin) / 2;
+    ////                      [1 1 2 9 9] -> [1 2 [2] 9 9] -> [1 2 2 9 9]
+    //// esta a la izquierda  [1 1 2 2 9] -> [1 1 [2] 2 9] -> [mid == mid - 1] == [2 == 1]
+    //if (vec[mid] != vec[mid - 1]        // si el valor del medio no es igual al anterior y el medio esta
+    //    && mid % 2 == 1) {              // en una posicion impar, todo lo de la izquierda tiene que coincidir
+    //                                
+    //    // esta en la derecha
+    //    return resolver(vec, mid, fin);
+    //}
+    //else if (vec[mid] != vec[mid + 1]   // si el valor del medio no es igual al sigueinte y el medio esta en 
+    //    && mid % 2 == 1) {              // una posicionimpar,
 
-    // esta a la izquierda
+    //}
+
+
+    // ---------------
     if (vec[mid] == vec[mid - 1]) {
-        // TODO
+        // si el medio es par, a la derecha hay impares
+        if (mid % 2 == 0) return resolver(vec, ini, mid);   //
+        return resolver(vec, mid, fin);
 
     }
     // esta a la derecha
     else if (vec[mid] == vec[mid + 1]) {
-        // TODO
-
+        // si el medio es par, a la derecha hay impares
+        if (mid % 2 == 0) return resolver(vec, mid, fin);
+        return resolver(vec, ini, mid);
     }
-
-    
-
-
+    // esta en el medio
+    else return mid;
 
 }
 
@@ -50,9 +73,10 @@ void resuelveCaso() {
     for (int& e : v) cin >> e;
 
     // Llamada a la función resolver
-
+    int a = resolver(v, 0, n-1);
 
     // Mostrar el resultado
+    std::cout << a << std::endl;
 }
 
 
