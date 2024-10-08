@@ -13,8 +13,8 @@ using namespace std;
 bool resolver(vector<int>& datos, int ini, int fin) {
 
     // caso base
-    if (datos.size() <= 1) {
-        if (datos[fin] >= datos[ini]) return true;
+    if (fin - ini <= 1 && datos[fin] >= datos[ini]) {
+        return true;
     }
 
     // caso recursivo
@@ -26,7 +26,28 @@ bool resolver(vector<int>& datos, int ini, int fin) {
         minDcha = datos[ini],
         maxDcha = datos[mitad];
 
-    if (maxDcha >= minDcha && maxIzda >= minIzda) {
+    //actualizacion de la izquierda
+    for (int i = ini+1; i <= mitad; i++) {
+        if (datos[i] < minIzda) {
+            minIzda = datos[i];
+        }
+        else if (datos[i] > maxIzda) {
+            maxIzda = datos[i];
+        }
+    }
+
+    //actualizacion de la derecha
+    for (int i = mitad+1; i <= fin; i++) {
+        if (datos[i] < minDcha) {
+            minDcha = datos[i];
+        }
+        else if(datos[i] > maxDcha){
+            maxDcha = datos[i];
+        }
+    }
+
+
+    if (maxDcha >= maxDcha && minIzda <= minDcha) {
             
         return resolver(datos, ini, mitad) && resolver(datos, mitad+1, fin);
     }
