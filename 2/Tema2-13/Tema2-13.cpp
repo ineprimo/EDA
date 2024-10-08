@@ -6,8 +6,37 @@
 using namespace std;
 
 // función que resuelve el problema
-void resolver(...) {
+int resolver(vector<int> vec, int ini, int fin) {
     
+    // base
+    if (fin - ini == 0) return ini;
+    else if (fin - ini == 1) {
+        // TODO
+    }
+    if (fin - ini == 2) {
+        if (vec[ini + 1] == vec[fin]) return ini;
+        else return fin;
+    }
+
+
+    // rec
+    int mid = (ini + fin) / 2;
+
+    // esta a la izquierda
+    if (vec[mid] == vec[mid - 1]) {
+        // TODO
+
+    }
+    // esta a la derecha
+    else if (vec[mid] == vec[mid + 1]) {
+        // TODO
+
+    }
+
+    
+
+
+
 }
 
 
@@ -21,6 +50,7 @@ void resuelveCaso() {
     for (int& e : v) cin >> e;
 
     // Llamada a la función resolver
+
 
     // Mostrar el resultado
 }
