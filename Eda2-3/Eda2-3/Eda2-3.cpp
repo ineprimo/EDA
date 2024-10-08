@@ -10,24 +10,27 @@
 using namespace std;
 
 // funcion que resuelve el problema
-string resolver(vector<int> datos) {
-    string sol = "SI";
+bool resolver(vector<int>& datos, int ini, int fin) {
 
     // caso base
-    if (datos.size() < 3) {
-
-
-
+    if (datos.size() <= 1) {
+        if (datos[fin] >= datos[ini]) return true;
     }
 
     // caso recursivo
-    else {
 
+    int mitad = (fin + ini) / 2;
 
+    int minIzda = datos[ini],
+        maxIzda = datos[mitad],
+        minDcha = datos[ini],
+        maxDcha = datos[mitad];
 
+    if (maxDcha >= minDcha && maxIzda >= minIzda) {
+            
+        return resolver(datos, ini, mitad) && resolver(datos, mitad+1, fin);
     }
-
-    return sol;
+    else return false;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -49,10 +52,12 @@ bool resuelveCaso() {
     }
 
 
-    string sol = resolver(vec);
+    bool sol = resolver(vec, 0, vec.size()-1);
 
     // escribir sol
-    cout << sol << endl;
+    if (sol) cout << "SI" << endl;
+    else cout << "NO" << endl;
+
 
     return true;
 
