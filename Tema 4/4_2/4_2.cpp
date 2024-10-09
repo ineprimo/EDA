@@ -5,13 +5,21 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-
+#include "Horas.h"
+#include "vector"
 
 // función que resuelve el problema
-//TipoSolucion resolver(TipoDatos datos) {
-//
-//
-//}
+int resolver(std::vector<Horas>& datos, Horas hora) {
+
+    //Tenemos que buscar el tren siguiente más cercano
+    //Podemos hacerlo facilmente lineal con un while
+
+    int i = 0;
+    while (i < datos.size() && datos[i] < hora) i++;
+
+    if (i == datos.size()) return -1;
+    else return i;
+}
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
@@ -20,14 +28,48 @@ bool resuelveCaso() {
     int n = 0;
     int h = 0;
 
+    Horas horas;
+    int min = 0;
+    int seg = 0;
+    std::vector<Horas> horario;
+
     std::cin >> n >> h;
 
     if (n == 0 && h == 0)
         return false;
 
-    //TipoSolucion sol = resolver(datos);
+    //Rellenamos el horario de trenes
+    for (int i = 0; i < n; i++) {
+        std::cin >> horas;
 
-    // escribir sol
+        horario.push_back(horas);
+    }
+
+    //vemos que horas tenemos que comprobar
+    for (int i = 0; i < h; i++) {
+
+        try {
+            std::cin >> horas;
+
+            //Haremos resolver el número de veces de horario que vamos a comprobar
+            int sol = resolver(horario, horas);
+
+            //escribir solucion
+
+            //Si devuelve -1 es que no hay
+            if (sol == -1) std::cout << "NO" << std::endl;
+            else std::cout << horario[sol] << std::endl;
+        }
+        catch (const std::invalid_argument& e) {
+            std::cout << e.what() << std::endl;
+        }
+        catch (...) {
+            std::cout << "ERROR" << std::endl;
+        }
+        
+    }
+
+    std::cout << "---" << std::endl;
 
     return true;
 
