@@ -203,7 +203,7 @@ inline Set<T> Set<T>::operator||(const Set<T>& other) const
         uni = other;
     }
     else {
-        //Tal vez es un &&
+        
         while (i < nelems && j < other.nelems) {
 
             if (array[i] == other.array[j]) {
