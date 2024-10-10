@@ -22,6 +22,9 @@
     <Filter Include="Archivos de origen\Tema2">
       <UniqueIdentifier>{b7387aa4-997b-4723-8008-293451a2b836}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Tema4">
+      <UniqueIdentifier>{8e8c1ac7-bc1b-43f8-b8d7-1f6f2e42bca1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tema0-1.cpp">
@@ -96,11 +99,19 @@
     <ClCompile Include="Tema2-09.cpp">
       <Filter>Archivos de origen\Tema2</Filter>
     </ClCompile>
-    <ClCompile Include="Tema2-10.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Tema2-12.cpp">
       <Filter>Archivos de origen\Tema2</Filter>
     </ClCompile>
+    <ClCompile Include="Tema2-10.cpp">
+      <Filter>Archivos de origen\Tema2</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema4-01.cpp">
+      <Filter>Archivos de origen\Tema4</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Set.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
