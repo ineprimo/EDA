@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
 template <class T>
@@ -87,6 +88,69 @@ public:
     // Consultar tamaño. O(1)
     int size() const {
         return nelems;
+    }
+
+    //Tal vez estos metodos deberian ser protegidos?
+    //Toma el dato mas grande 0(1)
+    T getMax(vector<T> serie) {
+        T max;
+        max = serie[0];
+
+        for (int i = 1; i < serie.size(); i++) {
+            if (serie[i] < max) max = serie[i];
+        }
+
+        return max;
+    }
+
+    //Tiene la misma complejidad que el remove
+    void removeMax(vector<T> serie) {
+        remove(getMax(serie));
+    }
+
+    //Toma el dato mas pequeño del vector O(n) -> n elementos del vector
+    int getMin(vector<T> serie) {
+        //Devolvemos el indice mejor
+        int min;
+        min = 0;
+
+        for (int i = 1; i < serie.size(); i++) {
+            if (serie[i] < serie[min]) min = i;
+        }
+
+        return min;
+    }
+
+    //Son iguales y simplemente llama al remove
+    void removeMin(vector<T>& serie) {
+        
+        //Deberiamos quitar las repeticiones del numero tambien
+        //El indice que nos dan es de la primera aparicion
+        
+        //Es el indice del menor
+        int min = getMin(serie);
+        T aux = serie[min];
+
+        int tam = serie.size() - 1;
+
+        //Comprobamos si tiene repeticiones
+        //Lo ponemos al final
+        serie[min] = serie[tam];
+        serie[tam] = aux;
+
+        //Si tiene repeticiones las quitamos tambien
+        for (int i = min; i < tam; i++) {
+            if (serie[i] == aux) {
+                tam--;
+                serie[i] = serie[tam];
+                serie[tam] = aux;
+            }
+        }
+
+        if (serie[tam - 1] == serie[tam]) tam--;
+
+        //Hacemos un resize y lo eliminamos
+        serie.resize(tam);
     }
 
     // Relación de equivalencia. O(n), n = nelems

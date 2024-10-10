@@ -5,39 +5,46 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <vector>
 
 #include "Set.h"
+
+
+// función que resuelve el problema
+//TipoSolucion resolver(TipoDatos datos) {
+//
+//
+//}
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
-
     // leer los datos de la entrada
-    Set<int> set1;
-    Set<int> set2;
-
-    int n1 = 0;
-    int n2 = 0;
+    int n = 0;
     int datos = 0;
 
-    //Rellenamos el set1
-    std::cin >> n1;
-    for (int i = 0; i < n1; i++) {
-        std::cin >> datos;
-        set1.add(datos);
-    }
+    std::vector<int> serie;
+    Set<int> sol;
 
-    std::cin >> n2;
-    for (int i = 0; i < n2; i++) {
-        std::cin >> datos;
-        set2.add(datos);
-    }
+    std::cin >> n;
 
-    if (!std::cin)
+    if (n == 0)
         return false;
 
+    std::cin >> datos;
+    while (datos != -1) {
+        serie.push_back(datos);
+        std::cin >> datos;
+    }
+
+    for (int i = 0; i < n; i++) {
+        datos = sol.getMin(serie);
+        sol.add(serie[datos]);
+        sol.removeMin(serie);
+    }
+
     // escribir sol
-    std::cout << (set1 || set2) << std::endl << (set1 && set2) << std::endl;
+    std::cout << sol << std::endl;
 
     return true;
 
