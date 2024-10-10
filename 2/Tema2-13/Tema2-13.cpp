@@ -24,7 +24,8 @@ int resolver(vector<int> vec, int ini, int fin) {
     }
     if (fin - ini == 2) {
         if (vec[ini + 1] == vec[fin]) return ini;
-        else return fin;
+        else if (vec[ini + 1] == vec[ini]) return fin;
+        else return ini + 1;
     }
 
 

@@ -8,26 +8,23 @@
 #include <vector>
 
 
-int resolv(std::vector<int> datos, int ini, int fini) {
-        // caso base
-        if (datos.size() == 1)
-            return datos[0];
-
-
-}
-
 // función que resuelve el problema
-bool resolver(std::vector<int> datos) {
+bool resolver(std::vector<int> datos, int ini, int fin) {
     
+    // casos base
+    if (fin - ini == 0) 
+        return true;
+    if (fin - ini == 1) 
+        return datos[ini] < datos[fin];
 
+
+    int mid = (ini + fin) / 2;
     // mitad izquierda
-    int max = 0;
-
+    bool izq = resolver(datos, ini, mid);
     // mitad derecha
-    int min = 0;
+    bool der = resolver(datos, mid, fin);
 
-    return max > min;
-
+    return izq && der;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -35,22 +32,20 @@ bool resolver(std::vector<int> datos) {
 bool resuelveCaso() {
     // leer los datos de la entrada
 
-    int lec;
-    std::cin >> lec;
+    int a;
+    std::cin >> a;
 
-    if (lec == 0)
+    if (a == 0)
         return false;
 
-    int in;
     std::vector<int> datos;
-    std::cin >> in;
 
-    while (in < 0) {
-        datos.push_back(in);
-        std::cin >> in;
+    while (a > 0) {
+        datos.push_back(a);
+        std::cin >> a;
     }
 
-    bool sol = resolver(datos);
+    bool sol = resolver(datos, 0, datos.size()-1);
 
     // escribir sol
     if (sol)

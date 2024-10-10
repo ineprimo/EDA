@@ -154,13 +154,13 @@ public:
 
     void removeMin(vector<T>& vec) {
         int min = getMin(vec);
-        int newsize = vec.size();
+        int newsize = vec.size()-1;
         int aux = vec[min];
 
-        // cambia de sitio el valor minimo para hacer un resize al final
-        vec[min] = vec[vec.size() - 1];
-        vec[vec.size() - 1] = aux;
-        newsize--;
+        //// cambia de sitio el valor minimo para hacer un resize al final
+        //vec[min] = vec[vec.size() - 1];
+        //vec[vec.size() - 1] = aux;
+        ////newsize--;
 
         // para repeticiones (hace lo mismo vaya)
         for (int i = min; i < vec.size() - 1; i++) {
