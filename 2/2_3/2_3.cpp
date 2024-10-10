@@ -8,25 +8,53 @@
 #include <vector>
 
 
+
 // función que resuelve el problema
-bool resolver(std::vector<int> datos, int ini, int fin) {
+bool resolver(std::vector<int> datos, int ini, int fin, int& min, int& max) {
     
     // casos base
-    if (fin - ini == 0) 
+    if (fin - ini == 0) {
+        min = ini;
+        max = ini;
         return true;
-    if (fin - ini == 1) 
-        return datos[ini] < datos[fin];
+    }
+    if (fin - ini == 1) {
+        if (datos[ini] < datos[fin]) {
+            min = ini;
+            max = fin;
+            return true;
+        }
+        else {
+            min = fin;
+            max = ini;
+            return false;
+        }
+    }
 
 
     int mid = (ini + fin) / 2;
     // mitad izquierda
-    bool izq = resolver(datos, ini, mid);
+    int izq = resolver(datos, ini, mid, min, max);
     // mitad derecha
-    bool der = resolver(datos, mid, fin);
+    int der = resolver(datos, mid, fin, min, max);
 
-    return izq && der;
+    if (izq < der) return true;
+    else return false;
 }
 
+
+bool parcialmenteOrdenados(std::vector<int> datos, int ini, int fin) {
+
+    int iMAX, iMIN;
+    int dMAX, dMIN;
+
+    int mid = (ini + fin) / 2;
+
+    bool izq = resolver(datos, ini, mid, iMIN, iMAX);
+    bool der = resolver(datos, mid, izq, dMIN, dMAX);
+
+    return (datos[iMIN] < datos[dMIN]) && (datos[dMAX] > datos[iMAX]);
+}
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
@@ -45,7 +73,7 @@ bool resuelveCaso() {
         std::cin >> a;
     }
 
-    bool sol = resolver(datos, 0, datos.size()-1);
+    bool sol = parcialmenteOrdenados(datos, 0, datos.size()-1);
 
     // escribir sol
     if (sol)
