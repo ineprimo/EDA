@@ -1,10 +1,10 @@
+﻿#pragma once
+
 // Nombre del alumno ..... Cynthia Tristán
 // Usuario del Juez ...... EDA-GDV73 
 
 
 #include <iostream>
-#include <iomanip>
-#include <fstream>
 #include <vector>
 
 class Hora
@@ -77,6 +77,23 @@ public: // constructoras
 			s == o.s;
 	}
 
+	Hora operator+(const Hora& hora) const
+	{
+		Hora resultado;
+		int h, m, s;
+		s = hora.s + this->s;
+		m = hora.m + this->m + (s / 60);
+		h = hora.h + this->h + (m / 60);
+
+		resultado.s = s % 60;
+		resultado.m = m % 60;
+		resultado.h = h;
+
+		if (h > 24) throw std::invalid_argument("ERROR");
+
+		return resultado;
+	}
+
 	friend std::ostream& operator<<(std::ostream& out, const Hora& h);
 	// friend porque accede a campos privados pero es funcion externa
 	friend std::istream& operator>>(std::istream& in, Hora& h);
@@ -106,95 +123,12 @@ std::istream& operator>>(std::istream& in, Hora& hora)
 	return in;
 }
 
-bool operator<=(const Hora& a, const Hora& b)
+inline bool operator<=(const Hora& a, const Hora& b)
 {
 	return a == b || a < b;
 }
 
-bool operator>=(const Hora& a, const Hora& b)
+inline bool operator>=(const Hora& a, const Hora& b)
 {
 	return a == b || a > b;
-}
-
-// devuelve la hora del siguiente tren segun la consultada
-bool siguiente(const std::vector<Hora>& trenes, const Hora& consulta, Hora& sig,
-               int ini, int fin)
-{
-	int n = fin - ini;
-	int mit = (ini + fin) / 2;
-
-	// no se hacer la puta busqueda binaria
-
-	// busqueda convencinal
-	unsigned int i = 0;
-	while (i < trenes.size())
-	{
-		if (consulta <= trenes[i])
-		{
-			sig = trenes[i];
-			return true;
-		}
-		i++;
-	}
-	return false; 
-}
-
-// Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
-bool resuelveCaso()
-{
-	int n = 0, m = 0;
-	std::cin >> n >> m;
-
-	if (n == 0 && m == 0)
-		return false;
-
-	std::vector<Hora> trenes(n);
-	for (auto& tren : trenes)
-		std::cin >> tren;
-
-	Hora sig, consulta;
-	for (int i = 0; i < m; i++)
-	{
-		try
-		{
-			std::cin >> consulta;
-			if (siguiente(trenes, consulta, sig, 0, trenes.size()))
-				std::cout << sig << std::endl;
-			else
-				std::cout << "NO\n";
-		}
-		catch (const std::invalid_argument& e)
-		{
-			std::cout << e.what() << std::endl;
-		}
-		catch (...)
-		{
-			std::cout << "ERROR" << std::endl;
-		}
-	}
-	std::cout << "---\n";
-	return true;
-}
-
-int main()
-{
-	// Para la entrada por fichero.
-	// Comentar para acepta el reto
-#ifndef DOMJUDGE
-	std::ifstream in("datos.txt");
-	auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
-#endif
-
-
-	while (resuelveCaso());
-
-
-	// Para restablecer entrada. Comentar para acepta el reto
-#ifndef DOMJUDGE // para dejar todo como estaba al principio
-	std::cin.rdbuf(cinbuf);
-	system("PAUSE");
-#endif
-
-	return 0;
 }

@@ -1,36 +1,39 @@
-﻿// Nombre del alumno ..... Cynthia Tristan
+// Nombre del alumno ..... Cynthia Tristán
 // Usuario del Juez ...... EDA-GDV73 
 
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "Polinomio.h"
+#include "Set.h"
 
-
-//// funcion que resuelve el problema
-//bool resolver(TipoDatos datos) {
-//    
-//    
-//}
 
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuracioon, y escribiendo la respuesta
+// configuración, y escribiendo la respuesta
 bool resuelveCaso()
 {
-	Polinomio p;
-	int n = 0, m = 0;
-	std::cin >> p;
-	if (!std::cin)
-		return false;
+    int n = 0;
+    std::cin >> n;
+    if (! std::cin)
+        return false;
 
-	std::cin >> n;
+    Set<int> set1, set2;
+    int c = 0;
+    for (int i = 0; i < n; i++)
+    {
+    	std::cin >> c;
+	    set1.add(c);
+    }
+
+    std::cin >> n;
 	for (int i = 0; i < n; i++)
-	{
-		std::cin >> m;
-		std::cout << p.evaluar(m) << " ";
-	}
-	std::cout << std::endl;
+    {
+        std::cin >> c;
+	    set2.add(c);
+    }
+
+	cout << (set1 <= set2) << endl;
+
 	return true;
 }
 

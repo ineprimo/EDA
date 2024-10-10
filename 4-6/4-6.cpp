@@ -5,32 +5,59 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "Polinomio.h"
+#include <vector>
 
+#include "Set.h"
 
-//// funcion que resuelve el problema
-//bool resolver(TipoDatos datos) {
-//    
-//    
-//}
+// O(n log m) donde n es el tamano del vector
+// y m el num de elementos pedidos
+Set<int> resolver(int n, std::vector<int> v)
+{
+	Set<int> set;
+	set.add(v[0]);
+
+	for (int i = 1; i < v.size(); i++) // O(n)
+	{
+		if (set.size() + 1 <= n)
+			set.add(v[i]);
+		else
+		{
+			if (v[i] < set.getMax() && v[i] != set.getMin() || v[i] < set.getMin())
+			{ 
+				set.removeMax(); // O(log m)
+				set.add(v[i]);
+			}
+		}
+	}
+
+	return set;
+}
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuracioon, y escribiendo la respuesta
 bool resuelveCaso()
 {
-	Polinomio p;
-	int n = 0, m = 0;
-	std::cin >> p;
-	if (!std::cin)
+	int n = 0;
+	std::cin >> n;
+
+	if (n == 0)
 		return false;
 
-	std::cin >> n;
-	for (int i = 0; i < n; i++)
+	int m;
+	vector<int> v;
+	cin >> m;
+	while (m != -1)
 	{
-		std::cin >> m;
-		std::cout << p.evaluar(m) << " ";
+		v.push_back(m);
+		cin >> m;
 	}
-	std::cout << std::endl;
+
+	Set<int> sol = resolver(n, v);
+
+	for (int i = 0; i < sol.size(); i++) 
+		cout << *(sol.toArray() + i) << " ";
+	cout << "\n";
+
 	return true;
 }
 
