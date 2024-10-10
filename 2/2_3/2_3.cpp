@@ -8,53 +8,37 @@
 #include <vector>
 
 
+struct sol {
+    bool ord;
+    int min;
+    int max;
 
-// función que resuelve el problema
-bool resolver(std::vector<int> datos, int ini, int fin, int& min, int& max) {
-    
-    // casos base
-    if (fin - ini == 0) {
-        min = ini;
-        max = ini;
-        return true;
+};
+
+sol parcialmenteOrdenados(const std::vector<int>& datos,int ini, int fin ) {
+    if (fin - ini == 0) 
+        return {true, 0, 0};
+    else if (fin - ini == 1) {
+        if (datos[ini] <= datos[fin])
+            return { true, ini, fin };
     }
-    if (fin - ini == 1) {
-        if (datos[ini] < datos[fin]) {
-            min = ini;
-            max = fin;
-            return true;
-        }
-        else {
-            min = fin;
-            max = ini;
-            return false;
-        }
+    else {
+        int mid = (ini + fin) / 2;
+        sol izq = parcialmenteOrdenados(datos, ini, mid);
+        sol der = parcialmenteOrdenados(datos, mid + 1, fin);
+
+        // compara maximos y minimos y los booleanos
+        if (datos[izq.max] <= datos[der.max]
+            && datos[izq.min] <= datos[der.min]
+            && izq.ord && der.ord)
+            return { true, izq.min, der.max };
     }
 
+    return {false, 0, 0};
 
-    int mid = (ini + fin) / 2;
-    // mitad izquierda
-    int izq = resolver(datos, ini, mid, min, max);
-    // mitad derecha
-    int der = resolver(datos, mid, fin, min, max);
-
-    if (izq < der) return true;
-    else return false;
 }
 
 
-bool parcialmenteOrdenados(std::vector<int> datos, int ini, int fin) {
-
-    int iMAX, iMIN;
-    int dMAX, dMIN;
-
-    int mid = (ini + fin) / 2;
-
-    bool izq = resolver(datos, ini, mid, iMIN, iMAX);
-    bool der = resolver(datos, mid, izq, dMIN, dMAX);
-
-    return (datos[iMIN] < datos[dMIN]) && (datos[dMAX] > datos[iMAX]);
-}
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
@@ -73,10 +57,10 @@ bool resuelveCaso() {
         std::cin >> a;
     }
 
-    bool sol = parcialmenteOrdenados(datos, 0, datos.size()-1);
+    sol sol1 = parcialmenteOrdenados(datos, 0, datos.size()-1);
 
     // escribir sol
-    if (sol)
+    if (sol1.ord)
         std::cout << "SI" << std::endl;
     else
         std::cout << "NO" << std::endl;
