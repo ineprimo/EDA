@@ -5,6 +5,7 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 template <class T>
@@ -123,6 +124,60 @@ public:
         return a;
     } 
 
+
+    /// <summary>
+    /// devuelve la posicion del menor
+    /// </summary>
+    /// <returns></returns>
+    int getMin(vector<T> vec) {
+        int min = 0;
+        for (int i = 0; i < vec.size(); i++) {
+            if (vec[i] < vec[min])
+                min = i;
+        }
+        return min;
+    }
+
+    /// <summary>
+    /// devuelve la posicion del mayor
+    /// </summary>
+    /// <returns></returns>
+    int getMax(vector<T> vec) {
+        int max = 0;
+        for (int i = 0; i < vec.size(); i++) {
+            if (vec[i] > array[max])
+                max = i;
+        }
+        return max;
+
+    }
+
+    void removeMin(vector<T>& vec) {
+        int min = getMin(vec);
+        int newsize = vec.size();
+        int aux = vec[min];
+
+        // cambia de sitio el valor minimo para hacer un resize al final
+        vec[min] = vec[vec.size() - 1];
+        vec[vec.size() - 1] = aux;
+        newsize--;
+
+        // para repeticiones (hace lo mismo vaya)
+        for (int i = min; i < vec.size() - 1; i++) {
+            if (vec[i] == vec[newsize]) {
+                newsize--;
+                vec[i] = vec[newsize];    // newsize es la nueva ultima posicion
+                vec[newsize] = aux;
+            }
+        }
+
+        vec.resize(newsize);
+    }
+
+    void removeMax(vector<T> vec) {
+        int max = getMax(vec);
+        remove(vec[max]);
+    }
 
 protected:
 

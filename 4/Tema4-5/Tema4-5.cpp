@@ -13,13 +13,13 @@
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     // leer los datos de la entrada
+   
+  
+    
     Set<int> a, b;
     int aux, size, i = 0;
     string ugu;
 
-
-    if (!std::cin)
-        return false;
 
     std::cin >> size;
     for (i; i < size; i++) {
@@ -33,6 +33,9 @@ bool resuelveCaso() {
         std::cin >> aux;
         b.add(aux);
     }
+
+      if (!std::cin)
+        return false;
 
 
     /// esto es por si no da el size de los sets al principio
@@ -56,11 +59,11 @@ bool resuelveCaso() {
     //}
 
 
-    Set<int> sol1 = a || b;
-    Set<int> sol2 = a && b;
+    //Set<int> sol1 = a || b;
+    //Set<int> sol2 = a && b;
 
     // escribir sol
-    std::cout << sol1 << std::endl << sol2 << std::endl;
+    std::cout << (a || b) << std::endl << (a && b) << std::endl;
 
     return true;
 
