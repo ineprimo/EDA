@@ -5,24 +5,52 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <vector>
+
+
 
 
 
 // función que resuelve el problema
-TipoSolucion resolver(TipoDatos datos) {
+bool resolver(const std::vector<int>& datos, int ini, int fin, int k) {
+
+    // casos base
+    if(fin - ini == 1){
+        if (datos[fin] - datos[ini] >= k)
+            return true;
+    }
+
+    int dif = 0; // TODO
+
+    int mid = (fin - ini) / 2;
+    bool der = resolver(datos, ini, mid, k);
+    bool izq = resolver(datos, mid, fin, k);
 
 
+
+    return der && izq && dif >= k;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     // leer los datos de la entrada
+    std::vector<int> datos;
+    int a, k, aux;
+
+    std::cin >> a;  // numero de tiradas
+    std::cin >> k;  // k
+
+    for (int i = 0; i < a; i++) {
+        std::cin >> aux;
+        datos.push_back(aux);
+    }
 
     if (!std::cin)
         return false;
 
-    TipoSolucion sol = resolver(datos);
+
+    std::cout << (resolver(datos, 0, a, k) ? "SI" : "NO") << std::endl;
 
     // escribir sol
 
