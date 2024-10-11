@@ -29,7 +29,7 @@ bool resuelveCaso()
 		set2.add(c);
 	}
 
-	cout << (set1 <= set2) << endl;
+	cout << (set1 = set2) << endl;
 
 	return true;
 }
