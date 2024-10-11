@@ -127,6 +127,30 @@ public:
     } 
 
 
+    // Interseccion de conjuntos (solo los que coinciden)
+    bool operator<=(const Set<T>& other) const {
+        bool sol = true;
+
+        int i = 0, j = 0;
+        if (nelems > other.nelems) sol = false;
+
+        while (i < nelems && j < other.nelems && sol) {
+            if (array[i] == other.array[j]) {
+                i++; j++;
+            }
+            else if (array[i] < other.array[j]) {
+                sol = false;
+            }
+            else if (array[i] > other.array[j]) {
+                j++;
+            }
+        }
+
+        if (i < nelems) sol = false;
+
+        return sol;
+    }
+
 
     // Interseccion de conjuntos (solo los que coinciden)
     // Complejidad O(n) ya que recorre el array una vez dependiendo del size nelems
@@ -134,7 +158,6 @@ public:
         Set<T> sol(nelems);
         int j = 0, i = 0, a = 0;
 
-        // recoree los arrays 
         while (i < nelems && j < other.nelems) {
             if (other.array[j] == array[i]) {
                 i++; j++;
