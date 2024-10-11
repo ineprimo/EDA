@@ -114,10 +114,16 @@ public:
 	// Union de conjuntos. COMPLEJIDAD:
 	Set<T> operator||(const Set<T>& other) const
 	{
-		
-		
-		
-		
+		Set<T> aux;
+		int i = 0;
+
+		while (i < this->size())
+		{
+			i++;
+		}
+
+
+
 		return other;
 	}
 
