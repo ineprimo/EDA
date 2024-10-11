@@ -27,6 +27,8 @@ bool resuelveCaso() {
         cin >> e; set2.add(e);
     }
 
+    //Set<int> sol = (set1 - set2);
+
     cout << (set1 - set2) << endl;
 
     return true;

@@ -1,4 +1,6 @@
 //  Implementación del TAD Set con array dinámico ordenado y sin repeticiones
+// INES PRIMO
+// EDA-GDV61
 
 #ifndef SET_H
 #define SET_H
@@ -127,14 +129,34 @@ public:
 
 
     // Interseccion de conjuntos (solo los que coinciden)
+    // Complejidad O(n) ya que recorre el array una vez dependiendo del size nelems
     Set<T> operator-(const Set<T>& other) const {
-        Set<T> a;
+        Set<T> sol(nelems);
+        int j = 0, i = 0, a = 0;
 
-        for (int i = 0; i < nelems; i++) {
-            if (!other.contains(array[i]))
-                a.add(array[i]);
+        while (i < nelems && j < other.nelems) {
+            if (other.array[j] == array[i]) {
+                i++; j++;
+            }
+            else if (array[i] < other.array[j]) {
+                sol.array[a] = array[i];
+                sol.nelems++;
+                a++;
+                i++;
+            }
+            else if (array[i] > other.array[j])
+                j++;
         }
-        return a;
+
+        while (i < nelems) {
+            sol.array[a] = array[i];
+            sol.nelems++;
+            a++;
+            i++;
+        }
+
+        return sol;
+
     }
 
     /// <summary>
