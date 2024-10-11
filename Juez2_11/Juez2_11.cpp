@@ -11,58 +11,41 @@ Usuario del juez: EDA-GDV37
 #include <vector>
 using namespace std;
 
-//Coste log(n)
-char resolver(const vector<char>& sec, int ini, int fin, char prim, char ult) {
+// (log n) donde n es la cantidad de elementos del vector sec
+// porque es una busqueda binaria
+char resolver(const vector<char>& sec, char ini, char fin, char prim, char ult)
+{
+    int n = fin - ini;
 
-    int diferencia = fin - ini;
-
-    //Caso base: No hay presos
-    if (diferencia == 0) {
-        return '0';
-    }
-    //Hay un preso
-    else if (diferencia == 1) {
-        if (sec[ini] != prim) {
-            return sec[ini] - 1;
-        }
-
-        return sec[ini] + 1;
-    }
-    if (sec[ini] != prim) {
+    // casos base
+    if (n == 0) // ningun elto
         return prim;
-    }
-    if (sec[fin] != ult) {
-        return ult;
-    }
+    if (n == 1) // un solo elto
+        // si coincide esta justo despues, si no esta inmediatamente antes
+        return sec[ini] == prim ? sec[ini] + 1 : sec[ini] - 1;
+    if (sec[ini] != prim)
+        return prim; // extremo izq
+    if (sec[fin - 1] != ult)
+        return ult; // extremo der
 
     int mitad = (ini + fin) / 2;
-    char medio = prim + (mitad - ini);
+    char esperado = prim + (mitad - ini);
 
-    //Búsqueda en la primera mitad
-    if (medio == sec[mitad]) {
-        return resolver(sec, mitad, fin, sec[mitad], ult);
-    }
-    //Búsqueda en la segunda mitad
-    else {
-        return resolver(sec, ini, mitad, prim, sec[mitad - 1]);
-    }
-
+    if (esperado == sec[mitad]) // si el de la mitad es el que corresponde 
+        return resolver(sec, mitad, fin, sec[mitad], ult); // el fugado esta a la derecha
+    return resolver(sec, ini, mitad, prim, sec[mitad - 1]); // si no a la izquierda
 }
-
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
     char prim, ult, n;
-    int ini, fin;
     cin >> prim >> ult;
     n = ult - prim;
-    ini = 0;
-    fin = n;
     vector<char> sec(n);
     for (char& e : sec) cin >> e;
-    cout << resolver(sec, ini, fin, prim, ult) << endl;
+    cout << resolver(sec, 0, n, prim, ult) << endl;
 }
 
 //#define DOMJUDGE
@@ -70,7 +53,7 @@ int main() {
     // Para la entrada por fichero.
     // Comentar para acepta el reto
 #ifndef DOMJUDGE
-    std::ifstream in("input2.txt");
+    std::ifstream in("datos.txt");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 
@@ -78,6 +61,7 @@ int main() {
     std::cin >> numCasos;
     for (int i = 0; i < numCasos; ++i)
         resuelveCaso();
+
 
     // Para restablecer entrada. Comentar para acepta el reto
 #ifndef DOMJUDGE // para dejar todo como estaba al principio

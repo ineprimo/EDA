@@ -4,27 +4,18 @@
 #include <vector>
 using namespace std;
 
-// función que resuelve el problema
 int resolver(const vector<int>& sec, int ini, int fin) {
+    int dif = fin - ini;
+    int mit = (ini + fin) / 2;
 
-    int diferencia = fin - ini;
+    if (dif == 1) return sec[ini];
+    if (sec[ini] % 2 != 0) return sec[ini];
+    if (sec[mit] % 2 != 0) return sec[mit];
 
-    if (diferencia == 1) {
-        if (sec[ini] % 2 != 0) {
-            return sec[ini];
-        }
-        else return 0;
-    }
-
-    int mitad = (ini + fin) / 2;
-
-    //Búsqueda en la primera mitad
-    if (sec[mitad] % 2 == 0) {
-        return resolver(sec, ini, mitad);
-        
-    }
-
-    return resolver(sec, mitad, fin);
+    int n = mit - ini;
+    if (sec[mit] == sec[ini] + 2 * n)
+        return resolver(sec, mit, fin);
+    return resolver(sec, ini, mit);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la

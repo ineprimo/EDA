@@ -2,52 +2,43 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-using namespace std;
 
-// función que resuelve el problema
-bool resuelve(const vector<int>& sec, int ini, int fin, int elem) {
 
-    int dif = fin - ini;
+// O(log n) - busqueda binaria
+bool resolver(std::vector<int>& datos, int ini, int fin, int v) {
+    int diff = fin - ini;
 
-    //Casos base
-    if (dif == 0) {
-        return false;
-    }
-    if (dif == 1) {
-        if (sec[ini] == elem) {
-            return true;
-        }
-        else return false;
+    if (diff == 1) return datos[ini] == v;
 
+    int mit = (ini + fin) / 2;
+
+    if (datos[ini] <= datos[mit]) 
+    {
+        if (v >= datos[ini] && v < datos[mit]) 
+            return resolver(datos, ini, mit, v);
+        return resolver(datos, mit, fin, v); 
     }
 
-    int mitad = (ini + fin) / 2;
-
-    if (sec[mitad] != elem) {
-        int elemMit1 = resuelve(sec, ini, mitad, elem);
-        int elemMit2 = resuelve(sec, mitad, fin, elem);
-    }
-    else return true;
-
+    // esta desordenada
+    if (v >= datos[mit] && v < datos[ini]) 
+        return resolver(datos, mit, fin, v); 
+    return resolver(datos, ini, mit, v);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
+    int n = 0, v = 0;
+    std::cin >> n >> v;
 
-    // leer los datos de la entrada
-    int n, elem;
-    cin >> n >> elem;
-    if (n == -1) return false;
+    if (n == -1)
+        return false;
 
-    vector<int> sec(n);
-    for (int& e : sec) cin >> e;
+    std::vector<int> datos(n);
+    for (int& i : datos)
+        std::cin >> i;
 
-    if (resuelve(sec, 0, n, elem)) {
-        cout << "SI" << endl;
-    }
-    else cout << "NO" << endl;
-
+    std::cout << (resolver(datos, 0, datos.size(), v) ? "SI" : "NO") << std::endl;
     return true;
 }
 
