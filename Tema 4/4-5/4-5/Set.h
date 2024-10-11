@@ -111,26 +111,35 @@ public:
 			return false;
 	}
 
-	// Union de conjuntos. COMPLEJIDAD:
+	// Union de conjuntos. COMPLEJIDAD: O(n * n)
 	Set<T> operator||(const Set<T>& other) const
 	{
-		Set<T> aux;
+		Set<T> aux = other; // Creamos un set auxiliar y le metemos el otro set.
 		int i = 0;
 
-		while (i < this->size())
+		while (i < nelems) // Recorremos el primer set.
 		{
+			aux.add(array[i]); // Metemos los elementos del primer set al aux que tiene los del segundo (el add ya mira si el elemento esta o no).
 			i++;
 		}
-
-
-
-		return other;
+		return aux; // Devolvemos el auxiliar. Esta el << modificado para que salga como dice la solicion.;
 	}
 
-	// Interseccion de conjuntos. COMPLEJIDAD:
+	// Interseccion de conjuntos. COMPLEJIDAD: O (n * n * n) ???
 	Set<T> operator&&(const Set<T>& other) const
 	{
-		return other;
+		Set<T> aux; // Set auxiliar.
+		int i = 0;
+
+		while (i < nelems) // Recorremos el primer set.
+		{
+			if (other.contains(array[i])) // Si el elemento del primer set esta en el segundo.
+			{
+				aux.add(array[i]); // Lo metemos al auxiliar.
+			}
+			i++;
+		}
+		return aux; // Devolvemos el auxiliar. Esta el << modificado para que salga como dice la solicion.
 	}
 
 
@@ -218,11 +227,12 @@ protected:
 template <class T>
 ostream& operator<<(ostream& out, Set<T> const& set)
 {
-	out << "{";
+	//out << "{";
 	for (int i = 0; i < set.nelems - 1; i++)
-		out << set.array[i] << ",";
+		out << set.array[i] << " ";
+	//out << set.array[i] << ",";
 	if (set.nelems > 0) out << set.array[set.nelems - 1];
-	out << "}";
+	//out << "}";
 	return out;
 }
 
