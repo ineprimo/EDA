@@ -105,8 +105,12 @@ bool resuelveCaso() {
     if (a == 0 && b == 0)
         return false;
 
+    std::vector<Hora> trenes(a);
+    Hora& aux;
+
     for (int i = 0; i < a; i++) {
-        
+        auto& = std::cin >> aux;
+        trenes.push_back(aux);
     }
 
 
