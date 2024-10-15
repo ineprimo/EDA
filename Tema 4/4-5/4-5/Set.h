@@ -114,7 +114,86 @@ public:
 	// Union de conjuntos. COMPLEJIDAD: O(n * n)
 	Set<T> operator||(const Set<T>& other) const
 	{
-		Set<T> aux = other; // Creamos un set auxiliar y le metemos el otro set.
+		Set<T> aux(nelems + other.nelems); // Set auxiliar que como maximo va a tener el numero de elementos de this + other.
+
+		int i = 0; // Indice del set1 y luego del set2.
+		int j = 0; // Indice para comprabar el aux.
+		int k = 0; // Indice del set auxiliar para meterle los elementos a aux.
+
+		while (i < nelems)
+		{
+			aux[i] = array[k];
+			i++;
+			k++;
+		}
+
+		i = 0;
+		while (i < aux.nelems)
+		{
+			if (other.array[i] == aux.array[j])
+			{
+
+			}
+
+
+
+
+
+		}
+
+
+
+
+
+
+		while (i < nelems && j < other.nelems)
+		{
+			if (array[i] > other.array[j])
+			{
+
+				aux.array[k] = other.array[j];
+				j++;
+				k++;
+			}
+			else if (array[i] < other.array[j])
+			{
+				aux.array[k] = array[i];
+				aux.nelems++;
+				i++;
+				k++;
+			}
+			else if (array[i] == other.array[j])
+			{
+				aux.array[k] = array[i];
+				i++;
+				j++;
+				k++;
+
+			}
+		}
+
+		// Metemos los elementos sobrantes de cada uno.
+		while (i < nelems)
+		{
+			aux.array[k] = array[i];
+			aux.nelems++;
+			i++;
+			k++;
+		}
+		while (j < other.nelems)
+		{
+			aux.array[k] = other.array[j];
+			aux.nelems++;
+			j++;
+			k++;
+		}
+		return aux;
+
+
+
+
+		//------Esta mal, no usar ni ocntains, ni add ni ninguno de esos.
+		/*Set<T> aux = other; // Creamos un set auxiliar y le metemos el otro set.
 		int i = 0;
 
 		while (i < nelems) // Recorremos el primer set.
@@ -122,13 +201,50 @@ public:
 			aux.add(array[i]); // Metemos los elementos del primer set al aux que tiene los del segundo (el add ya mira si el elemento esta o no).
 			i++;
 		}
-		return aux; // Devolvemos el auxiliar. Esta el << modificado para que salga como dice la solicion.;
+		return aux; // Devolvemos el auxiliar. Esta el << modificado para que salga como dice la solicion.*/
 	}
 
 	// Interseccion de conjuntos. COMPLEJIDAD: O (n * n * n) ???
 	Set<T> operator&&(const Set<T>& other) const
 	{
-		Set<T> aux; // Set auxiliar.
+		Set<T> aux(nelems); // Set auxiliar que como maximo puede ser igual de grande que el original.
+		/*
+		int i = 0; // Indice del set1.
+		int j = 0; // Indice del set2.
+		int k = 0; // Indice del set auxiliar para meterle los elementos.
+
+		while (i < nelems && j < other.nelems)
+		{
+			if (array[i] > other.array[j])
+			{
+				j++;
+			}
+			else if (array[i] < other.array[j])
+			{
+				aux.array[k] = array[i];
+				aux.nelems++;
+				i++;
+				k++;
+			}
+			else if (array[i] == other.array[j])
+			{
+				i++;
+				j++;
+			}
+		}
+
+		// Metemos los elementos sobrantes en el caso de que other.array < this.array
+		while (i < nelems)
+		{
+			aux.array[k] = array[i];
+			aux.nelems++;
+			i++;
+			k++;
+		}*/
+		return aux;
+
+		//------Esto esta mal, no usar ni el add, ni el contains ni ninguno de esos metodos.
+		/*Set<T> aux; // Set auxiliar.
 		int i = 0;
 
 		while (i < nelems) // Recorremos el primer set.
@@ -139,7 +255,7 @@ public:
 			}
 			i++;
 		}
-		return aux; // Devolvemos el auxiliar. Esta el << modificado para que salga como dice la solicion.
+		return aux; // Devolvemos el auxiliar. Esta el << modificado para que salga como dice la solicion.*/
 	}
 
 
