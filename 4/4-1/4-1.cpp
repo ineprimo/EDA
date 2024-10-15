@@ -1,19 +1,79 @@
-// 4-1.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
+// Nieves Alonso Gilsanz
+// EDA-GDV03
 
 #include <iostream>
+#include <iomanip>
+#include <fstream>
+#include "Set.h"
 
-int main()
+// función que resuelve el problema
+
+// Decimos que un num entero es feliz si al aplicar repetidamente el proceso de
+// sumar los cuadrados de sus digitos se termina llegando al 1
+bool resolver(int i, Set<int>& sol)
 {
-    std::cout << "Hello World!\n";
+    if(i == 1) return true; // si i es 1 el num es feliz
+
+    int digi = 0; // digito a la der
+    int cont = 0; // suma
+    while(i > 0)  // vas digito a digito de un num, mientras siga habiendo digitos
+    {
+        digi = i % 10; // primer digito de la der
+        cont += digi*digi;
+        i /= 10; // actualizas i, te quedas con el siguiente digito
+    }
+
+    std::cout << cont << " "; // escribes la suma final
+
+    if (sol.contains(cont)) return false; // si ya estaba no es feliz
+
+    sol.add(cont); // si no estaba se mete
+    return resolver(cont, sol); // se sigue buscando
 }
 
-// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
-// Depurar programa: F5 o menú Depurar > Iniciar depuración
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+bool resuelveCaso()
+{
+    // leer los datos de la entrada
+    int i = 0; // dato
+    Set<int> sol; // set de solucion
 
-// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
-//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
-//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
-//   4. Use la ventana Lista de errores para ver los errores
-//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
-//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
+	std:cin >> i; 
+
+    if (!std::cin)
+        return false;
+
+    // escribir sol
+    std::cout << i << " "; // escribe el num inicial
+    sol.add(i); // mete el numero inicial al set de sol
+
+    bool feliz = resolver(i, sol);
+
+    if(feliz) std::cout << "1" << std::endl;
+    else std::cout << "0" << std::endl;
+
+    return true;
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif 
+
+
+    while (resuelveCaso())
+        ;
+
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    system("PAUSE");
+#endif
+
+    return 0;
+}
