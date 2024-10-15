@@ -138,6 +138,7 @@ public:
 			return std::equal(array, array + nelems, other->array);
 		return false;
 	}
+
 	// Complejidad lineal O(n), se recorre el array una vez + m veces el segundo
 	Set operator-(const Set& other) const
 	{
@@ -175,6 +176,93 @@ public:
 		return aux;
 	}
 
+
+	// ------ 4-5 ------
+
+	// Complejidad lineal O(n) ya que se ha dimensionado aux con el tamaño máximo al que puede llegar en este metodo.
+	// Si hiciera falta redimensionar, el algoritmo se volveria cuadratico O(n^2).
+	// Operador OR:
+	Set<T> operator||(const Set<T>& other) const {
+		Set<T> aux(nelems + other.nelems);
+
+		int i = 0, j = 0, k = 0;
+
+		// bucle que añade los elementos comunes y no comunes
+		while (i < nelems && j < other.nelems)
+		{
+			cout << "i: " << array[i] << "j :" << other.array[j] << " K: " << k << endl;
+			if (array[i] == other.array[j])
+			{
+				aux.array[k] = array[i];
+				k++;
+				i++;
+				j++;
+			}
+			else if (array[i] > other.array[j]) {
+				aux.array[k] = other.array[j];
+				k++;
+				j++;
+			}
+			else
+			{
+				aux.array[k] = array[i];
+				k++;
+				i++;
+			}
+			aux.nelems = k;
+			std::cout << aux.array[k]<< "i: " << array[i] << "j :"<< other.array[j] << " K: " << k << endl;
+		}
+
+		// Buecle que añade los elementos restantes de cada array
+		while (i < nelems) {
+			aux.array[k] = array[i];
+			k++;
+			i++;
+		}
+		while (j < other.nelems) {
+			aux.array[k] = other.array[i];
+			k++;
+			j++;
+		}
+
+		aux.nelems = k;
+		return aux;
+	}
+
+
+	// Complejidad lineal O(n) ya que se ha dimensionado aux con el tamaño máximo al que puede llegar en este metodo.
+	// Si hiciera falta redimensionar, el algoritmo se volveria cuadratico O(n^2).
+	// Operador AND:
+	Set<T> operator&&(const Set<T>& other) const {
+
+		// Asignamos el tamaño del set menor
+		Set<T> aux(other.nelems + nelems);
+
+
+		// bucle que añade los elementos comunes
+		int i = 0, j = 0, k = 0;
+		while (i < nelems && j < other.nelems)
+		{
+			if (array[i] == other.array[j])
+			{
+				aux.add(array[i]);
+				i++;
+				j++;
+				k++;
+			}
+			else if (array[i] > other.array[j]) {
+				j++;
+			}
+			else
+			{
+				i++;
+			}
+		}
+
+		aux.nelems = k;
+
+		return aux;
+	}
 	template <class E>
 	friend ostream& operator<<(ostream& out, const Set<E>& s);
 
