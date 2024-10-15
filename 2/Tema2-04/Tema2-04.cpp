@@ -15,18 +15,21 @@
 bool resolver(const std::vector<int>& datos, int ini, int fin, int k) {
 
     // casos base
-    if(fin - ini == 1){
-        if (datos[fin] - datos[ini] >= k)
-            return true;
+    if(fin - ini == 1)
+        return true;
+    else if (fin - ini == 2) {
+        return abs(datos[ini] - datos[ini + 1]) >= k;
     }
 
-    int dif = 0; // TODO
+    // abs para que no de negativo (es la diferencia)
+    int dif = abs(datos[fin-1] - datos[ini]);
 
-    int mid = (fin - ini) / 2;
-    bool der = resolver(datos, ini, mid, k);
-    bool izq = resolver(datos, mid, fin, k);
+    if (dif < k)
+        return false;
 
-
+    int mid = (fin + ini) / 2;
+    bool izq = resolver(datos, ini, mid, k);
+    bool der = resolver(datos, mid, fin, k);
 
     return der && izq && dif >= k;
 }
