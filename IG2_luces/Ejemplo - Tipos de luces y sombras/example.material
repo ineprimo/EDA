@@ -1,9 +1,0 @@
-material example/stonesFloor{
-    technique { 
-	pass {  
-	    texture_unit {
-		texture BeachStones.jpg
-	    }
-	}
-    }
-}
