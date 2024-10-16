@@ -242,6 +242,37 @@ public:
 		return true;
 	}
 
+	// Devuelve el numero maximo del array. COMPLEJIDAD: O(1), como esta ordenado el mayor es el que esta en array[nelems - 1].
+	T getMax()
+	{
+		return array[nelems - 1];
+	}
+
+	// Devuelve el numero minimo del array. COMPLEJIDAD: O(1), como esta ordenado el menor es el que esta en array[0].
+	T getMin()
+	{
+		return array[0];
+	}
+
+	// Elimina el valor maximo del array. COMPLEJIDAD: O(n), usa el metodo remove().
+	void removeMax()
+	{
+		remove(getMax());
+	}
+
+	// Elimina el valor minimo del array. COMPLEJIDAD: O(n), usa el metodo remove().
+	void removeMin()
+	{
+		remove(getMin());
+	}
+
+	// Devuelve el numero de elementos del set. O(1).
+	const int getNelems()
+	{
+		return nelems;
+	}
+
+
 	template <class E>
 	friend ostream& operator<<(ostream& out, const Set<E>& s);
 
