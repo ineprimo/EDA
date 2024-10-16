@@ -190,7 +190,6 @@ public:
 		// bucle que añade los elementos comunes y no comunes
 		while (i < nelems && j < other.nelems)
 		{
-			cout << "i: " << array[i] << "j :" << other.array[j] << " K: " << k << endl;
 			if (array[i] == other.array[j])
 			{
 				aux.array[k] = array[i];
@@ -210,7 +209,6 @@ public:
 				i++;
 			}
 			aux.nelems = k;
-			std::cout << aux.array[k]<< "i: " << array[i] << "j :"<< other.array[j] << " K: " << k << endl;
 		}
 
 		// Buecle que añade los elementos restantes de cada array
@@ -220,7 +218,7 @@ public:
 			i++;
 		}
 		while (j < other.nelems) {
-			aux.array[k] = other.array[i];
+			aux.array[k] = other.array[j];
 			k++;
 			j++;
 		}
