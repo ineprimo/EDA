@@ -10,7 +10,7 @@
 #include "Set.h"
 
 
-// COMPLEJIDAD: O(n * n), el remove es O(n).
+// COMPLEJIDAD: O((size - k) * n), el remove es O(n).
 Set<int> resuelve(int k, std::vector<int> vec)
 {
 	Set<int> aux(vec.size());
