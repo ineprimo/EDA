@@ -11,30 +11,38 @@
 //using namespace std;
 //
 //
+//// El algoritmo es cuadratico O(n^4) ya que utiliza el metodo removeMin() con complejidad lineal
+//Set<int> resuelve(Set<int>& datos, int k) {
+//	Set<int> aux(k);
+//
+//	for (int i = 0; i < k; i++)
+//	{
+//		aux.add(datos.getMin());
+//		datos.removeMin();
+//	}
+//
+//	return aux;
+//}
+//
+//
 //// Resuelve un caso de prueba, leyendo de la entrada la
 //// configuración, y escribiendo la respuesta
 //bool resuelveCaso() {
 //	int n = 0;
 //	std::cin >> n;
-//	if (!std::cin)
+//	if (n == 0)
 //		return false;
 //
-//	Set<int> set1(n);
+//	Set<int> set;
 //	int c = 0;
-//	for (int i = 0; i < n; i++)
+//	std::cin >> c;
+//	while (c != (-1))
 //	{
+//		set.add(c);
 //		std::cin >> c;
-//		set1.add(c);
 //	}
 //
-//	std::cin >> n;
-//	Set<int> set2(n);
-//	for (int i = 0; i < n; i++)
-//	{
-//		std::cin >> c;
-//		set2.add(c);
-//	}
-//	cout << (set1 || set2) << endl << (set1 && set2) << endl;
+//	cout << resuelve(set, n) << endl;
 //	return true;
 //}
 //

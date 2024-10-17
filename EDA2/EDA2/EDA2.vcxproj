@@ -155,12 +155,14 @@
     <ClCompile Include="Tema2-2.cpp" />
     <ClCompile Include="Tema4-01.cpp" />
     <ClCompile Include="Tema4-05.cpp" />
+    <ClCompile Include="Tema4-06.cpp" />
+    <ClCompile Include="Tema4-07.cpp" />
     <ClCompile Include="Tema4-2.cpp" />
     <ClCompile Include="Tema4-8.cpp" />
+    <ClCompile Include="Tema5-01.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Set.h" />
-    <ClInclude Include="Set4-8.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

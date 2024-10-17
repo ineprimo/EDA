@@ -139,6 +139,8 @@ public:
 		return false;
 	}
 
+	// || ------EJERCICIOS JUEZ------ ||
+	// ------ 4-8 ------
 	// Complejidad lineal O(n), se recorre el array una vez + m veces el segundo
 	Set operator-(const Set& other) const
 	{
@@ -176,6 +178,53 @@ public:
 		return aux;
 	}
 
+	// ------ 4-7 ------
+	bool operator<=(const Set<T>& other) const {
+		bool incluido = true;
+		int i = 0, j = 0;
+
+		// bucle que comprueba ambas
+		while (i < nelems && j < other.nelems && incluido)
+		{
+			if (array[i] == other.array[j])
+			{
+				i++;
+				j++;
+			}
+			else if (array[i] > other.array[j]) {
+				j++;
+				incluido = false;
+			}
+			else
+			{
+				i++;
+			}
+		}
+
+		return incluido && j == other.nelems;
+	}
+
+	// ------ 4-6 ------
+	// --- 1 ---
+	// Devuelve el elemento mayor con complejidad constante
+	int getMax() {
+		return array[nelems];
+	}
+
+	// Devuelve el elemento menor con complejidad constante
+	int getMin() {
+		return array[0];
+	}
+
+	// Elimina el elemento mayor con complejidad constante
+	void removeMax() {
+		nelems - 1;
+	}
+
+	// Elimina el elemento menor con complejidad lineal O(n)
+	void removeMin() {
+		shiftLeftFrom(0);
+	}
 
 	// ------ 4-5 ------
 
