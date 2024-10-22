@@ -42,15 +42,18 @@ bool resuelveCaso() {
     int a, k, aux;
 
     std::cin >> a;  // numero de tiradas
+
+    if (!std::cin)
+        return false;
+
     std::cin >> k;  // k
+
+
 
     for (int i = 0; i < a; i++) {
         std::cin >> aux;
         datos.push_back(aux);
     }
-
-    if (!std::cin)
-        return false;
 
 
     std::cout << (resolver(datos, 0, a, k) ? "SI" : "NO") << std::endl;
