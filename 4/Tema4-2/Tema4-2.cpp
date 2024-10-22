@@ -21,9 +21,8 @@ private:
 
 public:
 
-    Hora() : s(0), m(0), h(0){}
 
-    Hora(int s_, int m_, int h_) : s(s_), m(m_), h(h_) {
+    Hora(int s_ = 0, int m_ = 0, int h_ = 0) : s(s_), m(m_), h(h_) {
         if (!check(s_, m_, h_)) {
             throw std::invalid_argument("ERROR");
         }
@@ -90,25 +89,38 @@ std::istream& operator>>(std::istream& in, Hora& hora)
 
 
 // función que resuelve el problema
-void resolver(const std::vector<Hora>& datos, const Hora& tren) {
+bool resolver(const std::vector<Hora>& datos, const Hora& tren) {
 
     bool found = false;
     int j = 0;
-        while (j < datos.size() && tren < datos[j]) {
+        //while (j < datos.size() && (tren < datos[j] || tren == datos[j])) {
+        //    j++;
+        //    //if (datos[i] > trenes[j] || datos[i] == trenes[j])
+        //    //    found = true;
+        //}
+
+
+        //// escribe cosas
+
+        //if (j < datos.size()) 
+        //    std::cout << datos[j] << std::endl;
+        //else if(j>= datos.size())
+        //    std::cout << "NO" << std::endl;
+
+        while (j < datos.size())
+        {
+            if (tren < datos[j] || tren == datos[j])
+            {
+                std::cout << datos[j] << std::endl;
+                return true;
+            }   
             j++;
-            //if (datos[i] > trenes[j] || datos[i] == trenes[j])
-            //    found = true;
         }
 
+        std::cout << "NO" << std::endl;
+        return false;
 
-        // escribe cosas
-
-        if (j < datos.size()) 
-            std::cout << datos[j] << std::endl;
-        else if(j>= datos.size())
-            std::cout << "NO" << std::endl;
-
-}
+    }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
@@ -130,8 +142,6 @@ bool resuelveCaso() {
     }
 
     std::vector<Hora> datos;
-
-
 
     for (int i = 0; i < b; i++) {
 
