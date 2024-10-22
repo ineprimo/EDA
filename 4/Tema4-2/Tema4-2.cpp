@@ -14,7 +14,9 @@ private:
     int s, m, h;
 
     bool check(int s_, int m_, int h_) {
-        return 0 <= s_ <= 59 && 0 <= m_ <= 59 && 0 <= h_ <= 23;
+        return 0 <= s_ && s_ <= 59 
+            && 0 <= m_ && m_ <= 59 
+            && 0 <= h_ && h_ <= 23;
     }
 
 public:
