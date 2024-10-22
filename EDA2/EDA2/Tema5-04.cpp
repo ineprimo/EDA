@@ -13,32 +13,25 @@
 //
 //
 //// Por lo que la complejidad es lineal O(n) donde n es el numero de elementos de la cola
-//void resuelve(queue<int>& cola) {
+//queue<int> resuelve(queue<int>& cola) {
 //
-//	queue<int> positivos;
-//	stack<int> negativos;
+//	queue<int> duplicados;
+//	int i = 0;
 //
 //	while (!cola.empty())
 //	{
-//		if (cola.front() > 0)
-//			positivos.push(cola.front());
+//		if (i >= 1) {
+//			i = 0;
+//			duplicados.push(cola.front());
+//			cola.pop();
+//		}
 //		else
-//			negativos.push(cola.front());
-//
-//		cola.pop();
+//		{
+//			duplicados.push(cola.front());
+//			i++;
+//		}
 //	}
-//
-//	while (!negativos.empty())
-//	{
-//		cola.push(negativos.top());
-//		negativos.pop();
-//	}
-//
-//	while (!positivos.empty())
-//	{
-//		cola.push(positivos.front());
-//		positivos.pop();
-//	}
+//	return duplicados;
 //}
 //
 //
@@ -46,21 +39,20 @@
 //// configuración, y escribiendo la respuesta
 //bool resuelveCaso() {
 //	int n = 0;
-//	cin >> n;
+//	std::cin >> n;
 //
-//	if (n == 0)
+//	if (!std::cin)
 //		return false;
 //
 //	queue<int> cola;
 //
-//	for (int i = 0; i < n; i++)
+//	while (n != 0)
 //	{
-//		int e = 0;
-//		cin >> e;
-//		cola.push(e);
+//		cola.push(n);
+//		std::cin >> n;
 //	}
 //
-//	resuelve(cola);
+//	cola = resuelve(cola);
 //
 //	while (!cola.empty())
 //	{

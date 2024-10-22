@@ -129,6 +129,15 @@
     <ClCompile Include="Tema4-07.cpp">
       <Filter>Archivos de origen\Tema4</Filter>
     </ClCompile>
+    <ClCompile Include="Tema5-02.cpp">
+      <Filter>Archivos de origen\Tema5</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema5-03.cpp">
+      <Filter>Archivos de origen\Tema5</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema5-04.cpp">
+      <Filter>Archivos de origen\Tema5</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Set.h">

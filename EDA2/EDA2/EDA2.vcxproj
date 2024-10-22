@@ -160,6 +160,9 @@
     <ClCompile Include="Tema4-2.cpp" />
     <ClCompile Include="Tema4-8.cpp" />
     <ClCompile Include="Tema5-01.cpp" />
+    <ClCompile Include="Tema5-02.cpp" />
+    <ClCompile Include="Tema5-03.cpp" />
+    <ClCompile Include="Tema5-04.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Set.h" />
