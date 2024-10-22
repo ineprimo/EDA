@@ -19,15 +19,16 @@ private:
 
 public:
 
+    Hora() : s(0), m(0), h(0){}
 
     Hora(int s_, int m_, int h_) : s(s_), m(m_), h(h_) {
-        if (check(s_, m_, h_)) {
+        if (!check(s_, m_, h_)) {
             throw std::invalid_argument("ERROR");
         }
     };
 
-    Hora(Hora& h) : s(h.s), m(h.m), h(h.h) {
-        if (check(h.s, h.m, h.h)) {
+    Hora(const Hora& h) : s(h.s), m(h.m), h(h.h) {
+        if (!check(h.s, h.m, h.h)) {
             throw std::invalid_argument("ERROR");
         }
     };
@@ -80,17 +81,30 @@ std::istream& operator>>(std::istream& in, Hora& hora)
     in.ignore(1, ':');
     in >> aux3;
 
-    hora = Hora(aux1, aux2, aux3);
+    hora = Hora(aux3, aux2, aux1);
 
     return in;
 }
 
 
 // función que resuelve el problema
-void resolver(int datos) {
+void resolver(const std::vector<Hora>& datos, const Hora& tren) {
+
+    bool found = false;
+    int j = 0;
+        while (j < datos.size() && tren < datos[j]) {
+            j++;
+            //if (datos[i] > trenes[j] || datos[i] == trenes[j])
+            //    found = true;
+        }
 
 
+        // escribe cosas
 
+        if (j < datos.size()) 
+            std::cout << datos[j] << std::endl;
+        else if(j>= datos.size())
+            std::cout << "NO" << std::endl;
 
 }
 
@@ -100,23 +114,43 @@ bool resuelveCaso() {
     // leer los datos de la entrada
     int a, b;
     std::cin >> a;
-    std::cin >> a;
+    std::cin >> b;
 
     if (a == 0 && b == 0)
         return false;
 
-    std::vector<Hora> trenes(a);
-    Hora& aux;
+    std::vector<Hora> trenes;
+    Hora aux;
 
     for (int i = 0; i < a; i++) {
-        auto& = std::cin >> aux;
+       std::cin >> aux;
         trenes.push_back(aux);
     }
 
+    std::vector<Hora> datos;
 
 
-    resolver(a);
 
+    for (int i = 0; i < b; i++) {
+
+        try {
+            std::cin >> aux;
+            datos.push_back(aux);
+
+            resolver(trenes, aux);
+        }
+        catch (const std::invalid_argument& e) {
+            std::cout << e.what() << std::endl;
+
+        }
+        catch (...)
+        {
+            std::cout << "ERROR" << std::endl;
+        }
+       
+    }
+
+    std::cout << "---" << std::endl;
     // escribir sol
 
 
