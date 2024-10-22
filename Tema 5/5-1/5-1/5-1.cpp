@@ -30,7 +30,7 @@ bool equilibrado(std::string line)
 			{
 				pila.push(c);
 			}
-		}// Lo mismo para los cierres de corchetes y llaves:
+		} // Lo mismo para los cierres de corchetes y llaves:
 		else if (c == ']')
 		{
 			if (!pila.empty() && pila.top() == '[')
@@ -54,10 +54,6 @@ bool equilibrado(std::string line)
 			}
 		}
 	}
-
-
-
-
 	return pila.empty();
 }
 
