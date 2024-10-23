@@ -21,71 +21,68 @@ public:
     // Complejidad: en el peor de todos los casos 0(nelems*mult.size()), ya que tendria que hacer un bucle para recorrer el vector de multiplicacion
     // y otro para las generar cada numero
     void replicaElems(vector<int> const& mult) {
+        Nodo* it = this->prim;
+        Nodo* sig = it->sig;
+        Nodo* ant = nullptr;
+        Nodo* ult = this->ult;
 
-        Nodo* it = this->prim;    // nodo auxiliar con el nodo actual
-        Nodo* ant = nullptr;  // nodo auxiliar con el anterior
-
-        // recorre el vector mult
-        for (int i = 0; i < mult.size(); i++) {
-            if (mult[i] == 0) {
+        for (int i = 0; i < mult.size(); i++)
+        { 
+            if (mult[i] == 0)
+            {
                 // borra elem de la cola
-                Nodo* aux = it->sig;
+
+                sig = it->sig;
+
 
                 // une el nodo anterior al que queremos borrar con el siguiente al que queremos borrar,
                 // "sacandolo" de la cola
-                if(ant != nullptr)         // si no es el primero
-                    ant->sig = it->sig;
-                // si it era el primero, sig se settea como primero
-                else
-                    this->prim = it->sig;
+                ant != nullptr ? // si no es el primero
+                    ant->sig = it->sig
+                    : this->prim = it->sig; // si es el primero
+
 
                 // si el ultimo es it, se settea el anterior como ultimo
-                if (this->ult == it)
-                    this->ult == ant;
+                if (this->ult == it) 
+                    this->ult = ant;
 
                 // intercambia el primero y el siguiente
                 it->sig = this->prim;
                 this->prim = it;
-
-                // elimina el primero (anterior it)
                 this->pop();
 
-                it = aux;   // pasa al siguiente nodo
+                it = sig; // pasa al siguiente nodo
 
             }
-            else if (mult[i] > 1) {
+            else if (mult[i] == 1)
+            { 
+                // pasa al siguiente nodo
+                ant = it;
+                it = it->sig;
+            }
+            else if (mult[i] > 1)
+            { 
                 // multiplica
+                sig = it->sig;
+                ult = this->ult;
 
-                Nodo* aux = it->sig;
-                Nodo* temp = this->ult; // para intercambiar de sitio
-
-                // mete el valor de it en la cola
-                for (int j = 0; j < mult[i]-1; ++j) {
-                    this->push(it->elem);
-                }
+                for (int j = 0; j < mult[i] - 1; ++j)
+                    this->push(it->elem); 
 
                 // los cambia de sitio, como estan conectados solo hace falta modificar los nodos de los extremos
                 ant = this->ult;
-                if (aux != nullptr) {
-
-                    // cambia sig y ult de sitio
-                    it->sig = temp->sig;
-                    this->ult->sig = aux;
-
-                    this->ult = temp;
+                if (sig != nullptr)
+                {
+                    it->sig = ult->sig;
+                    this->ult->sig = sig;
+                    this->ult = ult;
                     this->ult->sig = nullptr;
                 }
-
-                it = aux;
+                it = sig;
             }
-            else {
-
-                ant = it;
-                it = it->sig;   // pasa al siguiente nodo
-            }
-
         }
     }
+    
 };
 
 
