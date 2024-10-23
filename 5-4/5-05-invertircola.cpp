@@ -1,6 +1,5 @@
-// Nombre del alumno ..... Cynthia Trist√°n
-// Usuario del Juez ...... EDA-GDV73 
-
+// Nuria Bango Iglesias
+// VJ04
 
 #include <iostream>
 #include <iomanip>
@@ -14,22 +13,23 @@ class queue_plus : public queue<T> {
 	using Nodo = typename queue<T>::Nodo;
 public:
 	void invierte() {
-		if (this->empty()) 
+		if (this->nelems == 0)
 			return;
 
-		Nodo* actual = this->prim;
-		Nodo* siguiente = actual->sig;
-		Nodo* anterior = nullptr;
+		Nodo* act = this->prim;
+		Nodo* prev = nullptr;
+		Nodo* next = nullptr;
 
-		this->ult = this->prim;
-		while (actual != nullptr)
-		{
-			siguiente = actual->sig;
-			actual->sig = anterior;
-			anterior = actual;
-			actual = siguiente;
+		this->ult = this->prim; // El ultimo nodo sera el primero
+		
+		while (act != nullptr) {
+			next = act->sig;
+			act->sig = prev;
+			prev = act;
+			act = next;
 		}
-		this->prim = anterior;
+
+		this->prim = prev; // El primer nodo es el ultimo
 	}
 };
 
@@ -46,13 +46,13 @@ bool resuelveCaso() {
 
 	q.invierte();
 
-	// escribir sol (pero antes dar una vuelta para comprobar que la cola est√° bien formada)
+	// escribir sol (pero antes dar una vuelta para comprobar que la cola est· bien formada)
 	for (int i = 0; i < q.size(); ++i) {
 		n = q.front();
 		q.pop();
 		q.push(n);
 	}
-	// ahora imprimimos la cola y de paso la dejamos vac√≠a
+	// ahora imprimimos la cola y de paso la dejamos vacÌa
 	while (!q.empty()) {
 		cout << q.front() << " ";
 		q.pop();

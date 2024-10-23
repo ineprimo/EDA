@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{96934f33-9c7c-4408-b04a-3df56f38870c}</ProjectGuid>
-    <RootNamespace>My55</RootNamespace>
+    <ProjectGuid>{47ceabf2-5ee9-4221-a6d0-7b23b229ec2e}</ProjectGuid>
+    <RootNamespace>My510</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,10 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="5-5.cpp" />
+    <ClCompile Include="5-10.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\5-4\queue_eda.h" />
+    <ClInclude Include="queue_eda.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,21 +14,35 @@ class queue_plus : public queue<T>
 	using Nodo = typename queue<T>::Nodo;
 
 public:
-	void duplica()
+	void cuela(const T& a, queue<T>& b)
 	{
 		// Ojo que para acceder a prim o ult hay que escribir this->prim o this->ult
+
 		if (this->empty()) return;
+		if (b.empty()) return;
 
 		Nodo* actual = this->prim;
-		Nodo* duplicado = nullptr;
-		while (actual != nullptr)
+
+		while (actual != nullptr && actual->elem != a)
+			actual = actual->sig;
+
+		if (actual == nullptr) return; // no esta a
+
+		Nodo* colega = b.prim;
+		int i = 0;
+		while (colega != nullptr)
 		{
-			duplicado = new Nodo(actual->elem, actual->sig);
-			actual->sig = duplicado;
-			actual = duplicado->sig;
-			++this->nelems;
+			i++;
+			colega = colega->sig;
 		}
-		this->ult = duplicado;
+
+		//// si esta a, a partir de actual se inserta b
+		b.ult->sig = actual->sig;
+		actual->sig = b.prim;
+
+		this->nelems += i;
+
+		while (!b.empty()) b.pop();
 	}
 };
 
@@ -38,33 +52,47 @@ public:
 bool resuelveCaso()
 {
 	// leer los datos de la entrada
-	int n;
-	queue_plus<int> q;
-	cin >> n;
-	if (!cin) return false;
-	while (n != 0)
+	int n, a;
+	queue_plus<int> q; // cola normal
+	queue_plus<int> c; // colegas
+	cin >> n; // n casos
+
+	for (int i = 0; i < n; i++)
 	{
-		q.push(n);
-		cin >> n;
+		int m = 0;
+		cin >> m;
+		while (m != -1)
+		{
+			q.push(m);
+			cin >> m;
+		}
+		cin >> a;
+		cin >> m;
+		while (m != -1)
+		{
+			c.push(m);
+			cin >> m;
+		}
+
+		// llamada a metodo
+		q.cuela(a, c);
+
+		// escribir sol (pero antes dar una vuelta para comprobar que la cola está bien formada)
+		for (int j = 0; j < q.size(); ++j)
+		{
+			m = q.front();
+			q.pop();
+			q.push(m);
+		}
+		// Ahora imprimimos la cola y de paso la dejamos vacía
+		while (!q.empty())
+		{
+			cout << q.front() << " ";
+			q.pop();
+		}
+		cout << endl;
 	}
 
-	// llamada a metodo
-	q.duplica();
-
-	// escribir sol (pero antes dar una vuelta para comprobar que la cola está bien formada)
-	for (int i = 0; i < q.size(); ++i)
-	{
-		n = q.front();
-		q.pop();
-		q.push(n);
-	}
-	// Ahora imprimimos la cola y de paso la dejamos vacía
-	while (!q.empty())
-	{
-		cout << q.front() << " ";
-		q.pop();
-	}
-	cout << endl;
 	return true;
 }
 
