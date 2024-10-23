@@ -3,6 +3,9 @@ Nombre completo: Denisa Juarranz Berindea
 Usuario del juez: EDA-GDV37
 */
 
+//Complejidad O(n) siendo n el número de instrucciones que se realizan según las incidencias. 
+//Siendo en el caso de 0 incidencias 1, y en las demás, el valor determinado
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -44,8 +47,6 @@ public:
                     this->nelems--;
                 }
 
-                
-    
             }
             // Una sola aparición : Lo dejamos como está
             else if (mult[i] == 1) {
