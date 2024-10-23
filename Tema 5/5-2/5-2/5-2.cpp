@@ -9,7 +9,7 @@
 #include <stack>
 
 
-// Funcion que resuelve el problema. COMPLEJIDAD: O(n), n es la longitud de la linea. Los metodos push(), empty() y pop() son constantes.
+// Funcion que resuelve el problema. COMPLEJIDAD: O(n), en verdad O(n + n) (O(2n)), siendo n el longitud de la cola inicial que se recorre 2 veces.
 void reordenar(std::queue<int>& datos)
 {
 	std::queue<int> pos; // Cola de numeros positivos, los positivos estan bien ordenados entonces queremos que al sacarlos de aqui los primeros en haber entrado sean los primeros en salir. (FiFo).
