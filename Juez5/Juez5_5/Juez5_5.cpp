@@ -1,53 +1,72 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <list>
+#include "queue_eda.h"
 using namespace std;
 
-list<int> invertirSegmento(list<int> list, int pos, int long) {
 
-}
+template <class T>
+class queue_plus : public queue<T> {
+	using Nodo = typename queue<T>::Nodo;
+public:
+	void invierte() {
+		if (this->empty())
+			return;
+
+		Nodo* actual = this->prim;
+		Nodo* siguiente = actual->sig;
+		Nodo* anterior = nullptr;
+
+		this->ult = this->prim;
+		while (actual != nullptr)
+		{
+			siguiente = actual->sig;
+			actual->sig = anterior;
+			anterior = actual;
+			actual = siguiente;
+		}
+		this->prim = anterior;
+	}
+};
 
 
-// Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
 bool resuelveCaso() {
-    // leer los datos de la entrada
-    int n, pos, longitud, elem;
-    list<int> l;
-    cin >> n;
-    if (!std::cin) return false;
-    cin >> pos >> longitud;
+	int n;
+	queue_plus<int> q;
+	cin >> n;
+	if (!cin) return false;
+	while (n != 0) {
+		q.push(n);
+		cin >> n;
+	}
 
-    // Leo la lista
-    for (int i = 0; i < n; ++i) { cin >> elem; l.push_back(elem); }
+	q.invierte();
 
-    // Llamada a la funcion pedida
-    invertirSegmento(l, pos, longitud);
-
-    // Muestro la lista
-    for (int& e : l) cout << e << " ";
-    cout << endl;
-
-    return true;
+	// escribir sol (pero antes dar una vuelta para comprobar que la cola está bien formada)
+	for (int i = 0; i < q.size(); ++i) {
+		n = q.front();
+		q.pop();
+		q.push(n);
+	}
+	// ahora imprimimos la cola y de paso la dejamos vacía
+	while (!q.empty()) {
+		cout << q.front() << " ";
+		q.pop();
+	}
+	cout << endl;
+	return true;
 }
 
-//#define DOMJUDGE
 int main() {
-    // Para la entrada por fichero.
-    // Comentar para acepta el reto
 #ifndef DOMJUDGE
-    std::ifstream in("input1.txt");
-    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+	std::ifstream in("datos.txt");
+	auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 
-    while (resuelveCaso())
-        ;
+	while (resuelveCaso());
 
-    // Para restablecer entrada. Comentar para acepta el reto
-#ifndef DOMJUDGE // para dejar todo como estaba al principio
-    std::cin.rdbuf(cinbuf);
-    system("PAUSE");
+#ifndef DOMJUDGE
+	std::cin.rdbuf(cinbuf);
 #endif
-    return 0;
+	return 0;
 }
