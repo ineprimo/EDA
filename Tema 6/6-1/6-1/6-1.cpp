@@ -7,6 +7,8 @@
 #include "bintree_eda.h"
 
 
+//------Recursion normal:
+
 template <class T>
 int nodos(bintree<T> const& tree)
 {
@@ -48,9 +50,60 @@ int hojas(bintree<T> const& tree)
 template <class T>
 int altura(bintree<T> const& tree)
 {
+	// Caso base esta vacio entonces no tiene altura.
+	if (tree.empty())
+	{
+		return 0;
+	}
+
+	// Recursion.
+	int alturaMax = std::max(altura(tree.left()), altura(tree.right())) + 1;
+	// Si es una altura entonces (sus hijos son empty), se devuelve 1. 
+	// Luego el nivel superior va a comparar el 1 con otro numero y se queda con el mayor y asi no va a dar mal.
+
+	return alturaMax;
+}
 
 
-	return 66;
+//------Con acumulador:
+
+template <class T>
+void nodosAcu(bintree<T> const& tree, int& acu)
+{
+	if (tree.empty())
+	{
+		return;
+	}
+	nodosAcu(tree.left(), acu);
+	nodosAcu(tree.right(), acu);
+	acu++;
+}
+
+template <class T>
+void hojasAcu(bintree<T> const& tree, int& acu)
+{
+	if (tree.empty())
+	{
+		return;
+	}
+	// Si su hijo izquierdo esta vacion y si hijo derecho tambien entonces es hoja.
+	if (tree.left().empty() && tree.right().empty())
+	{
+		acu++;
+	}
+	else {
+
+		hojasAcu(tree.left(), acu);
+		hojasAcu(tree.right(), acu);
+	}
+}
+
+template <class T>
+void alturaAcu(bintree<T> const& tree, int& acu)
+{
+
+
+
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -61,7 +114,23 @@ void resuelveCaso()
 	int n;
 	bintree<char> tree;
 	tree = leerArbol('.');
-	std::cout << nodos(tree) << " " << hojas(tree) << " " << altura(tree) << std::endl;
+
+
+	//------Con recursion:
+	//std::cout << nodos(tree) << " " << hojas(tree) << " " << altura(tree) << std::endl;
+
+
+	//------Con acumulador.
+
+	int acuNodos = 0;
+	int acuHojas = 0;
+	int acuAltura = 0;
+
+	nodosAcu(tree, acuNodos);
+	hojasAcu(tree, acuHojas);
+	alturaAcu(tree, acuAltura);
+
+	std::cout << acuNodos << " " << acuHojas << " " << acuAltura << std::endl;
 }
 
 
