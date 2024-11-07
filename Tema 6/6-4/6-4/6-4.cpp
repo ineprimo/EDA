@@ -4,51 +4,69 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <vector>
-#include <list>
+#include <algorithm>
 #include "bintree_eda.h"
 
-// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
+
+// COMPLEJIDAD: .
 template <class T>
-void fronteraAcu(bintree<T> const& tree, std::vector<T>& acu)
+std::pair<int, int> barrera(const bintree<T>& tree)
 {
 	// Caso base esta vacio.
 	if (tree.empty())
-	{
-		return;
-	}
+		return { -1, 0 };
 
-	// Cuando el arbol dado es hoja nos guardamos la raiz en acu.
-	if (tree.left().empty() && tree.right().empty())
-	{
-		acu.push_back(tree.root());
-	}
-	else
-	{
-		fronteraAcu(tree.left(), acu);
-		fronteraAcu(tree.right(), acu);
-	}
+
+	std::pair<int, int> sol = { 0, 0 };
+
+
+
+
+
+
+
+
+
+
+
+	return { 66, 66 };
 }
 
+bool esPrimo(int num)
+{
+	if (num < 2)
+		return false;
+
+	for (int i = 2; i < (num / 2); i++)
+	{
+		if (num % i == 0)
+			return false;
+	}
+
+	return true;
+}
+
+
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuracion, y escribiendo la respuesta
+// configuración, y escribiendo la respuesta
 void resuelveCaso()
 {
 	// leer los datos de la entrada
-	int n = 0;
+	std::pair<int, int> brr = { 0,0 };
 	bintree<int> tree;
+
 	tree = leerArbol(-1);
-	std::vector<int> result;
 
+	brr = barrera(tree);
 
-	//-----Metodo externo con recursion con acumulador:
-	fronteraAcu(tree, result);
-
-	for (int e : result)
+	if (brr.first != -1)
 	{
-		std::cout << e << " ";
+		std::cout << brr.first << " " << brr.second << std::endl;
 	}
-	std::cout << std::endl;
+	else
+	{
+		std::cout << "NO HAY" << std::endl;
+	}
 }
 
 int main()
@@ -60,12 +78,14 @@ int main()
 	auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 
-	int numCasos;
-	std::cin >> numCasos;
-	for (int i = 0; i < numCasos; ++i)
+
+	int n = 0;
+	std::cin >> n;
+	for (int i = 0; i < n; i++)
 	{
 		resuelveCaso();
 	}
+
 
 	// Para restablecer entrada. Comentar para acepta el reto
 #ifndef DOMJUDGE // para dejar todo como estaba al principio

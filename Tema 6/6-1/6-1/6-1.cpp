@@ -9,6 +9,7 @@
 
 //------Recursion normal:
 
+// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 template <class T>
 int nodos(bintree<T> const& tree)
 {
@@ -25,6 +26,7 @@ int nodos(bintree<T> const& tree)
 	return ramaIzq + ramaDer + 1; // El 1 es el propio nodo.
 }
 
+// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 template <class T>
 int hojas(bintree<T> const& tree)
 {
@@ -34,7 +36,7 @@ int hojas(bintree<T> const& tree)
 		return 0;
 	}
 
-	// Si su hijo izquierdo esta vacion y si hijo derecho tambien entonces es hoja.
+	// Si su hijo izquierdo esta vacio y su hijo derecho tambien entonces es hoja.
 	if (tree.left().empty() && tree.right().empty())
 	{
 		return 1;
@@ -47,6 +49,7 @@ int hojas(bintree<T> const& tree)
 	return ramaIzq + ramaDer;
 }
 
+// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 template <class T>
 int altura(bintree<T> const& tree)
 {
@@ -67,6 +70,7 @@ int altura(bintree<T> const& tree)
 
 //------Con acumulador:
 
+// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 template <class T>
 void nodosAcu(bintree<T> const& tree, int& acu)
 {
@@ -84,6 +88,7 @@ void nodosAcu(bintree<T> const& tree, int& acu)
 	}
 }
 
+// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 template <class T>
 void hojasAcu(bintree<T> const& tree, int& acu)
 {
@@ -105,6 +110,7 @@ void hojasAcu(bintree<T> const& tree, int& acu)
 	}
 }
 
+// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 template <class T>
 void alturaAcu(bintree<T> const& tree, int prof, int& acu)
 {
