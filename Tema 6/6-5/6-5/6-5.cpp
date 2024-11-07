@@ -44,7 +44,7 @@ void barrera(const bintree<T>& tree, int& num, int profAux, int& profAcu, bool& 
 		return;
 	}
 
-
+	// Se guarda el numero si es multiplo de 7, todavia no se ha encontrado otro multiplo o
 	if ((tree.root() % 7) == 0 && (!encontrado || profAux < profAcu))
 	{
 		encontrado = true;
