@@ -20,7 +20,7 @@ bool esPrimo(int num) {
 }
 
 
-pair <int,int> accesible(bintree<int> const& tree, int& valor, int& nivel) {
+pair <int,int> accesible(bintree<int> const& tree, int& nivel) {
 
     
     int num = tree.root();    //De primeras el primer numero es el menor
@@ -43,14 +43,14 @@ pair <int,int> accesible(bintree<int> const& tree, int& valor, int& nivel) {
 
         if (!tree.left().empty())
         {
-            _left = accesible(tree.left(), valor, nivel);
+            _left = accesible(tree.left(), nivel);
             nivel--;
 
         }
 
         if (!tree.right().empty()) {
 
-            _right = accesible(tree.right(), valor, nivel);
+            _right = accesible(tree.right(), nivel);
             nivel--;
         }
         
@@ -92,14 +92,12 @@ void resuelveCaso() {
     // leer los datos de la entrada
     pair<int, int> Resultado (-1, -1);
     int nivel = 0;
-    int valor = 0;
     bintree<int> tree;
 
     tree = leerArbol(-1);
 
     if (!tree.empty()) {
-        valor = tree.root();
-        Resultado = accesible(tree, valor, nivel);
+        Resultado = accesible(tree, nivel);
     }
 
     if (Resultado.first == -1) {
