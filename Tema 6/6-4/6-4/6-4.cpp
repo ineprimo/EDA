@@ -19,18 +19,15 @@ bool esPrimo(int num)
 	{
 		if (num % i == 0)
 		{
-			//std::cout << num << "no primo" << std::endl;
 			return false;
 		}
 	}
-
-	//std::cout << num << "primo" << std::endl;
 	return true;
 }
 
-// COMPLEJIDAD: .
+// COMPLEJIDAD: O(n + raiz m)? siendo n el numero de elementos del arbol y m el numero a saber si es primo.
 template <class T>
-void barrera(const bintree<T>& tree, int& num, int profAux, int& profAcu, bool& encontrado)
+void barrera(const bintree<T>& tree, int& num, int profAux, int& profAct, bool& encontrado)
 {
 	// Caso base esta vacio.
 	if (tree.empty())
@@ -38,33 +35,32 @@ void barrera(const bintree<T>& tree, int& num, int profAux, int& profAcu, bool& 
 		return;
 	}
 
-	// Si el numero es primo entonces hay una barrera y no se sigue por esa rama.
+	// No se sigue si el numero es primo pues es ina barrera.
 	if (esPrimo(tree.root()))
 	{
 		return;
 	}
 
-
-	if ((tree.root() % 7) == 0 && (!encontrado || profAux < profAcu))
+	// Se guarda el numero si es multiplo de 7, todavia no se ha encontrado otro multiplo y estamos mas cerca de la raiz (profAux < profAct).
+	if ((tree.root() % 7) == 0 && (!encontrado || profAux < profAct))
 	{
-		encontrado = true;
-		num = tree.root();
-		profAcu = profAux;
+		encontrado = true; // Lo hemos encontrado.
+		num = tree.root(); // lo guardamos.
+		profAct = profAux;
 	}
 
-	//std::cout << prof << "---" << profAcu << std::endl;
-
-	if (!encontrado || profAux + 1 < profAcu)
+	// Se sigue mirando si no se ha encontrado y estamos mas cerca de la raiz.
+	if (!encontrado || profAux + 1 < profAct)
 	{
-		barrera(tree.left(), num, profAux + 1, profAcu, encontrado);
-		barrera(tree.right(), num, profAux + 1, profAcu, encontrado);
+		barrera(tree.left(), num, profAux + 1, profAct, encontrado);
+		barrera(tree.right(), num, profAux + 1, profAct, encontrado);
 	}
 
 	return;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
+// configuracion, y escribiendo la respuesta
 void resuelveCaso()
 {
 	// leer los datos de la entrada

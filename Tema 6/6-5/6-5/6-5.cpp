@@ -8,83 +8,25 @@
 #include "bintree_eda.h"
 
 
-bool esPrimo(int num)
-{
-	if (num < 2)
-	{
-		return false;
-	}
-
-	for (int i = 2; i * i <= num; ++i)
-	{
-		if (num % i == 0)
-		{
-			//std::cout << num << "no primo" << std::endl;
-			return false;
-		}
-	}
-
-	//std::cout << num << "primo" << std::endl;
-	return true;
-}
-
 // COMPLEJIDAD: .
 template <class T>
-void barrera(const bintree<T>& tree, int& num, int profAux, int& profAcu, bool& encontrado)
+void busqueda(const bintree<T>& tree)
 {
-	// Caso base esta vacio.
-	if (tree.empty())
-	{
-		return;
-	}
 
-	// Si el numero es primo entonces hay una barrera y no se sigue por esa rama.
-	if (esPrimo(tree.root()))
-	{
-		return;
-	}
-
-	// Se guarda el numero si es multiplo de 7, todavia no se ha encontrado otro multiplo o
-	if ((tree.root() % 7) == 0 && (!encontrado || profAux < profAcu))
-	{
-		encontrado = true;
-		num = tree.root();
-		profAcu = profAux;
-	}
-
-	//std::cout << prof << "---" << profAcu << std::endl;
-
-	if (!encontrado || profAux + 1 < profAcu)
-	{
-		barrera(tree.left(), num, profAux + 1, profAcu, encontrado);
-		barrera(tree.right(), num, profAux + 1, profAcu, encontrado);
-	}
-
-	return;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
+// configuracion, y escribiendo la respuesta
 void resuelveCaso()
 {
-	// leer los datos de la entrada
 	bintree<int> tree;
-	int num = -1;
-	int prof = 1;
-	bool encontrado = false;
 
 	tree = leerArbol(-1);
 
-	barrera(tree, num, prof, prof, encontrado);
+	busqueda(tree);
 
-	if (encontrado)
-	{
-		std::cout << num << " " << prof << std::endl;
-	}
-	else
-	{
-		std::cout << "NO HAY" << std::endl;
-	}
+	std::cout << "TO DO" << std::endl;
+
 }
 
 int main()
