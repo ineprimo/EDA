@@ -7,11 +7,12 @@
 #include "bintree_eda.h"
 using namespace std;
 
-bool esPrimo(int num, int divisor) {
+bool esPrimo(int num) {
 	if (num <= 1) return false;
-	if (divisor * divisor > num) return true;
-	if (num % divisor == 0)return false;
-	return esPrimo(num, divisor + 1);
+	for (int i = 2; i * i <= num; ++i) {
+		if (num % i == 0) return false;
+	}
+	return true;
 }
 
 // complejidad O(n) para n=elementos del arbol
@@ -20,11 +21,11 @@ T mult7(bintree<T> const& tree, int& prof) {
 	if (tree.empty())return 0;
 	if (tree.right().empty() && tree.left().empty())
 	{
-		return  (tree.root() > 7 && tree.root() % 7 == 0) ? tree.root() : 0;
+		return  (tree.root() % 7 == 0) ? tree.root() : 0;
 	}
-	if (esPrimo(tree.root(), 2)) return 0;
+	if (esPrimo(tree.root())) return 0;
 
-	T m7 = (tree.root() > 7 && tree.root() % 7 == 0) ? tree.root() : 0;
+	T m7 = (tree.root() % 7 == 0) ? tree.root() : 0;
 	int rightProf = prof + 1, leftProf = prof + 1;
 
 	if (!tree.left().empty()) {
@@ -51,14 +52,17 @@ bool resuelveCaso() {
 	// leer los datos de la entrada
 	char tipo;
 
-	bintree<int> tree = leerArbol(int(-1));
-	int profundidad = 0;
-	int multiplo = mult7(tree, profundidad);
-	if (multiplo != 0)
-		cout << multiplo << " " << profundidad << endl;
-	else
-		cout << "NO HAY" << endl;
+	bintree<int> tree = leerArbol(int(-1)); // lee el árbol
+	int mejorProfundidad = 1;
+	int mejorMultiplo = mult7(tree, mejorProfundidad);
 
+	// Buscamos el múltiplo de 7 más cercano a la raíz
+	if (mejorMultiplo > 0) {
+		cout << mejorMultiplo << " " << mejorProfundidad << endl;
+	}
+	else {
+		cout << "NO HAY" << endl;
+	}
 	return true;
 }
 
