@@ -165,8 +165,11 @@
     <ClCompile Include="Tema5-04.cpp" />
     <ClCompile Include="Tema5-05.cpp" />
     <ClCompile Include="Tema5-10.cpp" />
+    <ClCompile Include="Tema6-01.cpp" />
+    <ClCompile Include="Tema6-02.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bintree_eda.h" />
     <ClInclude Include="Set.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

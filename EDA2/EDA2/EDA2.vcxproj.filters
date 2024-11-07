@@ -28,6 +28,9 @@
     <Filter Include="Archivos de origen\Tema5">
       <UniqueIdentifier>{a6be609a-af47-4f2e-8572-54ed902ddcc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Tema6">
+      <UniqueIdentifier>{f2cb2795-1dde-48ae-9a4a-383b33553d28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tema0-1.cpp">
@@ -144,9 +147,18 @@
     <ClCompile Include="Tema5-10.cpp">
       <Filter>Archivos de origen\Tema5</Filter>
     </ClCompile>
+    <ClCompile Include="Tema6-01.cpp">
+      <Filter>Archivos de origen\Tema6</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema6-02.cpp">
+      <Filter>Archivos de origen\Tema6</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Set.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="bintree_eda.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
