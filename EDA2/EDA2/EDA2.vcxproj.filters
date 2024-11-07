@@ -153,6 +153,9 @@
     <ClCompile Include="Tema6-02.cpp">
       <Filter>Archivos de origen\Tema6</Filter>
     </ClCompile>
+    <ClCompile Include="Tema6-03.cpp">
+      <Filter>Archivos de origen\Tema6</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Set.h">
