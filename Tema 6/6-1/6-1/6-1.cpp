@@ -70,18 +70,24 @@ int altura(bintree<T> const& tree)
 template <class T>
 void nodosAcu(bintree<T> const& tree, int& acu)
 {
+	// Caso base esta vacio.
 	if (tree.empty())
 	{
 		return;
 	}
-	nodosAcu(tree.left(), acu);
-	nodosAcu(tree.right(), acu);
-	acu++;
+	else
+	{
+		// Recursion con acumulador.
+		nodosAcu(tree.left(), acu);
+		nodosAcu(tree.right(), acu);
+		acu++;
+	}
 }
 
 template <class T>
 void hojasAcu(bintree<T> const& tree, int& acu)
 {
+	// Caso base esta vacio.
 	if (tree.empty())
 	{
 		return;
@@ -91,19 +97,29 @@ void hojasAcu(bintree<T> const& tree, int& acu)
 	{
 		acu++;
 	}
-	else {
-
+	else
+	{
+		// Recursion con acumulador.
 		hojasAcu(tree.left(), acu);
 		hojasAcu(tree.right(), acu);
 	}
 }
 
 template <class T>
-void alturaAcu(bintree<T> const& tree, int& acu)
+void alturaAcu(bintree<T> const& tree, int prof, int& acu)
 {
-
-
-
+	if (tree.empty())
+	{
+		if (prof > acu)
+		{
+			acu = prof;
+		}
+	}
+	else
+	{
+		alturaAcu(tree.left(), prof + 1, acu);
+		alturaAcu(tree.right(), prof + 1, acu);
+	}
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -111,16 +127,16 @@ void alturaAcu(bintree<T> const& tree, int& acu)
 void resuelveCaso()
 {
 	// leer los datos de la entrada
-	int n;
+	int n = 0;
 	bintree<char> tree;
 	tree = leerArbol('.');
 
 
-	//------Con recursion:
-	//std::cout << nodos(tree) << " " << hojas(tree) << " " << altura(tree) << std::endl;
+	//------Con recursion normal:
+	std::cout << nodos(tree) << " " << hojas(tree) << " " << altura(tree) << std::endl;
 
 
-	//------Con acumulador.
+	/*//------Con recursion con acumulador.
 
 	int acuNodos = 0;
 	int acuHojas = 0;
@@ -128,9 +144,9 @@ void resuelveCaso()
 
 	nodosAcu(tree, acuNodos);
 	hojasAcu(tree, acuHojas);
-	alturaAcu(tree, acuAltura);
+	alturaAcu(tree, 0, acuAltura);
 
-	std::cout << acuNodos << " " << acuHojas << " " << acuAltura << std::endl;
+	std::cout << acuNodos << " " << acuHojas << " " << acuAltura << std::endl;*/
 }
 
 
