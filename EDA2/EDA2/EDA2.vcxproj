@@ -168,6 +168,7 @@
     <ClCompile Include="Tema6-01.cpp" />
     <ClCompile Include="Tema6-02.cpp" />
     <ClCompile Include="Tema6-03.cpp" />
+    <ClCompile Include="Tema6-04.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bintree_eda.h" />
