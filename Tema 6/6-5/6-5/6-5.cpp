@@ -8,7 +8,6 @@
 #include "bintree_eda.h"
 
 
-
 // COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 template <class T>
 bool busquedaAux(const bintree<T>& tree, int min, int max)
@@ -19,51 +18,15 @@ bool busquedaAux(const bintree<T>& tree, int min, int max)
 		return true;
 	}
 
+	// No es de busqueda si el elemnto es menor que el minimo anterior o mayor que el maximo anterior.
 	if (tree.root() <= min || tree.root() >= max)
 	{
+		//std::cout << "Mentira: " << tree.root() << " > " << min << " || " << tree.root() << " < " << max << std::endl;
 		return false;
 	}
 
+	// Calcular sus arboles hijos izquierdo y derecho.
 	return busquedaAux(tree.left(), min, tree.root()) && busquedaAux(tree.right(), tree.root(), max);
-
-
-
-	/*// Auxiliares. Suponemos que lo son de busqueda.
-	bool esBusquedaIzq = true; // Auxiliar para guardar si el brazo izquierdo es de busqueda.
-	bool esBusquedaDer = true; // Auxiliar para guardar si el brazo derecho es de busqueda.
-
-	// Rama izquierda. Solo si no esta vacia.
-	if (!tree.left().empty())
-	{
-		// Miramos si su hijo es de busqueda si cumple que es menor que sus elemento anteriores y que el elemento de su hijo izquierdo es menor que el propio.
-		if (tree.root() <= min && tree.root() > tree.left().root())
-		{
-			esBusquedaIzq = busquedaAux(tree.left(), min, max);
-		}
-		else // Sino no lo puede ser.
-		{
-			esBusquedaIzq = false;
-			std::cout << "Mentira: " << tree.root() << " <= " << min << " && " << tree.root() << " > " << tree.left().root() << std::endl;
-		}
-	}
-
-	// Rama derecha. Solo si no esta vacia.
-	if (!tree.right().empty())
-	{
-		// Miramos si su hijo es de busqueda si cumple que es mayor que sus elemento anteriores y que el elemento de su hijo derecho es mayor que el propio.
-		if (tree.root() >= max && tree.root() < tree.right().root())
-		{
-			esBusquedaDer = busquedaAux(tree.right(), min, max);
-		}
-		else // Sino no lo puede ser.
-		{
-			//std::cout << "Mentira: " << tree.root() << " >= " << max << " && " << tree.root() << " < " << tree.right().root() << std::endl;
-			esBusquedaDer = false;
-		}
-	}
-
-	// Es de busqueda si ambos hijos son de busqueda.
-	return esBusquedaIzq && esBusquedaDer;*/
 }
 
 // COMPLEJIDAD: O(1) solo se llama la primera vez.
@@ -76,8 +39,8 @@ bool busqueda(const bintree<T>& tree, int min, int max)
 		return true;
 	}
 
-	// Normalmente en los ejercios pone suponiendo enteros entre 1 y 5000. Pues ahi estan.
-	min = 1;
+	// Normalmente en los ejercios pone suponiendo enteros entre 0 y 5000. Pues ahi estan.
+	min = 0;
 	max = 5000;
 
 	return busquedaAux(tree, min, max);
