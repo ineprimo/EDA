@@ -24,19 +24,20 @@ std::pair<int, int> navegables(const bintree<int> tree) // Sease pair.first el n
 	std::pair<int, int> der = navegables(tree.right());
 
 	int riosNav = izq.first + der.first;
-	int nuevoCaudal = 0;
+	int caudalFinal = 0;
+	int nuevoCaudal = izq.second + der.second - tree.root();
 
-	if ((izq.second + der.second - tree.root()) >= 3) // Un rio es navegable si su caudal es 3.
+	if (nuevoCaudal >= 3) // Un rio es navegable si su caudal es 3.
 	{
 		//std::cout << "Navegables++ con caudal: " << izq.second + der.second - tree.root() << std::endl;
 		riosNav++;
 	}
-	if ((izq.second + der.second - tree.root()) >= 0) // Un caudal puede ser igual o mayor a 0.
+	if (nuevoCaudal >= 0) // Un caudal puede ser igual o mayor a 0.
 	{
-		nuevoCaudal = izq.second + der.second - tree.root();
+		caudalFinal = nuevoCaudal;
 	}
 
-	return { riosNav ,nuevoCaudal };
+	return { riosNav ,caudalFinal };
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la

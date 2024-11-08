@@ -6,7 +6,7 @@
 #include "bintree_eda.h"
 
 // COMPLEJIDAD: .
-void atrapados(const bintree<int> tree)
+void rescate(const bintree<int> tree)
 {
 
 
