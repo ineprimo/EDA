@@ -1,19 +1,83 @@
-// Tema6-9.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
+// Ines Primo Lopez
+// EDA-GDV61
+
 
 #include <iostream>
+#include <fstream>
+#include "bintree_eda.h"
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+
+// complejidad O(n) lineal porque hacer un recorrido de todos los nodos del arbol, siento n el numero de elementos del arbol
+pair<int, int> resuelve(bintree<int> datos) {
+
+    // casos base
+    if (datos.empty()) {
+        return { 0, 0 };
+    }
+
+    // divide et impera?
+    // right tree
+    pair<int, int> right = resuelve(datos.right());
+    // left tree
+    pair<int, int> left = resuelve(datos.left());
+
+    // mira si sus hijos tienen rescate, si no, devuelve el rescate
+    if (datos.root() != 0 && right.first == 0 && left.first == 0)
+        return { 1, datos.root()};
+
+
+    // merge
+    pair<int, int> merge;
+
+    // merge de equipos
+    merge.first = right.first + left.first;
+    merge.first = right.first + left.first;
+
+    // merge de max
+    if (right.second > left.second) merge.second = right.second;
+    else merge.second = left.second;
+    merge.second += datos.root();
+
+    // return
+    return merge;
 }
 
-// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
-// Depurar programa: F5 o menú Depurar > Iniciar depuración
 
-// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
-//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
-//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
-//   4. Use la ventana Lista de errores para ver los errores
-//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
-//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+void resuelveCaso() {
+    bintree<int> arb;
+    arb = leerArbol(-1); // -1 es la repr. de arbol vacio
+
+    //
+    pair<int, int> sol = resuelve(arb);
+
+    cout << sol.first << " " << sol.second << endl;
+
+
+}
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}
+
