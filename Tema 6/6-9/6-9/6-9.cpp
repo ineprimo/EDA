@@ -14,12 +14,33 @@ std::pair<int, int> atrapados(const bintree<int> tree) // Sease pair.first el nu
 		return { 0, 0 };
 	}
 	// Caso es base de la montanya, los hijos estan vacios.
-	if (tree.left().empty() && tree.right().empty()) 
+	if (tree.left().empty() && tree.right().empty())
+	{
+		if (tree.root() == 0)
+		{
+			return{ 0, 0 };
+		}
+		else
+		{
+			return{ 1, tree.root() };
+		}
+	}
+
+	std::pair<int, int> izq = atrapados(tree.left());
+	std::pair<int, int> der = atrapados(tree.right());
+
+	int sumaRescates = izq.first + der.first;
+	int excursionistasTotal = 0;
+	int excursionistasIzq = izq.second;
+	int excursionDerecha = der.second;
+
+	if ()
 	{
 
 	}
 
 
+	return{ sumaRescates, excursionistasTotal };
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
