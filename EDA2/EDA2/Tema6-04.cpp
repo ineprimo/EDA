@@ -53,7 +53,7 @@
 //	char tipo;
 //
 //	bintree<int> tree = leerArbol(int(-1)); // lee el árbol
-//	int mejorProfundidad = 1;
+//	int mejorProfundidad = ;
 //	int mejorMultiplo = mult7(tree, mejorProfundidad);
 //
 //	// Buscamos el múltiplo de 7 más cercano a la raíz
