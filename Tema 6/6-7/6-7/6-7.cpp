@@ -5,6 +5,7 @@
 #include <fstream>
 #include "bintree_eda.h"
 
+
 // COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 std::pair<int, int> navegables(const bintree<int> tree) // Sease pair.first el numero de rios navegables y pair.second el caudal.
 {
