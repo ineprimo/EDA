@@ -14,6 +14,7 @@ struct tsol {
 	int perAtrapados; // numero de excursionistas en la rama
 	bool hayExc; // si hay excursionistas en la rama
 };
+
 tsol excursionistas(bintree<int> const&arbol) {
 
 	if (arbol.empty()) {
