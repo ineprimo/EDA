@@ -18,7 +18,7 @@ void navegables(bintree<T> const& tree, int& navegables, int& caudal) {
     }
     
     //Si hay derecha e izquierda vacías, habrá un caudal, pero no será navegable
-    if (tree.left().empty && tree.right().empty()) {
+    if (tree.left().empty() && tree.right().empty()) {
         caudal = 1;
         navegables = 0;
         return;
