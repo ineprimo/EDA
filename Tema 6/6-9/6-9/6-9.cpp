@@ -6,9 +6,18 @@
 #include "bintree_eda.h"
 
 // COMPLEJIDAD: .
-void rescate(const bintree<int> tree)
+std::pair<int, int> atrapados(const bintree<int> tree) // Sease pair.first el numero de equipos de rescate y pair.second el mayor numero de excursionistas rescatados por un equipo.
 {
+	// Caso base esta vacio.
+	if (tree.empty())
+	{
+		return { 0, 0 };
+	}
+	// Caso es base de la montanya, los hijos estan vacios.
+	if (tree.left().empty() && tree.right().empty()) 
+	{
 
+	}
 
 
 }
@@ -21,6 +30,8 @@ void resuelveCaso()
 
 	tree = leerArbol(-1); // -1 es la repr. de arbol vacio
 
+	std::pair<int, int> sol = atrapados(tree);
+	std::cout << sol.first << " " << sol.second << std::endl;
 }
 
 int main()
