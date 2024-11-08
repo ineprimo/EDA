@@ -7,11 +7,69 @@
 
 
 // COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
-void navegables(const bintree<std::string> tree)
+std::pair<std::string, int> enanos(const bintree<std::string> tree) // Sease pair.first el lider del grupo y pair.second el numero de enanos.
 {
+	// Caso base esta vacio.
+	if (tree.empty())
+	{
+		return{ "", 0 };
+	}
+	// Caso es hoja, devolvemos, si lo hay, el enano y sumamos integrante.
+	if (tree.left().empty() && tree.right().empty())
+	{
+		if (tree.root() != "-")
+		{
+			return{ tree.root(), 1 };
+		}
+		else
+		{
+			return { "", 0 };
+		}
+	}
 
+	std::pair<std::string, int> izq = enanos(tree.left());
+	std::pair<std::string, int> der = enanos(tree.right());
 
+	int sumaEnanos = izq.second + der.second;
+	std::string nuevoLider = "";
+	std::string liderIzq = izq.first;
+	std::string liderDer = der.first;
 
+	// Si los dos grupos son iguales entonces se queda con el lider menor segun < . 
+	if (izq.second == der.second)
+	{
+		if (liderIzq < liderDer)
+		{
+			nuevoLider = liderIzq;
+		}
+		else
+		{
+			nuevoLider = liderDer;
+		}
+	}
+	else // Sino se elige al lider del grupo mas numeroso.
+	{
+		if (izq.second > der.second)
+		{
+			nuevoLider = liderIzq;
+		}
+		else
+		{
+			nuevoLider = liderDer;
+		}
+	}
+	// Cuando se encuentran con un orco y son mas que 0.
+	if (tree.root() == "Orcos" && sumaEnanos > 0)
+	{
+		sumaEnanos = sumaEnanos / 2; // Reducimos a la mitad los enanos.
+		// Si se queda sin enanos no hay lider.
+		if (sumaEnanos == 0)
+		{
+			nuevoLider = "";
+		}
+	}
+
+	return { nuevoLider, sumaEnanos };
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -20,8 +78,19 @@ void resuelveCaso()
 {
 	bintree<std::string> tree;
 
-	tree = leerArbol((std::string)"."); // -1 es la repr. de arbol vacio
+	tree = leerArbol((std::string)"."); // -1 es la repr. de arbol vacio.
 
+	std::pair<std::string, int> sol = enanos(tree);
+
+	// Si no hay enanos pues se es
+	if (sol.second == 0)
+	{
+		std::cout << "Ninguno" << std::endl;
+	}
+	else
+	{
+		std::cout << sol.first << " " << sol.second << std::endl;
+	}
 }
 
 int main()
