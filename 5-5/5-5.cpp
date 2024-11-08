@@ -10,11 +10,14 @@ using namespace std;
 
 
 template <class T>
-class queue_plus : public queue<T> {
+class queue_plus : public queue<T>
+{
 	using Nodo = typename queue<T>::Nodo;
+
 public:
-	void invierte() {
-		if (this->empty()) 
+	void invierte()
+	{
+		if (this->empty())
 			return;
 
 		Nodo* actual = this->prim;
@@ -34,12 +37,14 @@ public:
 };
 
 
-bool resuelveCaso() {
+bool resuelveCaso()
+{
 	int n;
 	queue_plus<int> q;
 	cin >> n;
 	if (!cin) return false;
-	while (n != 0) {
+	while (n != 0)
+	{
 		q.push(n);
 		cin >> n;
 	}
@@ -47,13 +52,15 @@ bool resuelveCaso() {
 	q.invierte();
 
 	// escribir sol (pero antes dar una vuelta para comprobar que la cola está bien formada)
-	for (int i = 0; i < q.size(); ++i) {
+	for (int i = 0; i < q.size(); ++i)
+	{
 		n = q.front();
 		q.pop();
 		q.push(n);
 	}
 	// ahora imprimimos la cola y de paso la dejamos vacía
-	while (!q.empty()) {
+	while (!q.empty())
+	{
 		cout << q.front() << " ";
 		q.pop();
 	}
@@ -61,7 +68,8 @@ bool resuelveCaso() {
 	return true;
 }
 
-int main() {
+int main()
+{
 #ifndef DOMJUDGE
 	std::ifstream in("datos.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf());

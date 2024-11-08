@@ -24,14 +24,16 @@ public:
 		Nodo* ultimo = this->ult;
 
 		for (int i = 0; i < mult.size(); i++)
-		{ // Si mult[i] = 0 entonces el elemento i-ésimo se elimina de la cola q.
+		{
+			// Si mult[i] = 0 entonces el elemento i-ésimo se elimina de la cola q.
 			if (mult[i] == 0)
 			{
 				siguiente = actual->sig;
 
-				anterior != nullptr ? // si no es el primero
+				anterior != nullptr
+					? // si no es el primero
 					anterior->sig = actual->sig
-				: this->prim = actual->sig; // si es el primero
+					: this->prim = actual->sig; // si es el primero
 
 				if (this->ult == actual) // si es el ultimo
 					this->ult = anterior;
@@ -43,22 +45,25 @@ public:
 				actual = siguiente;
 			}
 			else if (mult[i] == 1)
-			{ // Si mult[i] = 1 entonces el elemento i-ésimo de q se queda como estaba.
+			{
+				// Si mult[i] = 1 entonces el elemento i-ésimo de q se queda como estaba.
 				anterior = actual;
 				actual = actual->sig;
 			}
 			else if (mult[i] > 1)
-			{ // Si mult[i] = v, siendo v > 1, entonces se añaden v - 1
+			{
+				// Si mult[i] = v, siendo v > 1, entonces se añaden v - 1
 				// copias tras el elemento i-ésimo de q.
 				siguiente = actual->sig;
 				ultimo = this->ult;
 
-				for (int j = 0; j < mult[i] - 1; ++j) 
+				for (int j = 0; j < mult[i] - 1; ++j)
 					this->push(actual->elem); // se anaden al final
 
 				anterior = this->ult;
 				if (siguiente != nullptr)
-				{ // se actualizan las relaciones
+				{
+					// se actualizan las relaciones
 					actual->sig = ultimo->sig;
 					this->ult->sig = siguiente;
 					this->ult = ultimo;

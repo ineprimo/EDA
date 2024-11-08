@@ -16,7 +16,8 @@ bool resolver(std::string linea)
 {
 	std::stack<char> pila;
 
-	for (char c : linea) {
+	for (char c : linea)
+	{
 		if (c == '(' || c == '[' || c == '{')
 			pila.push(c);
 		else if (c == ')')
