@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="6-7.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bintree_eda.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
