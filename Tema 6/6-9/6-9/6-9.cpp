@@ -5,7 +5,7 @@
 #include <fstream>
 #include "bintree_eda.h"
 
-// COMPLEJIDAD: .
+// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
 std::pair<int, int> atrapados(const bintree<int> tree) // Sease pair.first el numero de equipos de rescate y pair.second el mayor numero de excursionistas rescatados por un equipo.
 {
 	// Caso base esta vacio.
@@ -32,13 +32,25 @@ std::pair<int, int> atrapados(const bintree<int> tree) // Sease pair.first el nu
 	int sumaRescates = izq.first + der.first;
 	int excursionistasTotal = 0;
 	int excursionistasIzq = izq.second;
-	int excursionDerecha = der.second;
+	int excursionistasDer = der.second;
 
-	if ()
+	// Si hay excursionistas en el nodo y todavia no han sido rescatados.
+	if (tree.root() != 0 && sumaRescates == 0)
 	{
-
+		sumaRescates += 1;
+		excursionistasTotal = tree.root();
 	}
 
+	// Para quedarnos con el mayor numero de excursionistas que ha rescatado un equipo de rescate.
+	if (excursionistasIzq > excursionistasDer)
+	{
+		excursionistasTotal = excursionistasIzq;
+	}
+	else
+	{
+		excursionistasTotal = excursionistasDer;
+	}
+	excursionistasTotal += tree.root(); // Por si se encuentran mas excursionistas.
 
 	return{ sumaRescates, excursionistasTotal };
 }
