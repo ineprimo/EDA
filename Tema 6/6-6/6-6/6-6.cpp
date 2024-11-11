@@ -43,11 +43,10 @@ void resuelveCaso()
 {
 	bintree<char> tree;
 
-	tree = leerArbol('.'); // -1 es la repr. de arbol vacio.
+	tree = leerArbol('.'); // '.' es la representacion de arbol vacio.
 
-	std::pair<int, bool>  sol = zurdo(tree);
+	std::pair<int, bool> sol = zurdo(tree);
 
-	// Si no hay enanos pues se es
 	if (sol.second)
 	{
 		std::cout << "SI" << std::endl;
