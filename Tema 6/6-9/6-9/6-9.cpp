@@ -6,7 +6,8 @@
 #include "bintree_eda.h"
 
 // COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
-std::pair<int, int> atrapados(const bintree<int> tree) // Sease pair.first el numero de equipos de rescate y pair.second el mayor numero de excursionistas rescatados por un equipo.
+// Sease pair.first el numero de equipos de rescate y pair.second el mayor numero de excursionistas rescatados por un equipo.
+std::pair<int, int> atrapados(const bintree<int> tree)
 {
 	// Caso base esta vacio.
 	if (tree.empty())

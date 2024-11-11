@@ -18,10 +18,9 @@ bool busquedaAux(const bintree<T>& tree, int min, int max)
 		return true;
 	}
 
-	// No es de busqueda si el elemnto es menor que el minimo anterior o mayor que el maximo anterior.
+	// No es de busqueda si el elemento es menor que el minimo anterior o mayor que el maximo anterior.
 	if (tree.root() <= min || tree.root() >= max)
 	{
-		//std::cout << "Mentira: " << tree.root() << " > " << min << " || " << tree.root() << " < " << max << std::endl;
 		return false;
 	}
 

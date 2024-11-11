@@ -7,7 +7,8 @@
 
 
 // COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
-std::pair<std::string, int> enanos(const bintree<std::string> tree) // Sease pair.first el lider del grupo y pair.second el numero de enanos.
+// Sease pair.first el lider del grupo y pair.second el numero de enanos.
+std::pair<std::string, int> enanos(const bintree<std::string> tree)
 {
 	// Caso base esta vacio.
 	if (tree.empty())

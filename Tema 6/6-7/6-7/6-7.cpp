@@ -7,7 +7,8 @@
 
 
 // COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol.
-std::pair<int, int> navegables(const bintree<int> tree) // Sease pair.first el numero de rios navegables y pair.second el caudal.
+// Sease pair.first el numero de rios navegables y pair.second el caudal.
+std::pair<int, int> navegables(const bintree<int> tree)
 {
 	// PAIGRO AQUI: este es el codigo del entregable del anyo pasado. Seguro hay otra solucion.
 	// Caso base esta vacio.
