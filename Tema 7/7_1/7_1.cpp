@@ -5,7 +5,7 @@
 #include <list>
 using namespace std;
 
-using TablaRefs = ...
+using TablaRefs = map<string, list<int>>;
 
 void referencias(int numLineas, TablaRefs& refs) {
     string palabra;
@@ -15,8 +15,25 @@ void referencias(int numLineas, TablaRefs& refs) {
         while (c != '\n') {
             cin.unget(); // Se vuelve a dejar c en cin (por si era la 1ª letra de la linea)
             cin >> palabra;
-            ...
-                cin.get(c);
+
+            //Solo tenemos en cuenta palabras mayores de 2
+            if (palabra.size() > 1) {
+
+                //Vemos si la palabra está o no está en el mapa
+                auto it = refs.find(palabra);
+
+                if (it == refs.end()) { //si la palabra no está todavia, la insertamos
+                    list<int> lis;
+                    lis.push_back(numLinea);
+                    refs.insert({ palabra, lis });
+                }
+                else {  //Si ya esta anadimos la linea a la lista
+                    refs[palabra].push_back(numLinea);
+                }
+            }
+
+            cin.get(c);
+            
         }
     }
 }
@@ -37,7 +54,19 @@ bool resuelveCaso() {
     referencias(n, refs);
 
     // escribir sol
-    ...
+    // par: <string, int>
+    for (auto par : refs) {
+        //Escribimos la palabra
+        cout << par.first << " ";
+
+        //Escribimos la lista de lineas
+        for (auto lis : par.second) {
+            cout << lis << " ";
+        }
+
+        //Hacemos salto de linea
+        cout << "\n";
+    }
         cout << "---\n";
     return true;
 
