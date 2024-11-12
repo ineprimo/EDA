@@ -13,20 +13,23 @@ public:
     void invierte() {
         // caso base
 
-        this->ult = invierteaux(this->prim);
+        if (this->nelems > 0) {
+            this->ult = invierteaux(this->prim);
+            this->ult->sig = nullptr;
+        }
 
     }
 
     Nodo* invierteaux(Nodo* node) {
         // caso base
-        if (node->sig == nullptr)
+        if (node->sig == nullptr) {
+            this->prim = node;
             return node;
+        }
 
         //
         Nodo* bot = invierteaux(node->sig);
         bot->sig = node;
-
-
 
         return node;
 
