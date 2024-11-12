@@ -12,7 +12,7 @@
 template <class T>
 T minimo(const bintree<T>& tree)
 {
-	T min = tree.root();
+	/*T min = tree.root();
 
 	// Caso es hoja se devuelve min.
 	if (tree.left().empty() && tree.right().empty())
@@ -40,7 +40,28 @@ T minimo(const bintree<T>& tree)
 		}
 	}
 
-	return min;
+	return min;*/
+
+	// o:
+
+	// Si no hay caso base del arbol vacio o no se tiene claro que puede devolver pasar a este esquema.
+	// Caso es hoka no tiene hijos.
+	if (tree.left().empty() && tree.right().empty())
+	{
+		return tree.root();
+	}
+	else if (tree.left().empty()) // Caso solo tiene hijo derecho.
+	{
+		return std::min({ minimo(tree.right()), tree.root() });
+	}
+	else if (tree.right().empty()) // caso solo tiene hijo derecho.
+	{
+		return std::min({ minimo(tree.left()), tree.root() });
+	}
+	else // Caso tiene ambos hijos.
+	{
+		return std::min({ minimo(tree.left()), minimo(tree.right()), tree.root() });
+	}
 }
 
 
