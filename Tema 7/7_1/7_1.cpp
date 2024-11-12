@@ -17,7 +17,11 @@ void referencias(int numLineas, TablaRefs& refs) {
             cin >> palabra;
 
             //Solo tenemos en cuenta palabras mayores de 2
-            if (palabra.size() > 1) {
+            if (palabra.size() > 2) {
+
+                //Convertimos la palabra en minuscula
+                for (auto& c : palabra)
+                    c = tolower(c);
 
                 //Vemos si la palabra está o no está en el mapa
                 auto it = refs.find(palabra);
@@ -28,6 +32,8 @@ void referencias(int numLineas, TablaRefs& refs) {
                     refs.insert({ palabra, lis });
                 }
                 else {  //Si ya esta anadimos la linea a la lista
+                    //Si el ultimo numero no es la linea actual anadimos
+                    if(refs[palabra].back() != numLinea)
                     refs[palabra].push_back(numLinea);
                 }
             }
