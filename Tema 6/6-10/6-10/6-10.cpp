@@ -18,6 +18,7 @@ std::pair<std::string, int> enanos(const bintree<std::string> tree)
 	// Caso es hoja, devolvemos, si lo hay, el enano y sumamos integrante.
 	if (tree.left().empty() && tree.right().empty())
 	{
+		// No hace falta esto porque siempre en las hojas hay enenaos pero por si acaso nunca se sabe.
 		if (tree.root() != "-")
 		{
 			return{ tree.root(), 1 };
@@ -83,7 +84,7 @@ void resuelveCaso()
 
 	std::pair<std::string, int> sol = enanos(tree);
 
-	// Si no hay enanos pues se es
+	// Si no hay enanos pues se escribe ninguno.
 	if (sol.second == 0)
 	{
 		std::cout << "Ninguno" << std::endl;
