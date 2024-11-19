@@ -21,6 +21,8 @@ map <string, int> resolver(string const& primerDeporte, ...) {
         deporte = alumno;
     }
 
+    
+
     return lista;
 }
 
@@ -33,11 +35,12 @@ bool resuelveCaso() {
     cin >> primerDeporte;
     if (!cin) return false;
 
-    map<string, int> sol = resolver(primerDeporte);
+    map<string, map <string, int>> sol;// = resolver(primerDeporte);
     
     //Escribimos la solucion
     for (auto par : sol) {
-        cout << par.first << " " << par.second << endl;
+        //Siendo size el numero de gente que hay en el deporte
+        cout << par.first << " " << par.second.size() << endl;
     }
         cout << "---\n";
     return true;

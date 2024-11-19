@@ -1,19 +1,86 @@
-// 7_4.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <map>
+#include <vector>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+
+int maxDias(vector<int>& datos) {
+    //Hacemos un mapa que guarde el capitulo y el indice en el que se encuentra
+    map <int, int> caps;
+    int maxD = 0;
+    int cont = 0;
+    int i = 0;
+
+     while (i < datos.size()) {
+
+        //Buscamos el dato actual en el mapa
+        auto it = caps.find(datos[i]);
+
+        if (it == caps.end()) {
+            //Nos guardamos los datos en el mapa
+            caps.insert({ datos[i], i });
+        }
+        else {
+
+            //Cuando el dato ya se encuentra en el mapa
+            //El capitulo se esta repitiendo
+            //La cadena se rompe por lo que debe empezar de nuevo
+            //Desde el numero que se ha repetido original +1 hasta el numero actual lo añadimos al mapa
+            if (caps.size() > maxD) maxD = caps.size();
+            i = it->second;
+            caps.clear();
+        }
+        i++;
+     }
+
+     if (caps.size() > maxD) maxD = caps.size();
+
+
+    return maxD;
 }
 
-// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
-// Depurar programa: F5 o menú Depurar > Iniciar depuración
+void resuelveCaso() {
 
-// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
-//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
-//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
-//   4. Use la ventana Lista de errores para ver los errores
-//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
-//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
+    //Leemos los datos de entrada
+    int n = 0;
+    int d = 0;
+    cin >> n;
+
+    vector<int> datos;
+
+    for (int i = 0; i < n; i++) {
+        cin >> d;
+        datos.push_back(d);
+    }
+   
+    int sol = maxDias(datos);
+
+    //Escribimos la solucion
+    cout << sol << endl;
+}
+
+
+int main() {
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+
+    int numCasos; char c;
+    std::cin >> numCasos;
+    cin.get(c);
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
+
+    // Para restablecer entrada. Comentar para acepta el reto
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
+#endif
+
+    return 0;
+}
