@@ -1,7 +1,3 @@
-// Ines Primo Lopez
-// EDA-GDV61
-
-
 #include <iostream>
 #include <fstream>
 #include "bintree_eda.h"
@@ -9,56 +5,52 @@ using namespace std;
 
 
 // complejidad O(n) lineal porque hacer un recorrido de todos los nodos del arbol, siento n el numero de elementos del arbol
-pair<int, int> resuelve(bintree<int> datos) {
+std::pair<int, int> resuelve(bintree<char> datos) {
 
     // casos base
     if (datos.empty()) {
-        return { 0, 0 };
+        return {0,0};
     }
     else if (datos.right().empty() && datos.left().empty()) {
-        return { 0, 1 };
+        return {1,1};
     }
 
-    // right tree
-    pair<int, int> right = resuelve(datos.right());
-    // left tree
-    pair<int, int> left = resuelve(datos.left());
+    // right left
+    std::pair<int, int> right = resuelve(datos.right());
+    std::pair<int, int> left = resuelve(datos.left());
 
-    // merge
-    pair<int, int> merge = { 0, 0 };
+    // comp
+    std::pair<int, int> sol = { 0,0 };
 
-    // caudal
-    int total = right.second + left.second;
-    merge.second = total - datos.root();
+    // diametro en este caso
+    int dia = right.second + left.second + 1;
 
-    merge.first = right.first + left.first;
-    // tramos recorribles
-    if(merge.second >= 3)
-        merge.first++;
+    // calcula el diametro actual mas largo
+    if (right.first >= dia) sol.first = right.first;
+    else if (left.first >= dia) sol.first = left.first;
+    else sol.first = dia;
 
-    if (merge.second < 0)
-        merge.second = 0;
+    // calcula el diametro (parcial) mas largo actual
+    if (right.second >= left.second) sol.second = right.second + 1;
+    else sol.second = left.second + 1;
 
-    // return
-    return merge;
+    // sol
+    return sol;
+
 }
 
 
 
-// Resuelve un caso de prueba, leyendo de la entrada la
+
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
-    bintree<int> arb;
-    arb = leerArbol(-1); // -1 es la repr. de arbol vacio
+    bintree<char> arb;
+    arb = leerArbol('.'); // '.' es la repr. de arbol vacio
 
-    //
-    pair<int, int> sol1 = resuelve(arb.right());
-    pair<int, int> sol2 = resuelve(arb.left());
+    std::pair<int, int> sol = resuelve(arb);
 
-    // sol || caudales
-    cout << sol1.first + sol2.first << endl;
-
-
+    std::cout << sol.first << std::endl;
+    
 }
 
 int main() {

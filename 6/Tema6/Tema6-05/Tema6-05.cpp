@@ -1,7 +1,3 @@
-// Ines Primo Lopez
-// EDA-GDV61
-
-
 #include <iostream>
 #include <fstream>
 #include "bintree_eda.h"
@@ -9,55 +5,47 @@ using namespace std;
 
 
 // complejidad O(n) lineal porque hacer un recorrido de todos los nodos del arbol, siento n el numero de elementos del arbol
-pair<int, int> resuelve(bintree<int> datos) {
-
+pair<bool, int> resuelve(bintree<int> datos) {
     // casos base
     if (datos.empty()) {
-        return { 0, 0 };
+        return { true,  -1 };
     }
     else if (datos.right().empty() && datos.left().empty()) {
-        return { 0, 1 };
+        return { true, datos.root() };
     }
 
-    // right tree
-    pair<int, int> right = resuelve(datos.right());
-    // left tree
-    pair<int, int> left = resuelve(datos.left());
+    //
+    pair<bool, int> right = resuelve(datos.right());
+    pair<bool, int> left = resuelve(datos.left());
 
-    // merge
-    pair<int, int> merge = { 0, 0 };
 
-    // caudal
-    int total = right.second + left.second;
-    merge.second = total - datos.root();
+    pair<bool, int> sol = {true, datos.root()};
+    if (right.first && left.first) {
+        if (!(left.second < datos.root() < right.second)) {
+            sol.first = false;
+        }
+    }
+    else sol.first = false;
 
-    merge.first = right.first + left.first;
-    // tramos recorribles
-    if(merge.second >= 3)
-        merge.first++;
+    return sol;
 
-    if (merge.second < 0)
-        merge.second = 0;
 
-    // return
-    return merge;
 }
 
 
 
-// Resuelve un caso de prueba, leyendo de la entrada la
+
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     bintree<int> arb;
-    arb = leerArbol(-1); // -1 es la repr. de arbol vacio
+    arb = leerArbol(-1); // '.' es la repr. de arbol vacio
 
-    //
-    pair<int, int> sol1 = resuelve(arb.right());
-    pair<int, int> sol2 = resuelve(arb.left());
+    pair<bool, int> sol = resuelve(arb);
 
-    // sol || caudales
-    cout << sol1.first + sol2.first << endl;
-
+    string aux;
+    if (sol.first) aux = "SI";
+    else aux = "NO";
+    std::cout << aux << std::endl;
 
 }
 
