@@ -8,7 +8,7 @@
 #include <list>
 
 
-using TablaRefs = std::map<std::string, int>;
+using TablaRefs = std::map < std::string, std::list<int>>;
 
 void referencias(int numLineas, TablaRefs& refs)
 {
@@ -17,23 +17,49 @@ void referencias(int numLineas, TablaRefs& refs)
 	for (int numLinea = 1; numLinea <= numLineas; numLinea++) {
 		std::cin.get(c);
 		while (c != '\n') {
-			std::cin.unget(); // Se vuelve a dejar c en cin (por si era la 1ª letra de la linea)
+			std::cin.unget(); // Se vuelve a dejar c en cin (por si era la 1a letra de la linea)
 			std::cin >> palabra;
-			...
-				std::cin.get(c);
+
+			if (palabra.size() > 2) // Solo palabras con mas de 2 letras.
+			{
+				// Todo en minusculas.
+				for (auto& l : palabra)
+				{
+					l = tolower(l);
+				}
+
+				// Para ver si la palabra esta ya o no en el mapa.
+				auto it = refs.find(palabra);
+
+				// Casos si esta o no esta:
+				if (it == refs.end()) // No esta si el it apunta al final de refs asi que la metemos junto con la linea.
+				{
+					std::list<int>aux;
+					aux.push_back(numLinea);
+					refs.insert({ palabra,aux });
+				}
+				else // Si ya esta le metemos la linea en la que se ha repedito si esa informacion no esta ya metida.
+				{
+					if (refs[palabra].back() != numLinea)
+					{
+						refs[palabra].push_back(numLinea);
+					}
+				}
+			}
+			std::cin.get(c);
 		}
 	}
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
+// configuracion, y escribiendo la respuesta
 bool resuelveCaso()
 {
 	// leer los datos de la entrada
 	int n;
 	char c;
 	std::cin >> n;
-	std::cin.get(c); // Me salto el \n de detrás del N
+	std::cin.get(c); // Me salto el \n de detras del N
 	if (n == 0)
 	{
 		return false;
@@ -43,9 +69,16 @@ bool resuelveCaso()
 	referencias(n, refs);
 
 	// escribir sol
-	for (int i = 0; i < refs.size(); i++)
+	for (auto par : refs)
 	{
-		std::cout<<refs
+		std::cout << par.first << " ";
+
+		for (auto lis : par.second)
+		{
+			std::cout << lis << " ";
+		}
+
+		std::cout << std::endl;
 	}
 	std::cout << "---\n";
 	return true;

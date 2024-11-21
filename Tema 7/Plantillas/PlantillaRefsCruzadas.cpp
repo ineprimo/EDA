@@ -33,7 +33,7 @@ bool resuelveCaso()
 	int n;
 	char c;
 	std::cin >> n;
-	std::cin.get(c); // Me salto el \n de detrás del N
+	std::cin.get(c); // Me salto el \n de detras del N
 	if (n == 0)
 	{
 		return false;
