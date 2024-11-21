@@ -27,7 +27,7 @@ std::map<std::string, int> resolver(std::string const& primerDeporte)
 			auto itALum = alumnos.find(alumno);
 			if (itALum == alumnos.end())
 			{
-				alumnos.insert({ alumno,deporte });
+				alumnos.insert({ alumno, deporte });
 			}
 			else // Si ya esta entonces hay que comprobar mas cosas.
 			{
@@ -51,7 +51,7 @@ std::map<std::string, int> resolver(std::string const& primerDeporte)
 			std::cin >> alumno;
 		}
 
-		deportes.insert({ deporte,nAlums });
+		deportes.insert({ deporte, nAlums });
 		nAlums = 0;
 		deporte = alumno;
 	}
@@ -77,7 +77,7 @@ bool resuelveCaso()
 	std::multimap<int, std::string, std::greater<int>> deportesOrdenados;
 	for (auto d : deportes)
 	{
-		deportesOrdenados.insert({ d.second,d.first });
+		deportesOrdenados.insert({ d.second, d.first });
 	}
 
 	// Escribir:
