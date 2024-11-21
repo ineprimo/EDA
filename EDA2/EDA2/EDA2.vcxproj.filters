@@ -31,6 +31,9 @@
     <Filter Include="Archivos de origen\Tema6">
       <UniqueIdentifier>{f2cb2795-1dde-48ae-9a4a-383b33553d28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Tema7">
+      <UniqueIdentifier>{ada0ce48-9bc7-4d0e-a944-cae6eadfa7d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tema0-1.cpp">
@@ -171,8 +174,8 @@
     <ClCompile Include="Tema6-10.cpp">
       <Filter>Archivos de origen\Tema6</Filter>
     </ClCompile>
-    <ClCompile Include="6-10.cpp">
-      <Filter>Archivos de origen\Tema6</Filter>
+    <ClCompile Include="Tema7-01.cpp">
+      <Filter>Archivos de origen\Tema7</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
