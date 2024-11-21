@@ -10,7 +10,7 @@
 
 int resolver(std::vector<int>& datos)
 {
-	std::map<int, int> rachaCaps; // Mapa que guarda el capitulo y nada mas.
+	std::map<int, int> rachaCaps; // Mapa que guarda el capitulo y el indice en el vector.
 	int racha = 0;
 
 	for (int i = 0; i < datos.size(); i++)
@@ -19,7 +19,7 @@ int resolver(std::vector<int>& datos)
 		auto it = rachaCaps.find(datos[i]);
 		if (it == rachaCaps.end()) // Si no ha salido lo metemos.
 		{
-			rachaCaps.insert({ datos[i], 1 });
+			rachaCaps.insert({ datos[i], i });
 		}
 		else // Si estan repitiendo el episodio entonces se rompe la racha.
 		{
@@ -27,10 +27,11 @@ int resolver(std::vector<int>& datos)
 			{
 				racha = rachaCaps.size();
 			}
+			i = it->second; // Para que la cuenta de racha empiece a contar desde el episodio que rompio la racha.
 			rachaCaps.clear(); // Lo vaciamos porque se ha roto la racha.
 		}
 	}
-	return rachaCaps.size() > racha ?  rachaCaps.size() : racha;
+	return rachaCaps.size() > racha ?  rachaCaps.size() : racha; // Yo probando no usar ifs. No me gusta, o si ns...
 }
 
 void resuelveCaso()
