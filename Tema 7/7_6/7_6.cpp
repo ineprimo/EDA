@@ -3,7 +3,9 @@
 #include <fstream>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <utility>
+#include <stack>
 using namespace std;
 
 
@@ -37,17 +39,19 @@ void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas) {
 }
 
 
-void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& secEmisiones) {
+map<pair<Pelicula, int>, pair<int, map<Actor, int>>>
+procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& secEmisiones) {
     
-    map<pair<Pelicula, int>, pair<Actor, int>> sol;
+    map<pair<Pelicula, int>, pair<int, map<Actor, int>>> sol;
     //Primero recorremos el vector de emisiones
     //Nos guardamos cuantas veces aparece cada una
 
     pair<Pelicula, int> solP = { "", 0 };
-    map <Pelicula, int> solPeli;
+    unordered_map <Pelicula, int> solPeli;
 
     pair<Actor, int> solA = { "",0 };
     map<Actor, int> solActor;
+    map<Actor, int> solutionA;
 
     int cont = 0;
 
@@ -63,8 +67,10 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
 
             for (auto j : i->second) {
 
-                //Metemos a los actores y su tiempo
-                solActor.insert({ j.first, j.second });
+                //Sumamos a los actores el tiempo de la pelicula
+                auto a = solActor.find(j.first);
+                if (a != solActor.end())a->second += j.second;
+                else solActor.insert({ j.first, j.second });
             }
         }
         else 
@@ -79,12 +85,12 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
                 a->second += j.second;
             }
         }
-    }
 
-    for (auto i : solPeli) {
-        if (solP.second < i.second) {
-            solP.first = i.first;
-            solP.second = i.second;
+        it = solPeli.find(emi);
+
+        if (it->second >= solP.second) {
+            solP.second = it->second;
+            solP.first = it->first;
         }
     }
 
@@ -93,8 +99,18 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
         if (solA.second < i.second) {
             solA.first = i.first;
             solA.second = i.second;
+            solutionA.clear();
+        }
+        else if (solA.second == i.second){
+            solutionA.insert(i);
         }
     }
+    solutionA.insert({ solA.first, solA.second });
+    
+    pair<int, map<Actor, int>> s = { solA.second, solutionA };
+    sol.insert({ solP, s });
+
+    return sol;
 }
 
 
@@ -103,6 +119,7 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
 bool resuelveCaso() {
     // leer los datos de la entrada
     int numPelis, numEmisiones;
+    map<pair<Pelicula, int>, pair<int, map<Actor, int>>> sol;
     cin >> numPelis;
 
     if (numPelis == 0)
@@ -117,12 +134,23 @@ bool resuelveCaso() {
     vector<string> secEmisiones(numEmisiones);
     for (string& s : secEmisiones) cin >> s;
 
-    procesarEmisiones(repartos, secEmisiones);
+    sol = procesarEmisiones(repartos, secEmisiones);
 
     //Escribimos el resultado
-    for (auto par : repartos) cout << par.first << " " << par.second << "\n";
+    for (auto par : sol) {
 
-    cout << "---------\n";
+        cout << "\n" << par.first.second << " " << par.first.first << "\n";
+
+        //Del segundo escribimos el primero
+        cout << par.second.first;
+
+        //Escribimos la lista de nombres
+        for (auto actor : par.second.second) {
+            cout << " " << actor.first;
+        }
+    }
+
+    cout << "\n";
 
     return true;
 }
