@@ -44,7 +44,10 @@ void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas)
 // (si varias pelis que se han emitido el mismo num max de veces, se muestra la ultima emitida)
 // linea 2) el max tiempo que ha aparecido un actor en pantalla + " " + actores que han aparecido ese tiempo max en orden alfabetico
 
-// Complejidad: 
+// Complejidad: N*(logP+logA)+A*logA
+// N -> num de peliculas emitidas en total (tam secEmisiones)
+// P -> num de peliculas ofertadas
+// A -> num de actores en plantilla
 void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& secEmisiones) 
 {
     // ---- pelis y num de emisiones
