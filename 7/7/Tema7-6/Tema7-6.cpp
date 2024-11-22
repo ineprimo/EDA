@@ -3,7 +3,6 @@
 #include <fstream>
 #include <vector>
 #include <map>
-#include <unordered_map>
 using namespace std;
 
 
@@ -16,6 +15,8 @@ using RepartosPeliculas = map<string, vector<Actor>>; //
 using Solution = map<pair<Pelicula, int>, pair<int, map<string, int>>>;
 
 
+
+// Complejidad: cuadratica n^2 ya que se anidan recorridos entre las peliculas y el reparto
 void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas) {
 
 
@@ -50,7 +51,7 @@ void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas) {
 
 
      pair<Pelicula, int> sol_peliculas = { "", 0 };
-     unordered_map <Pelicula, int> pelis;
+     map <Pelicula, int> pelis;
 
      pair<string, int> sol_actores_aux = { "",0 };
      map<string, int> actores;
