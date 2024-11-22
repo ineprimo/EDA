@@ -68,60 +68,9 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
                 a[aux[j].first] += aux[j].second;
             }
         }
-
     }
 
-    // ----- ACTOR ----
-    // mapa con el nombre del actor y su screen time
-    map<string, int> screentime;
-
-
-    // cuenta actores
-    it = emisiones.begin();
-    while (it != emisiones.end()) {
-
-        // saca el iterador de los actores de la peli
-        string peli = it->first;
-        auto it_actors = repartos.find(peli);
-
-        // ACTORES
-        int n_actores = it_actors->second.size();
-        for (int i = 0; i < n_actores; i++) {
-
-            string a_name = it_actors->second[i].first;
-            int a_min = it_actors->second[i].second;
-            auto ac = screentime.find(a_name);
-
-
-            if (ac == screentime.end()) {
-                screentime.insert({a_name, a_min * it->second });
-            }
-            else {
-                ac->second = ac->second * it->second;
-            }
-        }
-
-        it_actors = repartos.end();
-        it++;
-    }
-
-
-    // COMPARA
-
-    string peliMayor;
-    auto it = peli.begin();
-    peliMayor = (*it).first;
-    while (it != peli.end())
-    {
-        if (peli[peliMayor] < (*it).second) {
-            peliMayor = (*it).first;
-        }
-
-        it++;
-    }
-
-
-
+   
 }
 
 
