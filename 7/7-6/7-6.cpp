@@ -1,5 +1,6 @@
 // Nieves Alonso Gilsanz
 
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -8,7 +9,7 @@
 using namespace std;
 
 using Pelicula = string;
-using Peliculas = map<Pelicula, int>; // pelicula y las veces que se repiten
+using Peliculas = map<Pelicula, pair<int, int>>; // pelicula y las veces que se repiten y la antiguedad
 using Nombre = string;
 using Actor = pair<string, float>;    // nombre, min por peli
 using Actores = map<string, float>;   // nombre, min totales
@@ -22,10 +23,9 @@ void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas)
 
     Actor actor;    // nombre de actor y minutos
 
-    vector<Actor> actores; // vector auxiliar de actores
-
     for (int i = 0; i < numPeliculas; ++i) 
     {
+		vector<Actor> actores; // vector auxiliar de actores
         cin >> peli; cin >> numActores;
         
         for (int j = 0; j < numActores; ++j) 
@@ -53,11 +53,12 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
     {
         if (!pelis.count(secEmisiones[i]))
         {
-            pelis.insert({secEmisiones[i], 1});
+            pelis.insert({secEmisiones[i], {1, i}});
         }
         else 
         {
-            pelis[secEmisiones[i]]++;
+            pelis[secEmisiones[i]].first++;
+            pelis[secEmisiones[i]].second = i;
         }
     }
 
@@ -67,9 +68,9 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
     auto itP = pelis.begin();
     while (itP != pelis.end()) 
     {
-        if (pelis[maxPeliTit] < itP->second)
+        if ((pelis[maxPeliTit].first < itP->second.first) || (pelis[maxPeliTit].first == itP->second.first && itP->second.second > pelis[maxPeliTit].second))
         {
-            maxPeli = itP->second;
+            maxPeli = itP->second.first;
             maxPeliTit = itP->first;
         }
         itP++;
@@ -77,48 +78,59 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
 
     // ---- actores
     Actores actores;
+
     auto itA = actores.begin();
-
-    for (int i = 0; i < secEmisiones.size(); i++)
+    for (int i = 0; i < secEmisiones.size(); ++i)
     {
-        vector<Actor> vec = (*repartos.find(secEmisiones[i])).second;
+        vector<Actor> vec = repartos.find(secEmisiones[i])->second;
 
-        for (auto v : vec)
+        for (int j = 0; j < vec.size(); j++)
         {
-            if (!actores.count(v.first))
+            if (!actores.count(vec[j].first))
             {
-                actores.insert({ v.first , v.second}); // mete al actor
+                actores.insert({ vec[j].first , vec[j].second }); // mete al actor
             }
             else
             {
-                actores[v.first] += v.second; // suma minutos al actor
+                actores[vec[j].first] += vec[j].second; // suma minutos al actor
             }
         }
     }
 
     // ---- num max de minutos
-    float maxActor = 0; // num max de min de un actor
+    int maxActor = 0; // num max de min de un actor
     vector<Nombre> vecNom; // vector de actores con el num max de minutos
     itA = actores.begin();
-    while (itA != actores.end())
+    for (auto a : actores)
     {
-        if (maxActor < itA->second) 
+        if (itA->second > maxActor)
         {
-            vecNom.clear();
             maxActor = itA->second;
-            vecNom.push_back(itA->first);
         }
-        else if (maxActor == itA->second)
-        {
-            vecNom.push_back(itA->first);
-        }
-
         itA++;
     }
 
+    itA = actores.begin();
+    for (auto a : actores)
+    {
+        if (itA->second == maxActor)
+        {
+            vecNom.push_back(itA->first);
+        }
+        itA++;
+    }
+
+    sort(vecNom.begin(), vecNom.end());
+
     // ---- salida
     cout << maxPeli << " " << maxPeliTit << endl;
-    cout << maxActor << endl;
+    cout << maxActor << " ";
+
+    for(int i = 0; i < vecNom.size(); i++)
+    {
+        cout << vecNom[i] << " ";
+    }
+    cout << endl;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
