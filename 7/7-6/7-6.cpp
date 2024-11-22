@@ -77,46 +77,42 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
 
     // ---- actores
     Actores actores;
+    auto itA = actores.begin();
 
-    auto it = pelis.begin();
-
-    for (int i = 0; i < secEmisiones.size(); ++i)
+    for (int i = 0; i < secEmisiones.size(); i++)
     {
         vector<Actor> vec = (*repartos.find(secEmisiones[i])).second;
 
-        for (int j = 0; j < vec.size(); j++)
+        for (auto v : vec)
         {
-            if (!actores.count(vec[j].first))
+            if (!actores.count(v.first))
             {
-                actores.insert({ vec[j].first , vec[j].second}); // mete al actor
+                actores.insert({ v.first , v.second}); // mete al actor
             }
             else
             {
-                actores[vec[j].first] += vec[j].second; // suma minutos al actor
+                actores[v.first] += v.second; // suma minutos al actor
             }
         }
     }
 
     // ---- num max de minutos
-    int maxActor = 0; // num max de min de un actor
+    float maxActor = 0; // num max de min de un actor
     vector<Nombre> vecNom; // vector de actores con el num max de minutos
-    auto itA = actores.begin();
-    for (auto a : actores)
-    {
-        if (itA->second > maxActor)
-        {
-            maxActor = itA->second;
-        }
-        itA++;
-    }
-
     itA = actores.begin();
-    for (auto a : actores)
+    while (itA != actores.end())
     {
-        if (itA->second == maxActor) 
+        if (maxActor < itA->second) 
+        {
+            vecNom.clear();
+            maxActor = itA->second;
+            vecNom.push_back(itA->first);
+        }
+        else if (maxActor == itA->second)
         {
             vecNom.push_back(itA->first);
         }
+
         itA++;
     }
 
