@@ -1,0 +1,19 @@
+2
+pelicula1 3
+actor1 10 actor2 30 actor3 5
+pelicula2 2
+actor1 10 actor4 30
+3
+pelicula2 pelicula2 pelicula1
+4
+pelicula1 3
+actor3 5 actor1 10 actor2 20
+pelicula3 1
+actor5 40
+pelicula4 1
+actor1 40
+pelicula2 2
+actor1 10 actor4 15
+5
+pelicula2 pelicula1 pelicula2 pelicula3 pelicula1
+0
