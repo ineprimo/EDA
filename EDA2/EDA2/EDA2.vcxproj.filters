@@ -180,6 +180,12 @@
     <ClCompile Include="Tema7-02.cpp">
       <Filter>Archivos de origen\Tema7</Filter>
     </ClCompile>
+    <ClCompile Include="Tema7-03.cpp">
+      <Filter>Archivos de origen\Tema7</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema7-06.cpp">
+      <Filter>Archivos de origen\Tema7</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Set.h">
