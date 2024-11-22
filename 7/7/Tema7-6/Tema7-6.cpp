@@ -8,6 +8,7 @@ using namespace std;
 
 using Actor = pair<string, int>;        // nombre mins
 using Pelicula = map<string, int>; // nombre emision
+using Actores = map<string, int>; // nombre emision
 
 using RepartosPeliculas = map<string, vector<Actor>>; //
 
@@ -15,7 +16,7 @@ using RepartosPeliculas = map<string, vector<Actor>>; //
 void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas) {
 
     int numActores;
-    Actor actor; 
+    Actor actor;
     string nombreA, nombreP;
     int min;
     vector<Actor> aux;
@@ -25,15 +26,15 @@ void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas) {
         cin >> nombreP;        // titulo de la pelicula
         cin >> numActores;  // numero de actores en la pelicula
 
-       // peli.first = nombreP;
-        // rellena el vector de actores
+        // peli.first = nombreP;
+         // rellena el vector de actores
         for (int j = 0; j < numActores; ++j) {
             cin >> nombreA >> min;
             Actor a = Actor(nombreA, min);
 
             aux.push_back(a);
         }
-        peliculas.insert({nombreP, aux});
+        peliculas.insert({ nombreP, aux });
         aux.clear();
 
     }
@@ -44,25 +45,30 @@ void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas) {
 
 
 void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& secEmisiones) {
-    
+
     // ----- PELI -----
     // pelicula mas emitida + veces emitida
     Pelicula p;      // Pelicula mas emitida
-    map<Pelicula, int> emisiones;    // contador de numero de emisiones
-
-    // CUENTA LAS PELICULAS
-    int j = 0;
-    while (j < secEmisiones.size()) {
-        
-        // si no esta registrado en emisiones
-        auto e = emisiones.find(secEmisiones[j]);
-        if (e == emisiones.end())
-            // se registra
-            emisiones.insert({ secEmisiones[j], 1});
+    for (int i = 0; i < secEmisiones.size(); i++) {
+        if (p.count(secEmisiones[i]))
+            p.insert({ secEmisiones[i], 1 });
         else
-            // añade al contador
-            e->second++;
-        j++;
+            p[secEmisiones[i]]++;
+    }
+
+    Actores a;
+    for (int i = 0; i < secEmisiones.size(); i++) {
+
+        vector<Actor> aux = (repartos.find(secEmisiones[i]))->second;
+        for (int j = 0; j > aux.size(); j++) {
+            if (!a.count(aux[j].first)){
+                a.insert(aux[j]); // {aux[j].first, aux[j].second}
+            }
+            else {
+                a[aux[j].first] += aux[j].second;
+            }
+        }
+
     }
 
     // ----- ACTOR ----
