@@ -1,4 +1,6 @@
-﻿#include <iostream>
+﻿// Andres Garcia Navarro
+// EDA-GDV27
+#include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <vector>
@@ -6,57 +8,65 @@
 #include <algorithm>
 using namespace std;
 
-// pelicula, veces emitida
-using Pelicula = map<string, float>;
-// actor, tiempo en pantalla
-using Actor = pair<string, float>;
-// pelicula, vector de actores en la pelicula
-using RepartosPeliculas = map <string, vector<Actor>>;
-// actor, minutos en pantalla
-using Actores = map<string, float>;
+// Nombre pelicula | veces emitida | antiguedad
+using Pelicula = map<string, pair<int, int>>;
+// Nombre actor | tiempo en pantalla
+using Actor = map<string, float>;
+// Nombre pelicula | vector de actores en la pelicula
+using RepartosPeliculas = map <string, Actor>;
 
-
+// complejidad O(n*m) donde n es el numero de peliculas y m el numero de actores
 void leerRepartos(int numPeliculas, RepartosPeliculas& peliculas) {
 	string peli; int numActores;
 	string actor; int minutos;
 	for (int i = 0; i < numPeliculas; ++i) {
 		cin >> peli; cin >> numActores;
-		vector<Actor> actores;
+		Actor actores;
 		for (int j = 0; j < numActores; ++j) {
 			cin >> actor >> minutos;
-			actores.push_back({ actor, minutos });
+			actores.insert({ actor, minutos });
 		}
 		peliculas.insert({ peli, actores });
 	}
 }
 
-// complejudad del algoritmo O(n*logn) donde n son el numero de elementos de secEmisiones
+// complejidad del algoritmo es O(n*(logp+loga)+a*loga)
+// donde "n" es el numero de emisiones, 
+// "p" son las peliculas totales sin repeticiones,
+// y "a" la cantidad de actores sin repeticiones
 void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& secEmisiones) {
+	// calculo de peliculas, veces que se repiten y antiguedad
 	Pelicula peli;
-	for (auto e : secEmisiones) {
-		if (!peli.count(e))
-			peli.insert({ e,1 });
+	for (int i = 0; i < secEmisiones.size(); i++) {
+		if (!peli.count(secEmisiones[i]))
+		{
+			peli.insert({ secEmisiones[i],{1,i} });
+		}
 		else
-			peli[e]++;
+		{
+			peli[secEmisiones[i]].first++;
+			peli[secEmisiones[i]].second = i;
+		}
 	}
 
+	// escoge pelicula mas emitida y mas recientemente emitida
 	string peliMayor;
 	auto it = peli.begin();
 	peliMayor = (*it).first;
 	while (it != peli.end())
 	{
-		if (peli[peliMayor] < (*it).second) {
+		if (peli[peliMayor].first < (*it).second.first || (peli[peliMayor].first == (*it).second.first && peli[peliMayor].second < (*it).second.second)) {
 			peliMayor = (*it).first;
 		}
 
 		it++;
 	}
 
-	Actores actores;
+	// Guardamos en un mapa de actores la cantidad de minutos que han salido en pantalla
+	Actor actores;
 	for (int i = 0; i < secEmisiones.size(); i++)
 	{
-		vector<Actor> vec = (*repartos.find(secEmisiones[i])).second;
-		for (auto e : vec)
+		for (auto e : (*repartos.find(secEmisiones[i])).second)
 		{
 			if (!actores.count(e.first))
 				actores.insert({ e.first,e.second });
@@ -65,7 +75,7 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
 		}
 	}
 
-	// numero de actores 
+	// Escogemos al actor con mas minutos, a varios actores si todos tienen los mismos minutos
 	vector<string> actoresMayor;
 	float tMax = 0;
 	auto itA = actores.begin();
@@ -84,8 +94,11 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
 		itA++;
 	}
 
+	// ordenamos alfabeticamente si hay varios actores con el mismo minutaje
 	sort(actoresMayor.begin(), actoresMayor.end(), [](const string& a, const string& b) {return a < b; /* Orden descendente por valor*/		});
-	cout << peli[peliMayor] << " " << peliMayor << endl;
+	
+	// imprimimos por consola la solucion
+	cout << peli[peliMayor].first << " " << peliMayor << endl;
 	cout << tMax;
 
 	for (auto a : actoresMayor) {
