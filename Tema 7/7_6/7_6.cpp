@@ -43,8 +43,11 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
     //Primero recorremos el vector de emisiones
     //Nos guardamos cuantas veces aparece cada una
 
-    pair<Pelicula, int> solP;
+    pair<Pelicula, int> solP = { "", 0 };
     map <Pelicula, int> solPeli;
+
+    pair<Actor, int> solA = { "",0 };
+    map<Actor, int> solActor;
 
     int cont = 0;
 
@@ -52,21 +55,44 @@ void procesarEmisiones(RepartosPeliculas const& repartos, vector<string> const& 
 
         auto it = solPeli.find(emi);
 
-        if (it == solPeli.end()) {
-            solPeli.insert({ emi, 1 });
-        }
-        else { it->second++; }
-    }
+        //Buscamos el reparto de la peli
+        auto i = repartos.find(emi);
 
-    //Buscamos la pelicula que se repita mas
-    auto it = solPeli.begin();
-    solP.first = it->first;
-    solP.second = it->second;
+        if (it == solPeli.end()) {  //La peli aparece por primera vez
+            solPeli.insert({ emi, 1 });
+
+            for (auto j : i->second) {
+
+                //Metemos a los actores y su tiempo
+                solActor.insert({ j.first, j.second });
+            }
+        }
+        else 
+        {
+            it->second++; 
+
+            for (auto j : i->second) {
+
+                //Sumamos a los actores el tiempo de la pelicula
+                auto a = solActor.find(j.first);
+
+                a->second += j.second;
+            }
+        }
+    }
 
     for (auto i : solPeli) {
         if (solP.second < i.second) {
             solP.first = i.first;
             solP.second = i.second;
+        }
+    }
+
+    //Buscamos el actor con mas tiempo en pantalla
+    for (auto i : solActor) {
+        if (solA.second < i.second) {
+            solA.first = i.first;
+            solA.second = i.second;
         }
     }
 }
@@ -94,7 +120,7 @@ bool resuelveCaso() {
     procesarEmisiones(repartos, secEmisiones);
 
     //Escribimos el resultado
-    //for (auto par : repartos) cout << par.first << " " << par.second << "\n";
+    for (auto par : repartos) cout << par.first << " " << par.second << "\n";
 
     cout << "---------\n";
 
