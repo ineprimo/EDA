@@ -5,8 +5,45 @@
 #include <string>
 #include <stdexcept>
 #include <cassert>
+
+#include <set>
 using namespace std;
 
+using medico = string;
+using paciente = string;
+
+
+struct fecha {
+    int dia = 0;
+    int hora = 0;
+    int min = 0;
+};
+
+class consultorio {
+private:
+    medico med;
+
+    
+
+    set<medico> medicos;
+
+public:
+
+    void nuevoMedico(medico m) {
+        medicos.insert(m);  //El propio set solo lo anade si no esta
+    }
+
+    void pideConsulta(paciente p, medico m, fecha f) {
+
+        if (medicos.count(m) != 0) {
+
+            //Si tiene la fecha ya ocupada se lanza la excepcion
+            //throw exception("Fecha existente");
+        }
+        else throw exception("Medico no existente");
+    }
+
+};
 
 int casos = 0;
 bool resuelve() {
