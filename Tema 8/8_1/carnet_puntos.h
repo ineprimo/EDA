@@ -25,6 +25,28 @@ public:
 		else throw std::domain_error("Conductor inexistente");
 	}
 
+	int consultar(string dni) {
+		//Comprobamos si el conductor existe
+		auto it = conductores.find(dni);
+
+		//El dni existe
+		if (it != conductores.end()) { return it->second; }
+		else throw std::domain_error("Conductor inexistente");
+	}
+
+	int cuantos_con_puntos(int puntos) {
+
+		if (puntos >= 0 && puntos <= 15)	//Los puntos estan dentro del rango
+		{
+			//Recorremos el mapa viendo los puntos y nos guardamos los que tengan los puntos con un contador
+			int cont = 0;
+
+			for (auto par : conductores) if (par.second == puntos) cont++;
+			return cont;
+		}
+		else throw std::domain_error("Puntos no validos");
+	}
+
 private:
 	//Nos guardamos un map de dni??
 	map<string, int> conductores;
