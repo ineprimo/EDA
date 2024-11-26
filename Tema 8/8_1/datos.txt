@@ -11,6 +11,7 @@ quitar 123A 10
 cuantos_con_puntos 5
 quitar 456B 1
 cuantos_con_puntos 5
+cuantos_con_puntos 15
 FIN
 nuevo 123A
 nuevo 123A

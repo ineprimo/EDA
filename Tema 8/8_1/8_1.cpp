@@ -3,8 +3,68 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "carnet_puntos.h"
+#include <unordered_map> 
+#include <unordered_set> 
 using namespace std;
+
+class carnet_puntos {
+public:
+
+    carnet_puntos() {
+
+    }
+
+    void nuevo(const string dni) {
+        //Comprobamos si ya tenemos el dni
+        if (conductores.count(dni) == 0) {	//El dni es nuevo
+            conductores.insert({ dni, 15 });
+
+            //Lo anadimos tambien al multiset
+            puntos.insert(15);
+        }
+        else throw std::domain_error("Conductor duplicado");
+    }
+
+    void quitar(const string dni, const int punto) {
+        //Comprobamos si el conductor existe
+        auto it = conductores.find(dni);
+        if (it != conductores.end()) {	//El dni existe
+            
+            auto i = puntos.find(it->second);
+            puntos.erase(i);
+
+            it->second -= punto;
+
+            if (it->second < 0) it->second = 0;
+
+            puntos.insert(it->second);
+        }
+        else throw std::domain_error("Conductor inexistente");
+    }
+
+    int consultar(const string dni) {
+        //Comprobamos si el conductor existe
+        auto it = conductores.find(dni);
+
+        //El dni existe
+        if (it != conductores.end()) { return it->second; }
+        else throw std::domain_error("Conductor inexistente");
+    }
+
+    int cuantos_con_puntos(const int punto) {
+
+        if (punto >= 0 && punto <= 15)	//Los puntos estan dentro del rango
+        {
+            return puntos.count(punto);
+        }
+        else throw std::domain_error("Puntos no validos");
+    }
+
+private:
+    //Nos guardamos un map de dni??
+    unordered_map<string, int> conductores;
+    unordered_multiset<int> puntos;
+};
 
 
 bool resuelveCaso() {
