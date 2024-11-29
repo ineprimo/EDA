@@ -170,8 +170,6 @@ public:
 
                 it++;
             }
-
-
         }
         else
             throw invalid_argument("Heroe inexistente");
@@ -194,28 +192,102 @@ public:
 
     // Coste:
     bool villano_ataca(Villano const& v, Heroe const& h) {
-        //...
-        //    throw invalid_argument("Villano inexistente");
-        //...
-        //    throw invalid_argument("Heroe inexistente");
-        //...
-        //   throw invalid_argument("No es su turno");
-        //...
-        return true;
+        bool dead = false;
+        if (characters.size() > 0) {
+
+            // mira si el villano existe
+            auto villain_exists = characters.find(v);
+            if (villain_exists == characters.end()) {
+                throw invalid_argument("Villano inexistente");
+            }
+
+            // mira si el heroe existe
+            auto hero_exists = characters.find(v);
+            if (hero_exists == characters.end()) {
+                throw invalid_argument("Heroe inexistente");
+            }
+            
+            // mira si es su turno
+            auto current_turn_holder = turns.front();
+            if (current_turn_holder.name != villain_exists->first) {
+                throw invalid_argument("No es su turno");
+            }
+
+            // gestiona el turno
+
+            // el villano ataca al heroe
+            hero_exists->second.hp -= villain_exists->second.attacks.begin()->second.dmg;
+
+            // pide turno
+            turns.pop();
+            turns.push(villain_exists->second);
+
+            // mira muerte
+            if (hero_exists->second.hp <= 0) {
+                hero_exists->second.dead = true;
+                characters.erase(hero_exists);
+                dead = true;
+            }
+        }
+        else 
+            throw invalid_argument("Villano inexistente");
+
+        return dead;
     }
 
     // Coste:
     bool heroe_ataca(Heroe const& h, string const& ataque, Villano const& v) {
-        //...
-        //    throw invalid_argument("Villano inexistente");
-        //...
-        //    throw invalid_argument("Heroe inexistente");
-        //...
-        //    throw invalid_argument("No es su turno");
-        //...
-        //    throw invalid_argument("Ataque no aprendido");
-        //...
-        return true;
+
+        bool dead = false;
+        if (characters.size() > 0) {
+
+            // mira si el villano existe
+            auto villain_exists = characters.find(v);
+            if (villain_exists == characters.end()) {
+                throw invalid_argument("Villano inexistente");
+            }
+
+            // mira si el heroe existe
+            auto hero_exists = characters.find(v);
+            if (hero_exists == characters.end()) {
+                throw invalid_argument("Heroe inexistente");
+            }
+
+            // mira si es su turno
+            auto current_turn_holder = turns.front();
+            if (current_turn_holder.name != villain_exists->first) {
+                throw invalid_argument("No es su turno");
+            }
+
+            // mira si existe el ataque
+            auto attacks = hero_exists->second.attacks;
+            if (attacks.size() > 0) {
+                auto current_attack = attacks.find(ataque);
+                if (current_attack == attacks.end()) {
+                    throw invalid_argument("Ataque no aprendido");
+                }
+            }
+            // aquiiiiiiii TO DO
+
+            //// el villano ataca al heroe
+            //hero_exists->second.hp -= villain_exists->second.attacks.begin()->second.dmg;
+
+            //// pide turno
+            //turns.pop();
+            //turns.push(villain_exists->second);
+
+            //// mira muerte
+            //if (hero_exists->second.hp <= 0) {
+            //    hero_exists->second.dead = true;
+            //    characters.erase(hero_exists);
+            //    dead = true;
+            //}
+        }
+        else
+            throw invalid_argument("Villano inexistente");
+
+        return dead;
+
     }
 
 };
