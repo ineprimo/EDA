@@ -77,11 +77,11 @@ public:
         villain.hp = puntos;
         villain.dead = false;
 
-       /* Attack a = Attack();
+        Attack a = Attack();
         a.name = "default";
-        a.dmg = valor;*/
-
-        //villain.attacks.insert(a);
+        a.dmg = valor;
+        
+        villain.attacks.insert({"default", a});
 
         turns.push(villain);
         characters.insert({v, villain});
@@ -216,7 +216,8 @@ public:
             // gestiona el turno
 
             // el villano ataca al heroe
-            hero_exists->second.hp -= villain_exists->second.attacks.begin()->second.dmg;
+            int dmg = villain_exists->second.attacks.begin()->second.dmg;
+            hero_exists->second.hp -= dmg;
 
             // pide turno
             turns.pop();
@@ -365,7 +366,7 @@ bool resuelveCaso() { // No tacar nada de esta función!
 //#define DOMJUDGE
 int main() {
 #ifndef DOMJUDGE
-    ifstream in("pruebas.txt");
+    ifstream in("datos.txt");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 
