@@ -128,14 +128,13 @@ public:
             characters.find(a.first);
             Character c = characters.at(a.first);
 
-            if (!c.attacks.empty()) {
+            if (c.attacks.empty()) {
 
                 // mira si se repite
-
                 auto attk = c.attacks.find(ataque);
-                if (attk != c.attacks.end());
+                if (attk != c.attacks.end()) {
                     throw invalid_argument("Ataque repetido");
-
+                }
             }
 
             Attack attk = Attack();
@@ -143,7 +142,7 @@ public:
             attk.name = ataque;
 
             // si uso c no se guarda bien el valor 
-            characters.at(a.first).attacks.insert({ataque, attk});
+            characters.at(a.first).attacks.insert({ ataque, attk });
         }
     }
 
@@ -163,12 +162,9 @@ public:
             unordered_map<string, Attack> attks = a.second.attacks;
 
             // muestra ataques
-            auto it = attks.begin();
-            while (it != attks.end()) {
-                pair<string, int> o = { it->first, it->second.dmg };
+            for (auto a : attks) {
+                pair<string, int> o = { a.first, a.second.dmg };
                 res.push_back(o);
-
-                it++;
             }
         }
         else
