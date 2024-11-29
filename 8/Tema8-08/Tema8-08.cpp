@@ -142,8 +142,8 @@ public:
             attk.dmg = valor;
             attk.name = ataque;
 
-            // AQUI TO DO
-            c.attacks.insert({ataque, attk});
+            // si uso c no se guarda bien el valor 
+            characters.at(a.first).attacks.insert({ataque, attk});
         }
     }
 
