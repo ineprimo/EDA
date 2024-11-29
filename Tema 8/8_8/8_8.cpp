@@ -14,6 +14,7 @@ Qué has conseguido hacer y qué no:
 #include <map>
 #include <deque>
 #include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 
@@ -127,7 +128,9 @@ public:
             
     }
 
-    // Coste: Constate O(1)
+    // Coste:  Constante O(n) siendo n el numero de turnos
+    //Esto es en el caso peor si su turno del eliminado es el ultimo a eliminar
+    //Si no se muere es constante O(1)
     bool villano_ataca(Villano const& v, Heroe const& h) {
         
         auto itV = villanos.find(v);
@@ -150,7 +153,7 @@ public:
                     //Comprobamos la vida del heroe atacado
                     if (itH->second.first <= 0) {//El heroe esta muerto
                         //Eliminamos al heroe de la lista de turnos
-                        auto it = remove(turnos.begin(), turnos.end(), itH->first);
+                        auto it = remove(turnos.begin(), turnos.end(),itH->first);
                         turnos.erase(it, turnos.end());
                         heroes.erase(itH);
                         return true;
@@ -165,7 +168,9 @@ public:
         return false;
     }
 
-    // Coste: Constante O(1)
+    // Coste: Constante O(n) siendo n el numero de turnos
+    //Esto es en el caso peor si su turno es el ultimo a eliminar
+    //Si no se muere es constante O(1)
     bool heroe_ataca(Heroe const& h, string const& ataque, Villano const& v) {
         
         auto itV = villanos.find(v);
