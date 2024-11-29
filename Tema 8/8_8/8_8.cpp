@@ -35,14 +35,11 @@ private:
 public:
     // Coste: logaritmico O(log n) debido a la insercion del ataque
     void aparece_villano(Villano const& v, int puntos, int valor) {
-
-        //Registramos al villano v en la batalla con puntos de vida y valor de ataque
         if(villanos.count(v) == 0){
-            villanos.insert({ v, {puntos, valor} });  //Insertamos el personaje
-
+            villanos.insert({ v, {puntos, valor} });
             turnos.push_back(v);
         }
-        else throw invalid_argument("Personaje ya existente");  //El personaje ya existe
+        else throw invalid_argument("Personaje ya existente");
        
     }
 
@@ -50,25 +47,20 @@ public:
     void aparece_heroe(Heroe const& h, int puntos) {
         
         if (heroes.count(h) == 0) {
-            ataques a;  //Le creamos el set de ataques
-            heroes.insert({ h, {puntos, a} }); //Insertamos al heroe
-
+            ataques a;
+            heroes.insert({ h, {puntos, a} });
             turnos.push_back(h);
         }
-        else throw invalid_argument("Personaje ya existente");  //El personaje ya existe
+        else throw invalid_argument("Personaje ya existente");
         
     }
 
     // Coste: A causa de que los ataques son un map el coste es O(log n)
     void aprende_ataque(Heroe const& h, string const& ataque, int valor) {
 
-        //Necesitamos el iterador
         auto it = heroes.find(h);
 
-        //Comprobamos si el heroe existe
         if (it != heroes.end()) {
-
-            //Comprobamos si el ataque ya esta en su lista
             if(it->second.second.count(ataque) == 0) it->second.second.insert({ ataque, valor });
             else throw invalid_argument("Ataque repetido");
         }
@@ -78,17 +70,12 @@ public:
     // Coste: O(n) siendo n el numero de ataques que tenga el heroe
     vector<pair<string, dano>> mostrar_ataques(Heroe const& h) {
 
-        //Necesito el iterador
         auto it = heroes.find(h);
-        //Necesitamos que este ordenado 
+
         if (it != heroes.end()) {
             vector<pair<string, dano>> res;
 
-            //Vamos guardando las claves en el vector
-            for (auto a : it->second.second) {
-                res.push_back({ a.first, a.second });
-            }
-            
+            for (auto a : it->second.second) {res.push_back({ a.first, a.second }); }
             return res;
         }
         else throw invalid_argument("Heroe inexistente");
@@ -98,8 +85,7 @@ public:
     vector<pair<string, int>> mostrar_turnos() {
         vector<pair<string, int>> res;
 
-        //Nos guardamos el numero de turnos que hay
-        int tur = turnos.size();    //Vemos cuantos turnos hay
+        int tur = turnos.size();
         int i = 0;
 
         while (i < tur) {
@@ -108,24 +94,14 @@ public:
             auto itV = villanos.find(it);
             auto itH = heroes.find(it);
 
-            //El que sea distinto del final de su respectivo mapa es el que escribimos
-            if (itV != villanos.end()) {    //Escribimos el villano
+            if (itV != villanos.end()) { res.push_back({ itV->first, itV->second.first }); }
+            else { res.push_back({ itH->first, itH->second.first }); }
 
-                res.push_back({ itV->first, itV->second.first });
-            }
-            else {  //Escribimos el heroe
-                res.push_back({ itH->first, itH->second.first });
-            }
-
-            //Ponemos el mismo dato al final y quitamos el que esta al principio
             turnos.push_back(it);
             turnos.erase(turnos.begin());
-            
             i++;
         }
-        
-        return res;
-            
+        return res; 
     }
 
     // Coste:  Constante O(n) siendo n el numero de turnos
@@ -140,19 +116,14 @@ public:
             
             if (itH != heroes.end()) {
 
-                //Comprobamos si es su turno
                 string i = *turnos.begin();
                 if (i == itV->first) {
-                    //hacemos dano al heroe
                     itH->second.first -= itV->second.second;
 
-                    //Pasamos su turno
                     turnos.erase(turnos.begin());
                     turnos.push_back(i);
 
-                    //Comprobamos la vida del heroe atacado
-                    if (itH->second.first <= 0) {//El heroe esta muerto
-                        //Eliminamos al heroe de la lista de turnos
+                    if (itH->second.first <= 0) {
                         auto it = remove(turnos.begin(), turnos.end(),itH->first);
                         turnos.erase(it, turnos.end());
                         heroes.erase(itH);
@@ -174,25 +145,22 @@ public:
     bool heroe_ataca(Heroe const& h, string const& ataque, Villano const& v) {
         
         auto itV = villanos.find(v);
-        if (itV != villanos.end()) {    //Buscamos el villano
+        if (itV != villanos.end()) {
             
             auto itH = heroes.find(h);
-            if (itH != heroes.end()) {  //Buscamos el heroe
+            if (itH != heroes.end()) {
 
                 string i = *turnos.begin();
-                if (i == itH->first) { //Es su turno
+                if (i == itH->first) {
 
-                    auto at = itH->second.second.find(ataque);  //Buscamos el ataque
+                    auto at = itH->second.second.find(ataque);
                     if (at != itH->second.second.end()) {
-                        itV->second.first -= at->second;    //Le restamos la vida del ataque
+                        itV->second.first -= at->second;
 
-                        //Actualizamos los turnos
                         turnos.erase(turnos.begin());
                         turnos.push_back(i);
 
-                        //Comprobamos si esta muerto
                         if (itV->second.first <= 0) {
-                            //Aqui hay que quitarlo tambien de la cola de turno
                             auto it = remove(turnos.begin(), turnos.end(), itV->first);
                             turnos.erase(it, turnos.end());
                             villanos.erase(itV);
