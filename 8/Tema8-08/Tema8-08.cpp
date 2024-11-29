@@ -14,6 +14,7 @@ Qué has conseguido hacer y qué no:
 #include <queue>
 #include <unordered_set>
 #include <set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -31,7 +32,7 @@ struct Character {
     bool dead;
 
     // set para gestionar los ataques, no tienen prioridad pero no se pueden suplicar
-    set<Attack> attacks;
+    unordered_map<string, Attack> attacks;
 };
 
 struct Villain : public Character {
@@ -51,7 +52,11 @@ private:
     queue<Character> turns;
 
     // set no ordenado para la gestion de personajes activos
-    unordered_set<string> characters;
+    //unordered_set<string> characters;
+    //unordered_set<string> characters;
+    unordered_map<string, Character> characters;
+
+
 
 public:
     // Coste:
@@ -79,7 +84,7 @@ public:
         //villain.attacks.insert(a);
 
         turns.push(villain);
-        characters.insert(v);
+        characters.insert({v, villain});
     }
 
     // Coste:
@@ -101,26 +106,76 @@ public:
         hero.dead = false;
 
         turns.push(hero);
-        characters.insert(h);
+        characters.insert({h, hero});
 
     }
 
     // Coste:
     void aprende_ataque(Heroe const& h, string const& ataque, int valor) {
-        //...
-        //    throw invalid_argument("Heroe inexistente");
-        //...
-        //    throw invalid_argument("Ataque repetido");
-        //...
+        
+        if (characters.size() > 0) {
+
+            auto aux = characters.find(h);
+
+            // si esta
+            if (aux == characters.end()) {
+                throw invalid_argument("Heroe inexistente");
+            }
+            
+            // nombre del heroe
+            auto a = *(aux);
+            
+            characters.find(a.first);
+            Character c = characters.at(a.first);
+
+            if (!c.attacks.empty()) {
+
+                // mira si se repite
+
+                auto attk = c.attacks.find(ataque);
+                if (attk != c.attacks.end());
+                    throw invalid_argument("Ataque repetido");
+
+            }
+
+            Attack attk = Attack();
+            attk.dmg = valor;
+            attk.name = ataque;
+
+            // AQUI TO DO
+            c.attacks.insert({ataque, attk});
+        }
     }
 
     // Coste:
     vector<pair<string, int>> mostrar_ataques(Heroe const& h) {
-        //...
-        //    throw invalid_argument("Heroe inexistente");
-        //...
         vector<pair<string, int>> res;
-        //...
+        if (characters.size() > 0) {
+
+            auto aux = characters.find(h);
+
+            // si estano 
+            if (aux == characters.end()) {
+                throw invalid_argument("Heroe inexistente");
+            }
+
+            auto a = *(aux);
+            unordered_map<string, Attack> attks = a.second.attacks;
+
+            // muestra ataques
+            auto it = attks.begin();
+            while (it != attks.end()) {
+                pair<string, int> o = { it->first, it->second.dmg };
+                res.push_back(o);
+
+                it++;
+            }
+
+
+        }
+        else
+            throw invalid_argument("Heroe inexistente");
+
         return res;
     }
 
