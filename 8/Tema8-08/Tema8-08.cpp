@@ -56,13 +56,17 @@ private:
 public:
     // Coste:
     void aparece_villano(Villano const& v, int puntos, int valor) {
-       
-        auto aux = characters.find(v);
 
-        // si esta
-        if (*aux == v) {
-            throw invalid_argument("Personaje ya existente");
+        if (characters.size() > 0) {
+
+            auto aux = characters.find(v);
+
+            // si esta
+            if (aux != characters.end()) {
+                throw invalid_argument("Personaje ya existente");
+            }
         }
+
         Villain villain = Villain();
         villain.name = v;
         villain.hp = puntos;
@@ -81,12 +85,16 @@ public:
     // Coste:
     void aparece_heroe(Heroe const& h, int puntos) {
 
-        auto aux = characters.find(h);
+        if (characters.size() > 0) {
+            
+            auto aux = characters.find(h);
 
-        // si esta
-        if (*aux == h) {
-            throw invalid_argument("Personaje ya existente");
+            // si esta
+            if (aux != characters.end()) {
+                throw invalid_argument("Personaje ya existente");
+            }
         }
+
         Hero hero = Hero();
         hero.name = h;
         hero.hp = puntos;
@@ -119,8 +127,14 @@ public:
     // Coste:
     vector<pair<string, int>> mostrar_turnos() {
         vector<pair<string, int>> res;
-        // ...
-            return res;
+        queue<Character> aux = turns;
+
+        for (int i = 0; i < turns.size(); i++) {
+            res.push_back({aux.front().name, aux.front().hp});
+            aux.pop();
+        }
+
+        return res;
     }
 
     // Coste:
@@ -224,7 +238,7 @@ bool resuelveCaso() { // No tacar nada de esta función!
 //#define DOMJUDGE
 int main() {
 #ifndef DOMJUDGE
-    ifstream in("prueba.txt");
+    ifstream in("pruebas.txt");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 

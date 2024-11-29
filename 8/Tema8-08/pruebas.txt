@@ -1,2 +1,4 @@
 aparece_villano arlecchino 10 6
 aparece_heroe furina 20
+mostrar_turnos
+FIN
