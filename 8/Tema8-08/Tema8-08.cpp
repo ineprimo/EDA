@@ -134,14 +134,14 @@ public:
 
             if (!c.attack_stack.empty()) {
 
-                //// mira si se repite
-                //auto attk = c.attacks.find(ataque);
-                //if (attk != c.attacks.end()) {
-                //    throw invalid_argument("Ataque repetido");
-                //}
-
-                if (c.attack_stack.top().name == ataque)
+                // mira si se repite
+                auto attk = c.attacks.find(ataque);
+                if (attk != c.attacks.end()) {
                     throw invalid_argument("Ataque repetido");
+                }
+                /*
+                if (c.attack_stack.top().name == ataque)
+                    throw invalid_argument("Ataque repetido");*/
             }
 
             Attack attk = Attack();
