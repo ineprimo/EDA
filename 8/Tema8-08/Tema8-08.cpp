@@ -15,6 +15,8 @@ Qué has conseguido hacer y qué no:
 #include <unordered_set>
 #include <set>
 #include <unordered_map>
+#include <stack>
+#include <deque>
 
 using namespace std;
 
@@ -33,6 +35,8 @@ struct Character {
 
     // set para gestionar los ataques, no tienen prioridad pero no se pueden suplicar
     unordered_map<string, Attack> attacks;
+    stack<Attack> attack_stack;
+
 };
 
 struct Villain : public Character {
@@ -49,10 +53,9 @@ private:
     // ...
 
     // cola para la gestion de turnos
-    queue<Character> turns;
+    deque<Character> turns;
 
     // set no ordenado para la gestion de personajes activos
-    //unordered_set<string> characters;
     //unordered_set<string> characters;
     unordered_map<string, Character> characters;
 
@@ -81,9 +84,10 @@ public:
         a.name = "default";
         a.dmg = valor;
         
-        villain.attacks.insert({"default", a});
+        //villain.attacks.insert({"default", a});
+        villain.attack_stack.push(a);
 
-        turns.push(villain);
+        turns.push_back(villain);
         characters.insert({v, villain});
     }
 
@@ -105,7 +109,7 @@ public:
         hero.hp = puntos;
         hero.dead = false;
 
-        turns.push(hero);
+        turns.push_back(hero);
         characters.insert({h, hero});
 
     }
@@ -128,13 +132,16 @@ public:
             characters.find(a.first);
             Character c = characters.at(a.first);
 
-            if (c.attacks.empty()) {
+            if (!c.attack_stack.empty()) {
 
-                // mira si se repite
-                auto attk = c.attacks.find(ataque);
-                if (attk != c.attacks.end()) {
+                //// mira si se repite
+                //auto attk = c.attacks.find(ataque);
+                //if (attk != c.attacks.end()) {
+                //    throw invalid_argument("Ataque repetido");
+                //}
+
+                if (c.attack_stack.top().name == ataque)
                     throw invalid_argument("Ataque repetido");
-                }
             }
 
             Attack attk = Attack();
@@ -142,7 +149,8 @@ public:
             attk.name = ataque;
 
             // si uso c no se guarda bien el valor 
-            characters.at(a.first).attacks.insert({ ataque, attk });
+            //characters.at(a.first).attacks.insert({ ataque, attk });
+            characters.at(a.first).attack_stack.push(attk);
         }
     }
 
@@ -153,7 +161,7 @@ public:
 
             auto aux = characters.find(h);
 
-            // si estano 
+            // si no esta 
             if (aux == characters.end()) {
                 throw invalid_argument("Heroe inexistente");
             }
@@ -161,10 +169,13 @@ public:
             auto a = *(aux);
             unordered_map<string, Attack> attks = a.second.attacks;
 
-            // muestra ataques
-            for (auto a : attks) {
-                pair<string, int> o = { a.first, a.second.dmg };
+            stack<Attack> aux_stack = a.second.attack_stack;
+
+            int n = a.second.attack_stack.size();
+            for (int i = 0; i < n; i++) {
+                pair<string, int> o = { aux_stack.top().name, aux_stack.top().dmg };
                 res.push_back(o);
+                aux_stack.pop();
             }
         }
         else
@@ -176,11 +187,13 @@ public:
     // Coste:
     vector<pair<string, int>> mostrar_turnos() {
         vector<pair<string, int>> res;
-        queue<Character> aux = turns;
+        deque<Character> aux = turns;
 
         for (int i = 0; i < turns.size(); i++) {
-            res.push_back({aux.front().name, aux.front().hp});
-            aux.pop();
+            auto c = characters.find(aux.front().name);
+
+            res.push_back({c->first, c->second.hp});
+            aux.pop_front();
         }
 
         return res;
@@ -198,7 +211,7 @@ public:
             }
 
             // mira si el heroe existe
-            auto hero_exists = characters.find(v);
+            auto hero_exists = characters.find(h);
             if (hero_exists == characters.end()) {
                 throw invalid_argument("Heroe inexistente");
             }
@@ -212,17 +225,25 @@ public:
             // gestiona el turno
 
             // el villano ataca al heroe
-            int dmg = villain_exists->second.attacks.begin()->second.dmg;
-            hero_exists->second.hp -= dmg;
+            int dmg = villain_exists->second.attack_stack.top().dmg;
+            hero_exists->second.hp -= villain_exists->second.attack_stack.top().dmg;
 
             // pide turno
-            turns.pop();
-            turns.push(villain_exists->second);
+            turns.pop_front();
+            turns.push_back(villain_exists->second);
 
             // mira muerte
             if (hero_exists->second.hp <= 0) {
                 hero_exists->second.dead = true;
-                characters.erase(hero_exists);
+                characters.erase(hero_exists);  
+
+                auto hero_dead = turns.begin();
+                while (hero_dead != turns.begin() && hero_dead->name != h) {
+                    hero_dead++;
+                }
+                turns.erase(hero_dead);
+
+
                 dead = true;
             }
         }
@@ -245,14 +266,14 @@ public:
             }
 
             // mira si el heroe existe
-            auto hero_exists = characters.find(v);
+            auto hero_exists = characters.find(h);
             if (hero_exists == characters.end()) {
                 throw invalid_argument("Heroe inexistente");
             }
 
             // mira si es su turno
             auto current_turn_holder = turns.front();
-            if (current_turn_holder.name != villain_exists->first) {
+            if (current_turn_holder.name != hero_exists->first) {
                 throw invalid_argument("No es su turno");
             }
 
@@ -267,18 +288,27 @@ public:
             // aquiiiiiiii TO DO
 
             //// el villano ataca al heroe
-            //hero_exists->second.hp -= villain_exists->second.attacks.begin()->second.dmg;
+            villain_exists->second.hp -= hero_exists->second.attack_stack.top().dmg;
 
             //// pide turno
-            //turns.pop();
-            //turns.push(villain_exists->second);
+            turns.pop_front();
+            turns.push_back(hero_exists->second);
 
             //// mira muerte
-            //if (hero_exists->second.hp <= 0) {
-            //    hero_exists->second.dead = true;
-            //    characters.erase(hero_exists);
-            //    dead = true;
-            //}
+            if (villain_exists->second.hp <= 0) {
+
+                villain_exists->second.dead = true;
+                characters.erase(villain_exists);
+
+
+                auto villain_dead = turns.begin();
+                while (villain_dead != turns.begin() && villain_dead->name != v) {
+                    villain_dead++;
+                }
+                turns.erase(villain_dead);
+
+                dead = true;
+            }
         }
         else
             throw invalid_argument("Villano inexistente");
