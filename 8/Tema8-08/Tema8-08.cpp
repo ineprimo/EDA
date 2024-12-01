@@ -279,23 +279,20 @@ public:
 
             // mira si existe el ataque
             auto attacks = hero_exists->second.attacks;
-            if (attacks.size() > 0) {
-                auto current_attack = attacks.find(ataque);
-                if (current_attack == attacks.end()) {
-                    throw invalid_argument("Ataque no aprendido");
-                }
-
-
-                //// el villano ataca al heroe
-                villain_exists->second.hp -= current_attack->second.dmg;
-
-                //// pide turno
-                turns.pop_front();
-                turns.push_back(hero_exists->second);
+            auto current_attack = attacks.find(ataque);
+            if (current_attack == attacks.end()) {
+                throw invalid_argument("Ataque no aprendido");
             }
+
             // aquiiiiiiii TO DO
 
+
+             //// el villano ataca al heroe
+            villain_exists->second.hp -= current_attack->second.dmg;
             
+             //// pide turno
+            turns.pop_front();
+            turns.push_back(hero_exists->second);
 
             //// mira muerte
             if (villain_exists->second.hp <= 0) {
