@@ -84,7 +84,7 @@ public:
         a.name = "default";
         a.dmg = valor;
         
-        //villain.attacks.insert({"default", a});
+        villain.attacks.insert({"default", a});
         villain.attack_stack.push(a);
 
         turns.push_back(villain);
@@ -149,7 +149,7 @@ public:
             attk.name = ataque;
 
             // si uso c no se guarda bien el valor 
-            //characters.at(a.first).attacks.insert({ ataque, attk });
+            characters.at(a.first).attacks.insert({ ataque, attk });
             characters.at(a.first).attack_stack.push(attk);
         }
     }
@@ -284,15 +284,18 @@ public:
                 if (current_attack == attacks.end()) {
                     throw invalid_argument("Ataque no aprendido");
                 }
+
+
+                //// el villano ataca al heroe
+                villain_exists->second.hp -= current_attack->second.dmg;
+
+                //// pide turno
+                turns.pop_front();
+                turns.push_back(hero_exists->second);
             }
             // aquiiiiiiii TO DO
 
-            //// el villano ataca al heroe
-            villain_exists->second.hp -= hero_exists->second.attack_stack.top().dmg;
-
-            //// pide turno
-            turns.pop_front();
-            turns.push_back(hero_exists->second);
+            
 
             //// mira muerte
             if (villain_exists->second.hp <= 0) {
