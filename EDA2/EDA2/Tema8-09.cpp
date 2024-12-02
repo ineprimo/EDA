@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <unordered_map>
+#include <map>
 #include <queue>
 #include <utility>
 #include <algorithm>
@@ -26,13 +27,14 @@ private:
 	struct InfoHero
 	{
 		int vida;
-		unordered_map<string, int> ataques;
+		map<string, int> ataques;
 	};
 
 	unordered_map< Villano, InfoVillano> villanos;
 	unordered_map< Heroe, InfoHero> heroes;
 
-	queue<string> turns;
+	vector<string> turns;
+	int turnoActual = 0;
 
 public:
 
@@ -48,7 +50,7 @@ public:
 		// Aniade el villano al map
 		villanos.insert({ v,{puntos, valor} });
 
-		turns.push(v);
+		turns.push_back(v);
 	}
 
 	// Coste: Coste promedio O(1). Es lineal en el peor de los casos O(n), donde n es el numero de elementos de heroes
@@ -60,7 +62,7 @@ public:
 		// Aniade el heroe al map
 		heroes.insert({ h,{puntos} });
 
-		turns.push(h);
+		turns.push_back(h);
 	}
 
 	// Coste: Coste promedio O(1). En el peor de los casos el coste es O(n+m) donde n es el numero de elementos de heroes y m el de ataques del heroe h
@@ -90,9 +92,6 @@ public:
 		for (auto a : heroes[h].ataques)
 			res.push_back(a);
 
-		// Ordenamos en orden alfabetico
-		sort(res.begin(), res.end(), [](const pair<string, int>& a, const pair<string, int>& b) {return a.second > b.second; });
-
 		return res;
 	}
 
@@ -104,19 +103,21 @@ public:
 	vector<pair<string, int>> mostrar_turnos() {
 		vector<pair<string, int>> res;
 
-		for (int i = 0; i < turns.size(); i++)
+		pair <string, int> charac;
+		for (auto c : turns)
 		{
-			auto it = turns.front();
-			pair <string, int> charac;
+			// si no hay nombre en el turno lo salta
+			if (c == "")
+				continue;
+
 			// guarda los datos del personaje que buscamos
-			if (villanos.count(it))
-				charac = { it,villanos[it].vida };
-			else if (heroes.count(it))
-				charac = { it,heroes[it].vida };
+			if (villanos.count(c))
+				charac = { c,villanos[c].vida };
+			else if (heroes.count(c))
+				charac = { c,heroes[c].vida };
 
 			// Aniade el front al final
-			turns.push(it);
-			turns.pop();
+			turnoActual++;
 
 			res.push_back(charac);
 		}
@@ -134,13 +135,14 @@ public:
 			throw invalid_argument("Villano inexistente");
 		if (!heroes.count(h))
 			throw invalid_argument("Heroe inexistente");
-		if (turns.front() != v)
+		if (turns[turnoActual] != v)
 			throw invalid_argument("No es su turno");
 		heroes[h].vida -= villanos[v].ataque;
 
-		turns.pop();
-		// aniade el villano al siguiente turno
-		turns.push(v);
+		// avanza turno
+		turnoActual++;
+		if (turnoActual >= turns.size())
+			turnoActual = 0;
 
 		if (heroes[h].vida <= 0)
 		{
@@ -167,9 +169,10 @@ public:
 			throw invalid_argument("Ataque no aprendido");
 		villanos[v].vida -= heroes[h].ataques[ataque];
 
-		turns.pop();
-		// Aniade el heroe al siguiente turno
-		turns.push(h);
+		// avanza turno
+		turnoActual++;
+		if (turnoActual >= turns.size())
+			turnoActual = 0;
 
 		if (villanos[v].vida <= 0)
 		{
@@ -180,18 +183,12 @@ public:
 		return false;
 	}
 
+	// coste constante O(1) eliminacion de personaje en el turno;
 	void turnsPersonajeMuerto(string charac) {
-		// Bucle que reconstruye turns sin el personaje muerto coste O(n) donde n es el numero de personajes en turns
-		int siz = turns.size();
-		for (int i = 0; i < siz; i++)
-		{
-			auto c = turns.front();
+		int turno = turnoActual--;
+		if (turno < 0) turno = turns.size() - 1;
 
-			if (c != charac)
-				// Aniade el front al final
-				turns.push(c);
-			turns.pop();
-		}
+		turns[turno] = "";
 	}
 
 };

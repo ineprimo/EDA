@@ -189,7 +189,10 @@
     <ClCompile Include="Tema7-06.cpp">
       <Filter>Archivos de origen\Tema7</Filter>
     </ClCompile>
-    <ClCompile Include="Tema8-8.cpp">
+    <ClCompile Include="Tema8-08.cpp">
+      <Filter>Archivos de origen\Tema8</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema8-09.cpp">
       <Filter>Archivos de origen\Tema8</Filter>
     </ClCompile>
   </ItemGroup>
