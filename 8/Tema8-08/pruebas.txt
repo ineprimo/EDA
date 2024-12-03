@@ -1,10 +1,224 @@
-aparece_villano arlecchino 10 6
-aparece_heroe furina 20
+aparece_villano V2 16 13
+mostrar_ataques 2
 mostrar_turnos
-aprende_ataque furina fanfare 10
-mostrar_ataques furina
+villano_ataca V8 H9
 mostrar_turnos
-aparece_villano tart 5 5
-villano_ataca tarta furina
-villano_ataca arlecchino tart
+villano_ataca V5 H1
+aprende_ataque H7 A1 9
+villano_ataca V6 H5
+mostrar_turnos
+villano_ataca V7 H4
+mostrar_ataques 5
+heroe_ataca H2 A7 V8
+aprende_ataque H10 A1 12
+villano_ataca V9 H5
+villano_ataca V2 H7
+villano_ataca V5 H3
+villano_ataca V8 H8
+villano_ataca V1 H8
+aprende_ataque H9 A7 7
+heroe_ataca H5 A7 V6
+aparece_heroe H10 6
+heroe_ataca H1 A7 V9
+heroe_ataca H6 A3 V9
+aparece_heroe H2 17
+heroe_ataca H4 A10 V3
+aprende_ataque H2 A4 13
+aprende_ataque H9 A6 14
+villano_ataca V7 H5
+heroe_ataca H7 A2 V10
+heroe_ataca H4 A9 V4
+heroe_ataca H4 A10 V1
+heroe_ataca H10 A10 V6
+aprende_ataque H3 A6 17
+mostrar_ataques 5
+mostrar_ataques 9
+aparece_villano V4 5 18
+villano_ataca V5 H9
+heroe_ataca H7 A10 V8
+aparece_heroe H6 7
+mostrar_ataques 1
+heroe_ataca H3 A1 V5
+aprende_ataque H6 A4 13
+aprende_ataque H10 A8 3
+aparece_heroe H1 8
+mostrar_turnos
+villano_ataca V6 H2
+aparece_heroe H2 2
+heroe_ataca H4 A8 V3
+mostrar_turnos
+villano_ataca V6 H7
+mostrar_ataques 2
+aparece_villano V5 16 19
+mostrar_ataques 3
+heroe_ataca H10 A6 V4
+mostrar_ataques 9
+aparece_villano V2 17 13
+mostrar_ataques 9
+heroe_ataca H8 A9 V4
+mostrar_turnos
+villano_ataca V10 H8
+aprende_ataque H2 A9 7
+aparece_villano V6 15 14
+mostrar_ataques 1
+aparece_villano V9 6 9
+mostrar_ataques 5
+heroe_ataca H4 A10 V3
+aprende_ataque H9 A6 9
+aparece_villano V4 7 12
+aparece_heroe H2 18
+mostrar_turnos
+villano_ataca V5 H5
+mostrar_ataques 2
+villano_ataca V5 H9
+villano_ataca V6 H4
+aprende_ataque H2 A8 16
+mostrar_turnos
+villano_ataca V7 H4
+mostrar_ataques 8
+mostrar_ataques 6
+heroe_ataca H6 A5 V8
+aparece_heroe H9 1
+heroe_ataca H8 A10 V6
+aparece_heroe H3 5
+heroe_ataca H9 A4 V4
+mostrar_ataques 2
+villano_ataca V4 H2
+aprende_ataque H8 A1 15
+aprende_ataque H5 A1 4
+mostrar_turnos
+villano_ataca V7 H9
+heroe_ataca H4 A1 V5
+mostrar_ataques 6
+mostrar_turnos
+villano_ataca V1 H3
+villano_ataca V3 H5
+mostrar_ataques 1
+aparece_villano V10 16 10
+aparece_villano V10 6 11
+villano_ataca V9 H5
+villano_ataca V6 H9
+mostrar_ataques 7
+aparece_villano V1 16 3
+aprende_ataque H5 A6 18
+aparece_heroe H8 6
+villano_ataca V6 H6
+aparece_villano V1 11 11
+aparece_villano V2 3 9
+aparece_heroe H6 17
+aparece_heroe H6 15
+aparece_heroe H2 2
+mostrar_turnos
+villano_ataca V2 H1
+mostrar_turnos
+villano_ataca V9 H5
+aparece_villano V3 3 10
+mostrar_turnos
+villano_ataca V7 H2
+aprende_ataque H9 A1 11
+mostrar_turnos
+villano_ataca V7 H9
+mostrar_ataques 5
+aparece_villano V7 16 9
+aparece_heroe H6 19
+villano_ataca V10 H5
+mostrar_ataques 10
+aparece_villano V10 18 13
+heroe_ataca H4 A5 V10
+mostrar_turnos
+villano_ataca V4 H4
+mostrar_ataques 1
+mostrar_ataques 4
+villano_ataca V5 H9
+heroe_ataca H4 A2 V8
+mostrar_ataques 8
+aparece_heroe H5 13
+aprende_ataque H7 A7 11
+aparece_heroe H9 16
+aprende_ataque H10 A3 16
+aparece_heroe H3 4
+aparece_villano V7 16 20
+mostrar_ataques 10
+heroe_ataca H3 A10 V4
+aparece_villano V6 17 1
+aprende_ataque H1 A7 1
+mostrar_turnos
+villano_ataca V2 H10
+mostrar_ataques 6
+villano_ataca V2 H3
+mostrar_turnos
+villano_ataca V5 H7
+mostrar_turnos
+villano_ataca V8 H4
+heroe_ataca H7 A7 V8
+heroe_ataca H5 A9 V5
+heroe_ataca H7 A8 V6
+heroe_ataca H9 A7 V7
+aparece_heroe H7 4
+heroe_ataca H8 A3 V7
+aparece_heroe H7 15
+heroe_ataca H7 A3 V9
+aprende_ataque H1 A6 15
+aparece_heroe H9 9
+mostrar_turnos
+villano_ataca V3 H3
+mostrar_turnos
+villano_ataca V4 H2
+villano_ataca V10 H1
+mostrar_turnos
+villano_ataca V8 H8
+mostrar_turnos
+villano_ataca V9 H4
+mostrar_ataques 1
+mostrar_ataques 9
+villano_ataca V6 H8
+aprende_ataque H7 A6 1
+aprende_ataque H6 A10 15
+heroe_ataca H8 A6 V9
+mostrar_ataques 2
+aparece_villano V6 9 8
+heroe_ataca H10 A2 V10
+villano_ataca V4 H5
+aparece_villano V9 19 9
+aparece_villano V5 4 12
+aparece_villano V2 11 7
+aparece_heroe H8 1
+aprende_ataque H2 A5 9
+heroe_ataca H3 A10 V1
+heroe_ataca H6 A3 V6
+aparece_villano V8 17 15
+aprende_ataque H5 A1 8
+heroe_ataca H2 A4 V3
+aparece_villano V3 20 4
+aprende_ataque H4 A8 10
+mostrar_ataques 1
+aprende_ataque H4 A6 8
+villano_ataca V7 H4
+mostrar_ataques 7
+aparece_heroe H5 9
+aparece_villano V5 17 1
+heroe_ataca H4 A6 V7
+heroe_ataca H4 A2 V4
+heroe_ataca H7 A4 V10
+mostrar_turnos
+villano_ataca V9 H1
+aparece_villano V10 20 7
+heroe_ataca H8 A9 V5
+aprende_ataque H7 A7 4
+aparece_villano V2 4 4
+aparece_heroe H2 1
+heroe_ataca H10 A4 V9
+heroe_ataca H10 A1 V5
+aparece_heroe H5 18
+villano_ataca V9 H9
+villano_ataca V10 H5
+aparece_heroe H8 5
+aparece_heroe H2 10
+villano_ataca V2 H6
+villano_ataca V2 H3
+aparece_villano V1 18 2
+mostrar_ataques 5
+aparece_heroe H5 10
+aprende_ataque H6 A4 7
+villano_ataca V9 H10
 FIN

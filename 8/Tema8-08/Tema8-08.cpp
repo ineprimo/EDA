@@ -33,7 +33,7 @@ struct Character {
     bool dead;
 
     // set para gestionar los ataques, no tienen prioridad pero no se pueden suplicar
-    map<string, Attack> attacks;
+    map<string, int> attacks;
 
 };
 
@@ -73,11 +73,7 @@ public:
         villain.hp = puntos;
         villain.dead = false;
 
-        Attack a = Attack();
-        a.name = "default";
-        a.dmg = valor;
-        
-        villain.attacks.insert({"default", a});
+        villain.attacks.insert({"default", valor});
 
         turns.push_back(villain);
         villanos.insert({v, villain});
@@ -115,13 +111,8 @@ public:
         if(aux->second.attacks.count(ataque) != 0)
             throw invalid_argument("Ataque repetido");
 
-        // crea el ataque
-        Attack attk = Attack();
-        attk.dmg = valor;
-        attk.name = ataque;
-
         // si uso c no se guarda bien el valor 
-        aux->second.attacks.insert({ ataque, attk });
+        aux->second.attacks.insert({ ataque, valor });
         
     }
 
@@ -135,10 +126,10 @@ public:
             throw invalid_argument("Heroe inexistente");
         }
 
-        map<string, Attack> attks = aux->second.attacks;
+        map<string, int> attks = aux->second.attacks;
 
         for (auto it = attks.begin(); it != attks.end(); it++) {
-            pair<string, int> o = { it->first, it->second.dmg};
+            pair<string, int> o = { it->first, it->second};
             res.push_back(o);
         }
 
@@ -189,7 +180,7 @@ public:
         // gestiona el turno
 
         // el villano ataca al heroe
-        hero_exists->second.hp -= villain_exists->second.attacks.begin()->second.dmg;
+        hero_exists->second.hp -= villain_exists->second.attacks.begin()->second;
 
         // pide turno
         turns.pop_front();
@@ -203,7 +194,8 @@ public:
 
             // le borra de turns
             auto hero_dead = turns.begin();
-            while (hero_dead != turns.begin() && hero_dead->name != h) {
+
+            while (hero_dead != turns.end() && hero_dead->name != h) {
                 hero_dead++;
             }
             turns.erase(hero_dead);
@@ -244,7 +236,7 @@ public:
         }
 
         // el villano ataca al heroe
-        villain_exists->second.hp -= current_attack->second.dmg;
+        villain_exists->second.hp -= current_attack->second;
             
         // pide turno
         turns.pop_front();
@@ -259,7 +251,7 @@ public:
 
             // le quita de turns
             auto villain_dead = turns.begin();
-            while (villain_dead != turns.begin() && villain_dead->name != v) {
+            while (villain_dead != turns.end() && villain_dead->name != v) {
                 villain_dead++;
             }
             turns.erase(villain_dead);
