@@ -16,6 +16,7 @@ Qué has conseguido hacer y qué no:
 #include <map>
 #include <stack>
 #include <deque>
+#include <list>
 
 using namespace std;
 
@@ -38,12 +39,12 @@ struct Character {
 };
 
 struct Villain : public Character {
-    deque<Character>::iterator turn;
+    list<Character>::iterator turn;
 
 };
 
 struct Hero : public Character {
-    deque<Character>::iterator turn;
+    list<Character>::iterator turn;
 
 };
 
@@ -52,7 +53,7 @@ private:
     // ...
 
     // cola para la gestion de turnos
-    deque<Character> turns;
+    list<Character> turns;
 
     // set no ordenado para la gestion de personajes activos
     //unordered_set<string> characters;
@@ -62,7 +63,7 @@ private:
 
 
 public:
-    // Coste:
+    // Coste: lineal O(n) por el count del unordered map
     void aparece_villano(Villano const& v, int puntos, int valor) {
 
         if (villanos.count(v) != 0) {
@@ -84,7 +85,7 @@ public:
         //villain.turn = aux;
     }
 
-    // Coste:
+    // Coste: lineal O(n) por el count del unordered map
     void aparece_heroe(Heroe const& h, int puntos) {
 
         if (heroes.count(h) != 0) {
@@ -99,9 +100,13 @@ public:
         turns.push_back(hero);
         heroes.insert({h, hero});
 
+        auto aux = --turns.end();
+        heroes[h].turn = aux;
+
     }
 
-    // Coste:
+    // Coste: como uso un unordered_map, en el caso promedio la complejidad es constante por el 
+    // find, pero en el caso peor es lineal O(n)
     void aprende_ataque(Heroe const& h, string const& ataque, int valor) {
         
         // heroe
@@ -121,7 +126,7 @@ public:
         
     }
 
-    // Coste:
+    // Coste: lineal siempre segun el numero de ataques que tenga el heroe
     vector<pair<string, int>> mostrar_ataques(Heroe const& h) {
         vector<pair<string, int>> res;
         auto aux = heroes.find(h);
@@ -141,10 +146,10 @@ public:
         return res;
     }
 
-    // Coste:
+    // Coste: lineal segun los turnos que haya
     vector<pair<string, int>> mostrar_turnos() {
         vector<pair<string, int>> res;
-        deque<Character> aux = turns;
+        list<Character> aux = turns;
 
         for (int i = 0; i < turns.size(); i++) {
             auto ch = heroes.find(aux.front().name);
@@ -161,7 +166,7 @@ public:
         return res;
     }
 
-    // Coste:
+    // Coste: en el mejor de los casos constante por el find 
     bool villano_ataca(Villano const& v, Heroe const& h) {
         bool dead = false;
         // mira si el villano existe
@@ -194,18 +199,12 @@ public:
 
         // mira muerte
         if (hero_exists->second.hp <= 0) {
+
+            turns.erase(hero_exists->second.turn);
+
             // le borra de characters
             hero_exists->second.dead = true;
             heroes.erase(hero_exists);  
-
-            // le borra de turns
-            /*auto hero_dead = turns.begin();
-
-            while (hero_dead != turns.end() && hero_dead->name != h) {
-                hero_dead++;
-            }*/
-            turns.erase(hero_exists->second.turn);
-
 
             dead = true;
         }
@@ -213,7 +212,7 @@ public:
         return dead;
     }
 
-    // Coste:
+    // Coste: en el mejor de los casos constante por el find
     bool heroe_ataca(Heroe const& h, string const& ataque, Villano const& v) {
 
         bool dead = false;
