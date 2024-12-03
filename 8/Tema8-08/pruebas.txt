@@ -3,4 +3,8 @@ aparece_heroe furina 20
 mostrar_turnos
 aprende_ataque furina fanfare 10
 mostrar_ataques furina
+mostrar_turnos
+aparece_villano tart 5 5
+villano_ataca tarta furina
+villano_ataca arlecchino tart
 FIN

@@ -12,9 +12,8 @@ Qué has conseguido hacer y qué no:
 #include <vector>
 #include <utility>
 #include <queue>
-#include <unordered_set>
-#include <set>
 #include <unordered_map>
+#include <map>
 #include <stack>
 #include <deque>
 
@@ -34,8 +33,7 @@ struct Character {
     bool dead;
 
     // set para gestionar los ataques, no tienen prioridad pero no se pueden suplicar
-    unordered_map<string, Attack> attacks;
-    stack<Attack> attack_stack;
+    map<string, Attack> attacks;
 
 };
 
@@ -57,7 +55,8 @@ private:
 
     // set no ordenado para la gestion de personajes activos
     //unordered_set<string> characters;
-    unordered_map<string, Character> characters;
+    unordered_map<string, Character> villanos;
+    unordered_map<string, Character> heroes;
 
 
 
@@ -65,14 +64,8 @@ public:
     // Coste:
     void aparece_villano(Villano const& v, int puntos, int valor) {
 
-        if (characters.size() > 0) {
-
-            auto aux = characters.find(v);
-
-            // si esta
-            if (aux != characters.end()) {
-                throw invalid_argument("Personaje ya existente");
-            }
+        if (villanos.count(v) != 0) {
+            throw invalid_argument("Personaje ya existente");
         }
 
         Villain villain = Villain();
@@ -85,23 +78,16 @@ public:
         a.dmg = valor;
         
         villain.attacks.insert({"default", a});
-        villain.attack_stack.push(a);
 
         turns.push_back(villain);
-        characters.insert({v, villain});
+        villanos.insert({v, villain});
     }
 
     // Coste:
     void aparece_heroe(Heroe const& h, int puntos) {
 
-        if (characters.size() > 0) {
-            
-            auto aux = characters.find(h);
-
-            // si esta
-            if (aux != characters.end()) {
-                throw invalid_argument("Personaje ya existente");
-            }
+        if (heroes.count(h) != 0) {
+            throw invalid_argument("Personaje ya existente");
         }
 
         Hero hero = Hero();
@@ -110,76 +96,51 @@ public:
         hero.dead = false;
 
         turns.push_back(hero);
-        characters.insert({h, hero});
+        heroes.insert({h, hero});
 
     }
 
     // Coste:
     void aprende_ataque(Heroe const& h, string const& ataque, int valor) {
         
-        if (characters.size() > 0) {
+        // heroe
+        auto aux = heroes.find(h);
 
-            auto aux = characters.find(h);
-
-            // si esta
-            if (aux == characters.end()) {
-                throw invalid_argument("Heroe inexistente");
-            }
-            
-            // nombre del heroe
-            auto a = *(aux);
-            
-            characters.find(a.first);
-            Character c = characters.at(a.first);
-
-            if (!c.attack_stack.empty()) {
-
-                // mira si se repite
-                auto attk = c.attacks.find(ataque);
-                if (attk != c.attacks.end()) {
-                    throw invalid_argument("Ataque repetido");
-                }
-                /*
-                if (c.attack_stack.top().name == ataque)
-                    throw invalid_argument("Ataque repetido");*/
-            }
-
-            Attack attk = Attack();
-            attk.dmg = valor;
-            attk.name = ataque;
-
-            // si uso c no se guarda bien el valor 
-            characters.at(a.first).attacks.insert({ ataque, attk });
-            characters.at(a.first).attack_stack.push(attk);
+        // si no esta
+        if (aux == heroes.end()) {
+            throw invalid_argument("Heroe inexistente");
         }
+         
+        // si ya sabe ese ataque
+        if(aux->second.attacks.count(ataque) != 0)
+            throw invalid_argument("Ataque repetido");
+
+        // crea el ataque
+        Attack attk = Attack();
+        attk.dmg = valor;
+        attk.name = ataque;
+
+        // si uso c no se guarda bien el valor 
+        aux->second.attacks.insert({ ataque, attk });
+        
     }
 
     // Coste:
     vector<pair<string, int>> mostrar_ataques(Heroe const& h) {
         vector<pair<string, int>> res;
-        if (characters.size() > 0) {
+        auto aux = heroes.find(h);
 
-            auto aux = characters.find(h);
-
-            // si no esta 
-            if (aux == characters.end()) {
-                throw invalid_argument("Heroe inexistente");
-            }
-
-            auto a = *(aux);
-            unordered_map<string, Attack> attks = a.second.attacks;
-
-            stack<Attack> aux_stack = a.second.attack_stack;
-
-            int n = a.second.attack_stack.size();
-            for (int i = 0; i < n; i++) {
-                pair<string, int> o = { aux_stack.top().name, aux_stack.top().dmg };
-                res.push_back(o);
-                aux_stack.pop();
-            }
-        }
-        else
+        // si no esta 
+        if (aux == heroes.end()) {
             throw invalid_argument("Heroe inexistente");
+        }
+
+        map<string, Attack> attks = aux->second.attacks;
+
+        for (auto it = attks.begin(); it != attks.end(); it++) {
+            pair<string, int> o = { it->first, it->second.dmg};
+            res.push_back(o);
+        }
 
         return res;
     }
@@ -190,9 +151,14 @@ public:
         deque<Character> aux = turns;
 
         for (int i = 0; i < turns.size(); i++) {
-            auto c = characters.find(aux.front().name);
+            auto ch = heroes.find(aux.front().name);
+            auto cv = villanos.find(aux.front().name);
 
-            res.push_back({c->first, c->second.hp});
+            if(cv != villanos.end())
+                res.push_back({ cv->first, cv->second.hp });
+            else
+                res.push_back({ch->first, ch->second.hp});
+
             aux.pop_front();
         }
 
@@ -202,53 +168,48 @@ public:
     // Coste:
     bool villano_ataca(Villano const& v, Heroe const& h) {
         bool dead = false;
-        if (characters.size() > 0) {
-
-            // mira si el villano existe
-            auto villain_exists = characters.find(v);
-            if (villain_exists == characters.end()) {
-                throw invalid_argument("Villano inexistente");
-            }
-
-            // mira si el heroe existe
-            auto hero_exists = characters.find(h);
-            if (hero_exists == characters.end()) {
-                throw invalid_argument("Heroe inexistente");
-            }
-            
-            // mira si es su turno
-            auto current_turn_holder = turns.front();
-            if (current_turn_holder.name != villain_exists->first) {
-                throw invalid_argument("No es su turno");
-            }
-
-            // gestiona el turno
-
-            // el villano ataca al heroe
-            int dmg = villain_exists->second.attack_stack.top().dmg;
-            hero_exists->second.hp -= villain_exists->second.attack_stack.top().dmg;
-
-            // pide turno
-            turns.pop_front();
-            turns.push_back(villain_exists->second);
-
-            // mira muerte
-            if (hero_exists->second.hp <= 0) {
-                hero_exists->second.dead = true;
-                characters.erase(hero_exists);  
-
-                auto hero_dead = turns.begin();
-                while (hero_dead != turns.begin() && hero_dead->name != h) {
-                    hero_dead++;
-                }
-                turns.erase(hero_dead);
-
-
-                dead = true;
-            }
-        }
-        else 
+        // mira si el villano existe
+        auto villain_exists = villanos.find(v);
+        if (villain_exists == villanos.end()) {
             throw invalid_argument("Villano inexistente");
+        }
+
+        // mira si el heroe existe
+        auto hero_exists = heroes.find(h);
+        if (hero_exists == heroes.end()) {
+            throw invalid_argument("Heroe inexistente");
+        }
+            
+        // mira si es su turno
+        auto current_turn_holder = turns.front();
+        if (current_turn_holder.name != villain_exists->first) {
+            throw invalid_argument("No es su turno");
+        }
+
+        // gestiona el turno
+
+        // el villano ataca al heroe
+        hero_exists->second.hp -= villain_exists->second.attacks.begin()->second.dmg;
+
+        // pide turno
+        turns.pop_front();
+        turns.push_back(villain_exists->second);
+
+        // mira muerte
+        if (hero_exists->second.hp <= 0) {
+            // le borra de characters
+            hero_exists->second.dead = true;
+            heroes.erase(hero_exists);  
+
+            // le borra de turns
+            auto hero_dead = turns.begin();
+            while (hero_dead != turns.begin() && hero_dead->name != h) {
+                hero_dead++;
+            }
+            turns.erase(hero_dead);
+
+            dead = true;
+        }
 
         return dead;
     }
@@ -257,62 +218,54 @@ public:
     bool heroe_ataca(Heroe const& h, string const& ataque, Villano const& v) {
 
         bool dead = false;
-        if (characters.size() > 0) {
-
-            // mira si el villano existe
-            auto villain_exists = characters.find(v);
-            if (villain_exists == characters.end()) {
-                throw invalid_argument("Villano inexistente");
-            }
-
-            // mira si el heroe existe
-            auto hero_exists = characters.find(h);
-            if (hero_exists == characters.end()) {
-                throw invalid_argument("Heroe inexistente");
-            }
-
-            // mira si es su turno
-            auto current_turn_holder = turns.front();
-            if (current_turn_holder.name != hero_exists->first) {
-                throw invalid_argument("No es su turno");
-            }
-
-            // mira si existe el ataque
-            auto attacks = hero_exists->second.attacks;
-            auto current_attack = attacks.find(ataque);
-            if (current_attack == attacks.end()) {
-                throw invalid_argument("Ataque no aprendido");
-            }
-
-            // aquiiiiiiii TO DO
-
-
-             //// el villano ataca al heroe
-            villain_exists->second.hp -= current_attack->second.dmg;
-            
-             //// pide turno
-            turns.pop_front();
-            turns.push_back(hero_exists->second);
-
-            //// mira muerte
-            if (villain_exists->second.hp <= 0) {
-
-                villain_exists->second.dead = true;
-                characters.erase(villain_exists);
-
-
-                auto villain_dead = turns.begin();
-                while (villain_dead != turns.begin() && villain_dead->name != v) {
-                    villain_dead++;
-                }
-                turns.erase(villain_dead);
-
-                dead = true;
-            }
-        }
-        else
+        // mira si el villano existe
+        auto villain_exists = villanos.find(v);
+        if (villain_exists == villanos.end()) {
             throw invalid_argument("Villano inexistente");
+        }
 
+        // mira si el heroe existe
+        auto hero_exists = heroes.find(h);
+        if (hero_exists == heroes.end()) {
+            throw invalid_argument("Heroe inexistente");
+        }
+
+        // mira si es su turno
+        auto current_turn_holder = turns.front();
+        if (current_turn_holder.name != hero_exists->first) {
+            throw invalid_argument("No es su turno");
+        }
+
+        // mira si existe el ataque
+        auto attacks = hero_exists->second.attacks;
+        auto current_attack = attacks.find(ataque);
+        if (current_attack == attacks.end()) {
+            throw invalid_argument("Ataque no aprendido");
+        }
+
+        // el villano ataca al heroe
+        villain_exists->second.hp -= current_attack->second.dmg;
+            
+        // pide turno
+        turns.pop_front();
+        turns.push_back(hero_exists->second);
+
+        //// mira muerte
+        if (villain_exists->second.hp <= 0) {
+
+            // le quita de characters
+            villain_exists->second.dead = true;
+            villanos.erase(villain_exists);
+
+            // le quita de turns
+            auto villain_dead = turns.begin();
+            while (villain_dead != turns.begin() && villain_dead->name != v) {
+                villain_dead++;
+            }
+            turns.erase(villain_dead);
+
+            dead = true;
+        }
         return dead;
 
     }
