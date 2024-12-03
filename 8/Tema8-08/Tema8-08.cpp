@@ -38,11 +38,12 @@ struct Character {
 };
 
 struct Villain : public Character {
+    deque<Character>::iterator turn;
 
 };
 
 struct Hero : public Character {
-    // ??
+    deque<Character>::iterator turn;
 
 };
 
@@ -55,8 +56,8 @@ private:
 
     // set no ordenado para la gestion de personajes activos
     //unordered_set<string> characters;
-    unordered_map<string, Character> villanos;
-    unordered_map<string, Character> heroes;
+    unordered_map<string, Villain> villanos;
+    unordered_map<string, Hero> heroes;
 
 
 
@@ -77,6 +78,10 @@ public:
 
         turns.push_back(villain);
         villanos.insert({v, villain});
+
+        auto aux = --turns.end();
+        villanos[v].turn = aux;
+        //villain.turn = aux;
     }
 
     // Coste:
@@ -185,6 +190,7 @@ public:
         // pide turno
         turns.pop_front();
         turns.push_back(villain_exists->second);
+        villain_exists->second.turn = --turns.end();
 
         // mira muerte
         if (hero_exists->second.hp <= 0) {
@@ -193,12 +199,13 @@ public:
             heroes.erase(hero_exists);  
 
             // le borra de turns
-            auto hero_dead = turns.begin();
+            /*auto hero_dead = turns.begin();
 
             while (hero_dead != turns.end() && hero_dead->name != h) {
                 hero_dead++;
-            }
-            turns.erase(hero_dead);
+            }*/
+            turns.erase(hero_exists->second.turn);
+
 
             dead = true;
         }
@@ -241,20 +248,17 @@ public:
         // pide turno
         turns.pop_front();
         turns.push_back(hero_exists->second);
+        hero_exists->second.turn = --turns.end();
 
         //// mira muerte
         if (villain_exists->second.hp <= 0) {
+
+            turns.erase(villain_exists->second.turn);
 
             // le quita de characters
             villain_exists->second.dead = true;
             villanos.erase(villain_exists);
 
-            // le quita de turns
-            auto villain_dead = turns.begin();
-            while (villain_dead != turns.end() && villain_dead->name != v) {
-                villain_dead++;
-            }
-            turns.erase(villain_dead);
 
             dead = true;
         }
