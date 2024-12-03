@@ -1,5 +1,5 @@
 /*
-Nombre completo:
+Nombre completo:    Paula Alemany Rodriguez
 DNI:
 Usuario del juez:
 Puesto de laboratorio:
@@ -12,32 +12,47 @@ Qué has conseguido hacer y qué no:
 #include <vector>
 #include <utility>
 #include <map>
-#include <deque>
 #include <unordered_map>
 #include <algorithm>
+#include <list>
 
 using namespace std;
 
 using Heroe = string;
 using Villano = string;
 
-using vida = int;
-using dano = int;
-using ataques = map<string, dano>;
-
 class SistemaBatallas {
 private:
+
+    //Struct de la información de cada personaje
+    struct infoVillano {
+
+        int vida = 0;
+        int dano = 0;
+        list<pair<Villano, int>>::iterator it;  //Puntero a la lista de turnos
+    };
+
+    struct infoHeroe {
+
+        int vida = 0;
+        map<string, int> ataques;
+        list<pair<Heroe, int>>::iterator it;    //Puntero a la lista de turnos
+    };
+
     //El mapa guarda el nombre y luego la vida y el ataque
-    unordered_map <string, pair<vida, dano>> villanos;
-    unordered_map <string, pair<vida, ataques>> heroes;
-    deque<string> turnos;
+    unordered_map <Villano, infoVillano> villanos;
+    unordered_map <Heroe, infoHeroe> heroes;
+    list<pair<string, int>> turnos;
 
 public:
     // Coste: logaritmico O(log n) debido a la insercion del ataque
     void aparece_villano(Villano const& v, int puntos, int valor) {
         if(villanos.count(v) == 0){
-            villanos.insert({ v, {puntos, valor} });
-            turnos.push_back(v);
+            villanos[v].vida = puntos;
+            villanos[v].dano = valor;
+
+            turnos.emplace_back(v, puntos);
+            villanos[v].it = --turnos.end();
         }
         else throw invalid_argument("Personaje ya existente");
        
@@ -47,9 +62,11 @@ public:
     void aparece_heroe(Heroe const& h, int puntos) {
         
         if (heroes.count(h) == 0) {
-            ataques a;
-            heroes.insert({ h, {puntos, a} });
-            turnos.push_back(h);
+            heroes[h].vida = puntos;
+
+            turnos.emplace_back(h, puntos);
+            heroes[h].it = --turnos.end();
+            
         }
         else throw invalid_argument("Personaje ya existente");
         
@@ -61,21 +78,24 @@ public:
         auto it = heroes.find(h);
 
         if (it != heroes.end()) {
-            if(it->second.second.count(ataque) == 0) it->second.second.insert({ ataque, valor });
+
+            if (it->second.ataques.count(ataque) == 0) {
+                heroes[h].ataques.insert({ ataque, valor });
+            }
             else throw invalid_argument("Ataque repetido");
         }
         else throw invalid_argument("Heroe inexistente");
     }
 
     // Coste: O(n) siendo n el numero de ataques que tenga el heroe
-    vector<pair<string, dano>> mostrar_ataques(Heroe const& h) {
+    vector<pair<string, int>> mostrar_ataques(Heroe const& h) {
 
         auto it = heroes.find(h);
 
         if (it != heroes.end()) {
-            vector<pair<string, dano>> res;
+            vector<pair<string, int>> res;
 
-            for (auto a : it->second.second) {res.push_back({ a.first, a.second }); }
+            for (auto a : it->second.ataques) {res.push_back({ a.first, a.second }); }
             return res;
         }
         else throw invalid_argument("Heroe inexistente");
@@ -88,25 +108,13 @@ public:
         int tur = turnos.size();
         int i = 0;
 
-        while (i < tur) {
-
-            string it = *turnos.begin();
-            auto itV = villanos.find(it);
-            auto itH = heroes.find(it);
-
-            if (itV != villanos.end()) { res.push_back({ itV->first, itV->second.first }); }
-            else { res.push_back({ itH->first, itH->second.first }); }
-
-            turnos.push_back(it);
-            turnos.erase(turnos.begin());
-            i++;
+        for (auto i : turnos) {
+            res.emplace_back(i);
         }
         return res; 
     }
 
-    // Coste:  Constante O(n) siendo n el numero de turnos
-    //Esto es en el caso peor si su turno del eliminado es el ultimo a eliminar
-    //Si no se muere es constante O(1)
+    // Coste: O(1) Como ya tenemos el iterador a eliminar es siempre contaste
     bool villano_ataca(Villano const& v, Heroe const& h) {
         
         auto itV = villanos.find(v);
@@ -116,16 +124,18 @@ public:
             
             if (itH != heroes.end()) {
 
-                string i = *turnos.begin();
-                if (i == itV->first) {
-                    itH->second.first -= itV->second.second;
+                if (turnos.front().first == itV->first) {  //Comprobamos si es su turno
+                    itH->second.vida -= itV->second.dano;    //A la vida del heroe restamos el ataque
+                    itH->second.it->second = itH->second.vida;
 
-                    turnos.erase(turnos.begin());
-                    turnos.push_back(i);
+                    //Actualizamos el turno
+                    turnos.pop_front();
+                    turnos.emplace_back(v, itV->second.vida);   //Turno villano
+                    itV->second.it = --turnos.end();
 
-                    if (itH->second.first <= 0) {
-                        auto it = remove(turnos.begin(), turnos.end(),itH->first);
-                        turnos.erase(it, turnos.end());
+                    //Comprobamos si tiene que morir
+                    if (itH->second.vida <= 0) {
+                        turnos.erase(itH->second.it);
                         heroes.erase(itH);
                         return true;
                     }
@@ -139,9 +149,7 @@ public:
         return false;
     }
 
-    // Coste: Constante O(n) siendo n el numero de turnos
-    //Esto es en el caso peor si su turno es el ultimo a eliminar
-    //Si no se muere es constante O(1)
+    // Coste: O(1) Como ya tenemos el iterador a eliminar es siempre contaste
     bool heroe_ataca(Heroe const& h, string const& ataque, Villano const& v) {
         
         auto itV = villanos.find(v);
@@ -150,19 +158,20 @@ public:
             auto itH = heroes.find(h);
             if (itH != heroes.end()) {
 
-                string i = *turnos.begin();
-                if (i == itH->first) {
+                if (turnos.front().first == itH->first) {
 
-                    auto at = itH->second.second.find(ataque);
-                    if (at != itH->second.second.end()) {
-                        itV->second.first -= at->second;
+                    auto at = itH->second.ataques.find(ataque);
+                    if (at != itH->second.ataques.end()) {
+                        itV->second.vida -= at->second;
+                        itV->second.it->second = itV->second.vida;
 
-                        turnos.erase(turnos.begin());
-                        turnos.push_back(i);
+                        //Actualizamos el turno
+                        turnos.pop_front();
+                        turnos.emplace_back(h, itH->second.vida);   //Turno del heroe
+                        itH->second.it = --turnos.end();
 
-                        if (itV->second.first <= 0) {
-                            auto it = remove(turnos.begin(), turnos.end(), itV->first);
-                            turnos.erase(it, turnos.end());
+                        if (itV->second.vida <= 0) {
+                            turnos.erase(itV->second.it);
                             villanos.erase(itV);
                             return true;
                         }
