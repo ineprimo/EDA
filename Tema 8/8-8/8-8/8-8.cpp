@@ -11,29 +11,48 @@ Usuario del juez: EDA-GDV35.
 #include <utility>
 #include <map>
 
+
 using namespace std;
+
 
 using Heroe = string;
 using Villano = string;
-using VidaYAtaque = std::pair<int, int>;
-using Villanos = std::map <Villano, VidaYAtaque>;
+
+
+struct Vill
+{
+public:
+	Villano nombre;
+	int vida;
+	int danyo;
+};
+
+struct Her
+{
+public:
+	Heroe nombre;
+};
+
+
+using Villanos = std::map<Vill, int>;
+using ataques = std::pair<std::string, int>;
+
+
+
+
 
 
 class SistemaBatallas {
 private:
 	Villanos villanos;
+	Her heroe;
 
 public:
 	// Coste:
 	void aparece_villano(Villano const& v, int puntos, int valor)
 	{
-		if (!villanos.count(v))
-		{
-			villanos.insert({ v, {puntos, valor} });
-		}
-		else
-		{
-			throw invalid_argument("Personaje ya existente");
+		if () {
+
 		}
 	}
 
@@ -160,7 +179,7 @@ bool resuelveCaso() { // No tacar nada de esta función!
 //#define DOMJUDGE
 int main() {
 #ifndef DOMJUDGE
-	ifstream in("input3.txt");
+	ifstream in("datos.txt");
 	auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 
