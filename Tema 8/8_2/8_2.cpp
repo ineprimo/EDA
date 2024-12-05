@@ -7,31 +7,55 @@
 #include <cassert>
 
 #include <set>
+#include <map>
 #include <unordered_map>
 using namespace std;
 
 using medico = string;
 using paciente = string;
 
-
-struct fecha {
+class fecha {
+public:
     int dia = 0;
-    int hora = 0;
-    int min = 0;
-};
+    int hora = 0;   //Tiene que ser menor a 24 (A las 24 es 1 dia)
+    int min = 0;    //Tiene que ser menor a 60 (A los 60 es 1 hora)
 
+    fecha(int d, int h, int m) {    //Nos aseguramos de que siempre sean correctas
+
+        if (m > 60) {
+            hora++;
+            min = m - 60;
+        }
+        else min = m;
+
+        if (hora + h > 24) {
+            dia++;
+            hora = h - 24;
+        }
+        else hora = h;
+
+        dia += d;
+    }
+
+    inline bool operator< (const fecha& f) {
+
+        if (dia > f.dia && hora > f.hora && min > f.min) return false;
+        else return true;
+
+    }
+};
 class consultorio {
 private:
     //Vamos a hacer un mapa que ponga por cada medico las horas que tiene pilladas
-    unordered_map<medico, set<fecha>> medicos;
+    unordered_map<medico, map<fecha, paciente, less<fecha>>> medicos;
 
-    //Hacemos otro mapa para los pacientes
-    //unordered_map<paciente, 
+    //La cosa es que la hora con el medico va con un paciente atachado
+    //La clave es la fecha y el dato el paciente porque puede tener el mismo paciente a distintas horas
 
 public:
 
     void nuevoMedico(medico m) {
-        set<fecha> h;
+        set<fecha, less<fecha>> h;
         medicos.insert({m, h});  //El propio map solo lo añade si no esta
     }
 
@@ -48,6 +72,18 @@ public:
             else throw exception("Fecha ocupada");
         }
         else throw exception("Medico no existente");
+    }
+
+    void siguientePaciente(medico m) {
+        //El paciente al que le toca es aquel que tenga la fecha menor
+    }
+
+    void atiendeConsulta(medico m) {
+
+    }
+
+    void listaPacientes(medico m, int d) {
+
     }
 
 };
