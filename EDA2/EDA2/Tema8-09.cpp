@@ -5,11 +5,11 @@
 #include <stdexcept>
 #include <fstream>
 #include <vector>
+#include <utility>
 #include <unordered_map>
 #include <map>
-#include <queue>
-#include <utility>
-#include <algorithm>
+#include <list>
+
 
 using namespace std;
 
@@ -20,12 +20,14 @@ class SistemaBatallas {
 private:
 	struct InfoVillano
 	{
+		list<pair<string, int>>::iterator it;
 		int vida;
 		int ataque;
 	};
 
 	struct InfoHero
 	{
+		list<pair<string, int>>::iterator it;
 		int vida;
 		map<string, int> ataques;
 	};
@@ -33,162 +35,142 @@ private:
 	unordered_map< Villano, InfoVillano> villanos;
 	unordered_map< Heroe, InfoHero> heroes;
 
-	vector<string> turns;
-	int turnoActual = 0;
+	// nombre del personaje || vida del personaje
+	list<pair<string, int>> turns; // lista para saber el orden de los turnos
 
 public:
 
 	SistemaBatallas() {}
 	~SistemaBatallas() {}
 
-	// Coste: Coste promedio O(1). Es lineal en el peor de los casos O(n), donde n es el numero de elementos de villanos
+	// Coste: Coste promedio O(1).
 	void aparece_villano(Villano const& v, int puntos, int valor) {
 		// Si ya existe el villano, lanza una excepcion
-		if (villanos.count(v))
+		if (villanos.find(v) != villanos.end())
 			throw invalid_argument("Personaje ya existente");
+
+		turns.emplace_back(v, puntos);
 
 		// Aniade el villano al map
-		villanos.insert({ v,{puntos, valor} });
-
-		turns.push_back(v);
+		villanos[v].vida = puntos;
+		villanos[v].ataque = valor;
+		villanos[v].it = --turns.end();
 	}
 
-	// Coste: Coste promedio O(1). Es lineal en el peor de los casos O(n), donde n es el numero de elementos de heroes
+	// Coste: Coste promedio O(1).
 	void aparece_heroe(Heroe const& h, int puntos) {
 		// Si ya existe el heroe lanza una excepcion
-		if (heroes.count(h))
+		if (heroes.find(h) != heroes.end())
 			throw invalid_argument("Personaje ya existente");
 
-		// Aniade el heroe al map
-		heroes.insert({ h,{puntos} });
+		turns.emplace_back(h, puntos);
 
-		turns.push_back(h);
+		// Aniade el heroe al turns
+		heroes[h].vida = puntos;
+		heroes[h].it = --turns.end();
 	}
 
-	// Coste: Coste promedio O(1). En el peor de los casos el coste es O(n+m) donde n es el numero de elementos de heroes y m el de ataques del heroe h
+	// Coste: Coste promedio O(log n) donde n es el numero de ataques del heroe h.
 	void aprende_ataque(Heroe const& h, string const& ataque, int valor) {
 		// Si no existe el hero al que queremos aniadir el ataque lanza excepcion
 		if (!heroes.count(h))
 			throw invalid_argument("Heroe inexistente");
 		// Cacheamos la informacion del heroe para no tener que buscarla todo el rato
-		InfoHero& info = heroes[h];
+		auto& info = heroes[h].ataques;
 		// Si ya existe el ataque en el heroe lanza excepcion
-		if (info.ataques.count(ataque))
+		if (info.count(ataque))
 			throw invalid_argument("Ataque repetido");
 
 		// Aniadimos el ataque a la lista de ataques
-		info.ataques.insert({ ataque,valor });
+		info.insert({ ataque,valor });
 	}
 
-	// Coste: el coste lineal O(n) donde n es el numero de ataques que tiene el heroe h
+	// Coste: el coste lineal O(n) donde n es el numero de ataques que tiene el heroe h.
 	vector<pair<string, int>> mostrar_ataques(Heroe const& h) {
 		// Si no existe el hero lanza excepcion
-		if (!heroes.count(h))
+		if (heroes.find(h) == heroes.end())
 			throw invalid_argument("Heroe inexistente");
 		// Guardamos los ataques en el vector res
 		vector<pair<string, int>> res;
+		auto ataquesH = heroes[h].ataques; // mapa ordenado
 
-		// O(a) a = elementos en ataques
-		for (auto a : heroes[h].ataques)
-			res.push_back(a);
+		for (auto& a : ataquesH)
+			res.emplace_back(a.first, a.second);
 
 		return res;
 	}
 
 	// Coste: el coste es lineal O(n) donde n es el numero de elementos de turns.
-	// En el peor de los casos O(n*(V+H)) donde:
-	// n es el numero de elementos de turns
-	// H el de heroes
-	// V el de villanos
 	vector<pair<string, int>> mostrar_turnos() {
 		vector<pair<string, int>> res;
 
-		pair <string, int> charac;
 		for (auto c : turns)
 		{
-			// si no hay nombre en el turno lo salta
-			if (c == "")
-				continue;
-
-			// guarda los datos del personaje que buscamos
-			if (villanos.count(c))
-				charac = { c,villanos[c].vida };
-			else if (heroes.count(c))
-				charac = { c,heroes[c].vida };
-
-			// Aniade el front al final
-			turnoActual++;
-
-			res.push_back(charac);
+			res.emplace_back(c.first, c.second);
 		}
 
 		return res;
 	}
 
-	// Coste: el coste es lineal O(n) n es el numero de elementos en turns.
-	// En el peor de los casos sera O(n+H+V) donde:
-	// n es el numero de elementos de turns
-	// H el de heroes
-	// V el de villanos
+	// Coste: el coste es lineal O(1) gracias al uso de iteradores.
 	bool villano_ataca(Villano const& v, Heroe const& h) {
-		if (!villanos.count(v))
+		const auto villano = villanos.find(v);
+		if (villano == villanos.end())
 			throw invalid_argument("Villano inexistente");
-		if (!heroes.count(h))
+		const auto heroe = heroes.find(h);
+		if (heroe == heroes.end())
 			throw invalid_argument("Heroe inexistente");
-		if (turns[turnoActual] != v)
+		if (v != turns.front().first)
 			throw invalid_argument("No es su turno");
-		heroes[h].vida -= villanos[v].ataque;
 
-		// avanza turno
-		turnoActual++;
-		if (turnoActual >= turns.size())
-			turnoActual = 0;
+		// actualizacion de turnos
+		turns.pop_front();
+		heroe->second.vida -= villano->second.ataque;
+		heroe->second.it->second = heroe->second.vida; // hace danio
+		turns.emplace_back(v, villano->second.vida);
+		villano->second.it = --turns.end();
 
-		if (heroes[h].vida <= 0)
+		if (heroe->second.vida <= 0)
 		{
-			heroes.erase(h);
-			turnsPersonajeMuerto(h);
+			// coste de eliminacion de heroe constante
+			turns.erase(heroe->second.it);
+			heroes.erase(heroe);
 			return true;
 		}
+
 		return false;
 	}
 
-	// Coste: el coste es lineal O(n) n es el numero de elementos en turns.
-	// En el peor de los casos sera O(n+H+V+A) donde:
-	// n es el numero de elementos de turns
-	// H el de heroes, V el de villanos
-	// A el de los ataques de h
+	// Coste: el coste es lineal O(log n) n es el numero de ataques del heroe h.
 	bool heroe_ataca(Heroe const& h, string const& ataque, Villano const& v) {
-		if (!villanos.count(v))
+		const auto villano = villanos.find(v);
+		if (villano == villanos.end())
 			throw invalid_argument("Villano inexistente");
-		if (!heroes.count(h))
+		const auto heroe = heroes.find(h);
+		if (heroe == heroes.end())
 			throw invalid_argument("Heroe inexistente");
-		if (turns.front() != h)
+		if (h != turns.front().first)
 			throw invalid_argument("No es su turno");
-		if (!heroes[h].ataques.count(ataque))
+		const auto ataqueHeroe = heroe->second.ataques.find(ataque);
+		if (ataqueHeroe == heroe->second.ataques.end())
 			throw invalid_argument("Ataque no aprendido");
-		villanos[v].vida -= heroes[h].ataques[ataque];
 
-		// avanza turno
-		turnoActual++;
-		if (turnoActual >= turns.size())
-			turnoActual = 0;
+		// actualizacion de turnos
+		turns.pop_front();
+		villano->second.vida -= ataqueHeroe->second;
+		villano->second.it->second = villano->second.vida; // hace danio
+		turns.emplace_back(h, heroe->second.vida);
+		heroe->second.it = --turns.end();
 
-		if (villanos[v].vida <= 0)
+		if (villano->second.vida <= 0)
 		{
-			villanos.erase(v);
-			turnsPersonajeMuerto(v);
+			// coste de eliminacion de heroe constante
+			turns.erase(villano->second.it);
+			villanos.erase(villano);
 			return true;
 		}
+
 		return false;
-	}
-
-	// coste constante O(1) eliminacion de personaje en el turno;
-	void turnsPersonajeMuerto(string charac) {
-		int turno = turnoActual--;
-		if (turno < 0) turno = turns.size() - 1;
-
-		turns[turno] = "";
 	}
 
 };
