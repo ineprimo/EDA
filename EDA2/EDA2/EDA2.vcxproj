@@ -154,6 +154,7 @@
     <ClCompile Include="Tema2-12.cpp" />
     <ClCompile Include="Tema2-2.cpp" />
     <ClCompile Include="Tema3-01.cpp" />
+    <ClCompile Include="Tema3-014.cpp" />
     <ClCompile Include="Tema3-02.cpp" />
     <ClCompile Include="Tema3-03.cpp" />
     <ClCompile Include="Tema4-01.cpp" />

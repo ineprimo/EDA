@@ -11,7 +11,7 @@ const int valores[NUM_MONEDAS] = { 1,2,5,10,20,50,100,200 };
 
 
 // función que resuelve el problema
-void resolver(vector<int>& soluc, ...) {
+void resolver(vector<int>& soluc, int k, ) {
 
 }
 
@@ -26,7 +26,7 @@ void resuelveCaso() {
     for (int i = 0; i < NUM_MONEDAS; ++i)
         cin >> monedas[i];
     vector<int> soluc(NUM_MONEDAS);
-    resolver(soluc, ...);
+    resolver(soluc, 0,);
     // Mostrar salida
     ...
 }
