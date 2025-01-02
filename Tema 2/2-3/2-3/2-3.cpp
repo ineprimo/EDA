@@ -7,16 +7,40 @@
 #include <vector>
 #include <algorithm>
 
-
-bool parcialmenteOrdenado(const std::vector<int>& v, int ini, int fin, int& min, int& max)
+// Algoritmo que dado un vector dice si esta parcialmente ordenado.
+// COMPLEJIDAD: O(n * logn) siendo n  el numero de elementos del vector.
+bool parcialmenteOrdenado(const std::vector<int>& sec, int ini, int fin, int& min, int& max)
 {
-	...
+	// Casos base:
+	if (fin == ini) // Caso base vector vacio.
+	{
+		return true;
+	}
+	if (fin - ini == 1)
+	{
+		min = sec[ini];
+		max = sec[fin];
+		return max >= min;
+	}
+
+	int mid = ini + ((fin - ini) / 2); // Calcular la mitad.
+
+	int mayorIzq, menorIzq, mayorDer, menorDer;
+
+	bool solIzq = parcialmenteOrdenado(sec, ini, mid, menorIzq, mayorIzq);
+	bool solDer = parcialmenteOrdenado(sec, mid + 1, fin, menorDer, mayorDer);
+
+	// Asigna el menor y el mayor.
+	min = menorIzq;
+	max = mayorDer;
+
+	return solIzq && solDer && (mayorDer >= mayorIzq && menorIzq <= menorDer);
 }
 
 bool parcialmenteOrdenado(const std::vector<int>& v)
 {
 	int min, max;
-	return parcialmenteOrdenado(v, 0, v.size(), min, max);
+	return parcialmenteOrdenado(v, 0, v.size() - 1, min, max);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la

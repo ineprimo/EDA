@@ -4,11 +4,11 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <vector>
 
 
-// COMPLEJIDAD: O(...) siendo n ... .
-void complementarioEInverso(int num, int& com, int& inv)
+// Algoritmo recursivo que calcula el complementario a un numero y el inverso al complementario.
+// COMPLEJIDAD: O(n) siendo n el numero de digitos del numero dado.
+void comp(int num, int& com, int& inv)
 {
 	// Caso base:
 	if (num < 10)
@@ -20,7 +20,7 @@ void complementarioEInverso(int num, int& com, int& inv)
 	{
 		inv *= 10;
 		inv += 9 - (num % 10);
-		complementarioEInverso(num / 10, com, inv);
+		comp(num / 10, com, inv);
 		com *= 10;
 		com += 9 - (num % 10);
 	}
@@ -40,7 +40,7 @@ void resuelveCaso()
 
 
 	// Resolver:
-	complementarioEInverso(num, com, inv);
+	comp(num, com, inv);
 
 
 	// Escribir solucion:
