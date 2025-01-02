@@ -8,60 +8,43 @@
 
 
 // COMPLEJIDAD: O(...) siendo n ... .
-std::pair<std::vector<int>, std::vector<int>> complementarioEInverso(const std::vector<int>& sec)
+void complementarioEInverso(int num, int& com, int& inv)
 {
-	std::vector<int> complementario(sec.size()); // Vector auxuliar que contiene el complementario.
-	std::vector<int> inverso(sec.size()); // Vector auxiliar que contiene el inverso del complementario.
-
-
-	for (int i = 0; i < sec.size(); i++)
+	// Caso base:
+	if (num < 10)
 	{
-		inverso[i] = (9 - sec[i]); // La secuencia viene invertida.
-		complementario[sec.size() - i - 1] = inverso[i];
+		com = 9 - num;
+		inv = (inv * 10) + (9 - num);
 	}
-
-	return { complementario, inverso };
+	else
+	{
+		inv *= 10;
+		inv += 9 - (num % 10);
+		complementarioEInverso(num / 10, com, inv);
+		com *= 10;
+		com += 9 - (num % 10);
+	}
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuracion, y escribiendo la respuesta
 void resuelveCaso()
 {
+	int num = 0; // Numero dado en el enunciado.
+	int com = 0; // Complementario al numero.
+	int inv = 0; // Inverso al complementario.
+
+
 	// Lectura:
-	std::vector<int> sec;
-	int num = 0;
 	std::cin >> num;
-	num /= 1; // Para el punto de ruptura.
-	if (num > 0)
-	{
-		while (num > 0)
-		{
-			sec.push_back(num % 10);
-			num /= 10;
-		}
-	}
-	else
-	{
-		sec.push_back(num);
-	}
 
 
 	// Resolver:
-	std::pair<std::vector<int>, std::vector<int>> sol;
-	sol = complementarioEInverso(sec);
+	complementarioEInverso(num, com, inv);
 
 
 	// Escribir solucion:
-	for (int i = 0; i < sec.size(); i++)
-	{
-		std::cout << sol.first[i];
-	}
-	std::cout << " ";
-	for (int i = 0; i < sec.size(); i++)
-	{
-		std::cout << sol.second[i];
-	}
-	std::cout << std::endl;
+	std::cout << com << " " << inv << std::endl;
 }
 
 int main()
