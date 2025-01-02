@@ -6,22 +6,23 @@
 using namespace std;
 
 template <class T>
-int nodos(bintree<T> const& tree){
-    ...
+int nodosSingulares(bintree<T> const& tree) 
+{
+    if (tree.empty()) return 0;
+    if (tree.left().empty() && tree.right().empty()) return 0;
+    
+
 }
-
-...
-
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
     int n;
-    bintree<char> tree;
-    tree = leerArbol('.');
+    bintree<int> tree;
+    tree = leerArbol(-1);
 
-    cout << nodos(tree) << " " << hojas(tree) << " " << altura(tree) << endl;
+    cout << nodosSingulares(tree) << endl;
 }
 
 

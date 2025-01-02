@@ -1,0 +1,65 @@
+### TEMA 7 DICCIONARIOS ###
+
+QUE SON: contenedores de pares (clave, valor) que permiten acceder a los valores mediante claves.
+
+	std::map<std::string, int> diccionario;
+	diccionario["edad"] = 25;
+	std::cout << diccionario["edad"]; // 25
+
+
+OPERACIONES
+
+insert		Agrega o actualiza un par (clave, valor).		dic.insert({"a", 10});
+erase		Elimina un par a partir de la clave.			dic.erase("a");
+contains	Verifica si una clave existe en el diccionario.		dic.contains("a");
+at		Devuelve el valor asociado a una clave.			int val = dic.at("a");
+empty		Indica si el diccionario está vacío.			dic.empty();
+size		Devuelve el número de elementos almacenados.		dic.size();
+
+
+IMPLEMENTACION CON ARBOLES DE BUSQUEDA
+Usar árboles binarios ordenados para representar los pares (clave, valor).
+
+	Las claves deben ser comparables (tener el operador <).
+	Las claves están ordenadas.
+
+
+IMPLEMENTACION CON TABLAS DISPERSAS (HASH TABLES)
+
+
+
+ITERADORES: Permiten recorrer los elementos en un diccionario.
+	
+	En map (ordenado): Iterador respeta el orden de las claves.
+	En unordered_map: El orden no está garantizado.
+
+	std::map<std::string, int> dic = {{"a", 1}, {"b", 2}};
+	for (const auto& [clave, valor] : dic) {
+	    std::cout << clave << ": " << valor << "\n";
+	}
+
+
+FUNCIONES DE DISPERSION
+Transforman una clave en un índice del vector de la tabla dispersa.
+
+	struct Persona {
+    		std::string nombre;
+    		bool operator==(const Persona& p) const {
+     		   return nombre == p.nombre;
+    		}
+	};
+
+	struct PersonaHash {
+    		size_t operator()(const Persona& p) const {
+        		return std::hash<std::string>()(p.nombre);
+    		}
+	};
+
+	std::unordered_map<Persona, int, PersonaHash> tabla;
+
+
+[!] map si necesitas orden y unordered_map si necesitas velocidad
+
+
+
+

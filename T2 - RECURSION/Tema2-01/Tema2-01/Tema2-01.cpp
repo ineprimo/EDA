@@ -1,29 +1,47 @@
+// Nombre del alumno .....
+// Usuario del Juez ......
+
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "bintree_eda.h"
+
 using namespace std;
 
-template <class T>
-int nodos(bintree<T> const& tree){
-    ...
+// función que resuelve el problema
+void resolver(int raiz, int dig, int maxDigitos) 
+{
+
+
 }
 
-...
-
+void escribePolidivisibles(long long raiz, int maxDigitos) 
+{
+    for (int i = 0; i < maxDigitos; i++) {
+        cout << raiz;
+    }
+}
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-void resuelveCaso() {
+bool resuelveCaso() {
     // leer los datos de la entrada
     int n;
-    bintree<char> tree;
-    tree = leerArbol('.');
+    cin >> n;
+    if (!std::cin)
+        return false;
 
-    cout << nodos(tree) << " " << hojas(tree) << " " << altura(tree) << endl;
+    int d;
+    cin >> d;
+
+    // escribir sol
+    escribePolidivisibles(n, d);
+
+    cout << "---" << endl;
+
+    return true;
+
 }
-
 
 int main() {
     // Para la entrada por fichero.
@@ -31,17 +49,17 @@ int main() {
 #ifndef DOMJUDGE
     std::ifstream in("datos.txt");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
-#endif
+#endif 
 
-    int numCasos;
-    std::cin >> numCasos;
-    for (int i = 0; i < numCasos; ++i)
-        resuelveCaso();
+
+    while (resuelveCaso())
+        ;
+
 
     // Para restablecer entrada. Comentar para acepta el reto
 #ifndef DOMJUDGE // para dejar todo como estaba al principio
     std::cin.rdbuf(cinbuf);
-    //system("PAUSE");
+    system("PAUSE");
 #endif
 
     return 0;
