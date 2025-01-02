@@ -1,0 +1,23 @@
+### TEMA 4 ### Implementación de TADs
+
+· Implementar operadores
+	- Método de miembro: comparar el objeto actual (this) con otro objeto.
+	- Función externa amiga (friend): cuando la comparación necesita acceder a atributos privados de ambos objetos.
+
+			---- Uso de referencias (&) y const ----
+
+	· Point other -> Se pasa una copia del objeto other, lo cual puede ser costoso para objetos grandes.
+	· Point& other -> Se pasa una referencia, lo cual es eficiente, pero permite modificar other.
+	· const Point& other -> Se pasa una referencia constante, lo cual es eficiente y garantiza que other no será modificado.
+	·bool operator<(...) const -> Garantiza que el método no modificará el objeto actual (this).
+	
+
+
+· Operaciones Mutadoras (no llevan const porque modifican el objeto) y observadoras (llevan const puesto que no modifican el objeto).
+	Ej. void add() {} -> añade elemento al objeto
+	    bool contains(n) const {} -> te dice si tiene un numero el objeto, sin modificarlo
+
+
+
+TAD Set
+· Operaciones: contains, add, empty, remove
