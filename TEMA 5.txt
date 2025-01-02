@@ -1,0 +1,69 @@
+### TEMA 5 TIPOS DE DATOS LINEALES ###
+
+QUE SON: 
+Colección de elementos organizada en una secuencia, donde cada elemento tiene una posición definida.
+
+
+
+---TADS CLASICOS---
+
+· VECTOR
+	
+	push_back: añade al final
+	pop_back: elimina del final
+	operator[]: acceso por índice O(1)
+
+· PILA / STACK 
+  (LIFO: Last In First Out)
+	
+	push: añade a la cima
+	pop: elimina de la cima 
+	top: consulta elemento superior 
+
+· COLA / QUEUE
+  (FIFO: First In First Out)
+	
+	push: añade al final
+	pop: elimina del principio
+	front: consulta el primer elemento
+
+· COLA DOBLE / DEQUE
+  (FIFO: First In First Out)
+	
+	push_back: añade al final
+	push_front: añade al ppio
+	pop_back: elimina del final
+	pop_front: elimina del ppio
+	operator[] / at: acceso por indice
+
+
+· LISTA
+	
+	insert: añade en cualquier posicion
+	erase: elimina en cualquier posicion
+	iteradores para recorrer elementos
+
+
+
+---ITERADORES---
+
+- vector, list, y deque: tienen iteradores para recorrer sus elementos.
+- pilas y colas no tienen iteradores por su acceso de datos LIFO y FIFO.
+
+· OPERACIONES:
+	
+	*it	accede al elemento actual
+	++it	avanza
+	!=	compara iteradores
+
+· EJEMPLO
+	
+	std::list<int> lista = {10, 20, 30, 40, 50};
+
+	for (auto it = lista.begin(); it != lista.end(); ++it) 
+	{
+    		cout << *it << " " << endl;
+	}
+	
+	// Salida: 10 20 30 40 50
+
