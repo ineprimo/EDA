@@ -9,10 +9,8 @@ using namespace std;
 const int NUM_MONEDAS = 8;
 const int valores[NUM_MONEDAS] = { 1,2,5,10,20,50,100,200 };
 
-bool isValid(vector<int>& soluc, int precio) {
-    int sum = 0;
-
-    return sum == precio;
+bool isValid(vector<int>& soluc, int pos, int* monedas) {
+    return soluc[pos] < monedas[pos];
 }
 
 bool isSolution(vector<int>& soluc, int precio) {
@@ -27,24 +25,22 @@ bool isBetter() {
     return true;
 }
 
-void treatSol() {
-
-}
-
 // función que resuelve el problema
 void resolver(vector<int>& soluc, int k, int n, int* monedas, int precio, int valor, int mayorCant) {
-    for (int i = n; i >= 0; i--) {
-        soluc.push_back(monedas[i]);
-        if (isValid(soluc, precio)) {
-            if (isSolution(soluc, precio)) {
-                if (isBetter()) {
+    for (int i = 0; i < n; i++) {
+        soluc[k]++;                             // suma las monedas usadas
+        if (isValid(soluc, k, monedas)) {       // mira si tenemos monedas
+            if (isSolution(soluc, precio)) {    // mira si es solucion
+                if (isBetter()) {               // lmfao
                     mayorCant = soluc.size();
                 }
             }
+            else if (k < n - 1) {
+                // falta la poda
+                resolver(soluc, k + 1, NUM_MONEDAS, monedas, precio, valor, 0);
+            }
         }
-        else if (k < n - 1) {
-            resolver(soluc, k + 1, NUM_MONEDAS, monedas, precio, valor, 0);
-        }
+        
     }
 
 
