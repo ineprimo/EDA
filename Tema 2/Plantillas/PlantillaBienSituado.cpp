@@ -7,7 +7,7 @@
 #include <vector>
 
 
-// función que resuelve el problema
+// funcion que resuelve el problema
 bool resolver(const std::vector<int>& v, int ini, int fin)
 {
 	...
