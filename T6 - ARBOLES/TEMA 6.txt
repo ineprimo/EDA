@@ -1,0 +1,41 @@
+### TEMA 6 ARBOLES ###
+
+QUE SON: Un árbol está compuesto por nodos organizados jerárquicamente:
+
+Raíz: Nodo inicial
+Hijos: Nodos conectados al nodo superior
+Hojas: Nodos sin hijos
+
+
+ARBOL BINARIO bintree: Un árbol binario es una estructura donde cada nodo tiene como máximo dos hijos.
+
+	OPERACIONES BASICAS
+
+	Constructores:
+
+	· Sin argumentos: Árbol vacío.
+	· Con argumento: Árbol hoja con un dato.
+	· Con tres argumentos: Árbol con un nodo raíz y dos subárboles (izquierdo y derecho).
+
+	Observadoras:
+
+	· root: Devuelve el valor de la raíz.
+	· left y right: Devuelven subárboles izquierdo y derecho.
+	· empty: Indica si el árbol está vacío.
+
+IMPLEMENTACION DE ARBOLES
+
+Los nodos del árbol se representan con una estructura que incluye:
+
+	El elemento almacenado.
+	Punteros a los hijos izquierdo y derecho.
+	Se usa una clase TreeNode para manejar los nodos
+
+RECORRIDOS definen el orden en que se visitan los nodos
+
+	Preorden: Raíz → Subárbol izquierdo → Subárbol derecho. (USUAL)
+	Inorden: Subárbol izquierdo → Raíz → Subárbol derecho.
+	Postorden: Subárbol izquierdo → Subárbol derecho → Raíz.
+	Por niveles: Nodo por nodo, nivel por nivel.
+
+
