@@ -26,22 +26,48 @@ bool isBetter() {
 }
 
 // función que resuelve el problema
-void resolver(vector<int>& soluc, int k, int n, int* monedas, int precio, int valor, int mayorCant) {
-    for (int i = 0; i < n; i++) {
-        soluc[k]++;                             // suma las monedas usadas
+void resolver(vector<int>& soluc, int k, int n, int* monedas, int cantActual, int cantFinal, int monedasUsadas, int& maxUsadas) {
+    for (int j = 0; j <= soluc[k]; j++) {
+       
+        int cant = cantActual + valores[k] * j;     // 
+        int usadas = monedasUsadas + j;             // 
+        
         if (isValid(soluc, k, monedas)) {       // mira si tenemos monedas
-            if (isSolution(soluc, precio)) {    // mira si es solucion
+            if (isSolution(soluc, cantFinal)) {    // mira si es solucion
                 if (isBetter()) {               // lmfao
-                    mayorCant = soluc.size();
+                    
                 }
             }
             else if (k < n - 1) {
                 // falta la poda
-                resolver(soluc, k + 1, NUM_MONEDAS, monedas, precio, valor, 0);
+                int poda = 0;
+
+                resolver(soluc, k + 1, NUM_MONEDAS, monedas, cantActual, cantFinal, 0, maxUsadas);
             }
         }
         
     }
+
+
+    // ------------------
+    //for (int i = 0; i <= soluc[k]; i++)
+    //{
+    //    int cant = cantAct + valores[k] * i;
+    //    int usadas = monedasUsadas + i;
+
+    //    if (cant > cantFin) continue; // Poda si nos hemos pasado pasamos al siguiente
+    //    else { // no nos hemos pasado
+    //        if (cant == cantFin) // si hemos llegado al precio
+    //        {
+    //            if (usadas > maxUsadas) // si por este camino hemos usado mas monedas, se convierte en el nuevo maximo
+    //                maxUsadas = usadas;
+    //        }
+    //        else if (k + 1 < NUM_MONEDAS) // si no hemos llegado al maximo de monedas usables
+    //        {
+    //            resolver(soluc, k + 1, cant, cantFin, usadas, maxUsadas);
+    //        }
+    //    }
+    //}
 
 
 }
@@ -57,7 +83,8 @@ void resuelveCaso() {
     for (int i = 0; i < NUM_MONEDAS; ++i)
         cin >> monedas[i];
     vector<int> soluc(NUM_MONEDAS);
-    resolver(soluc, 0, NUM_MONEDAS, monedas, precio, 0, 0);
+    int maxusadas = 0;
+    resolver(soluc, 0, NUM_MONEDAS, monedas, precio, 0, 0, maxusadas);
     
     // Mostrar salida
 
