@@ -44,19 +44,11 @@ void resolver(vector<int>& soluc, int k, int n, const int* monedas, int valor, i
                 // calcula el numero de monedas del siguiente tipo que harian falta, es optimista porque cuanto mas bajo sea el valor
                 // de la moneda mas haran falta
 
-                // un poco guarro pero va mirando hasta que encuentre unas que si tenga
-                int acc = 1;
-                int m = 0;
-                while (m == 0) {
-                    m = monedas[k + acc];// esto puede dar 0 y joderte la vida
-                    acc++;
-                }
-
                 // calculo de la estimacion
-                int estimacionOptimista = (valorFinal - valor) / m;   
+                int estimacionOptimista = (valorFinal - valor) / valores[k + 1];   
 
                 //
-                if (valor + estimacionOptimista > maxUsadas) {      // si el valor actual + el siguiente tipo de moneda es menor sigue
+                if (monedasUsadas + estimacionOptimista > maxUsadas) {      // si el valor actual + el siguiente tipo de moneda es menor sigue
                     resolver(soluc, k + 1, NUM_MONEDAS, monedas, valor, valorFinal, monedasUsadas, maxUsadas, mejorSol);
                 }
 
