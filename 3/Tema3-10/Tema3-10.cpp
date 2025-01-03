@@ -7,6 +7,7 @@ using namespace std;
 
 
 
+// AY QUE SE ME OLVIDA: PASAD LAS COSAS CONSTANTES POR REFERENCIA PLS SI NO PROBABLEMENTE OS DE TIMELIMIT AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 void resolver(vector<int>& sol, const int n, const int k, vector<int>& estimacionOptimista, vector<int>&regalosDados, const vector<vector<int>>& regalos,
     int valor, int& mejorValor, vector<int>& mejorSol) {
 
