@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-void resolver(vector<int>& sol, const int n, const int k, vector<int>&regalosDados, const vector<vector<int>>& regalos,
+void resolver(vector<int>& sol, const int n, const int k, vector<int>& estimacionOptimista, vector<int>&regalosDados, const vector<vector<int>>& regalos,
     int valor, int& mejorValor, vector<int>& mejorSol) {
 
     // k son los chavales
@@ -17,7 +17,7 @@ void resolver(vector<int>& sol, const int n, const int k, vector<int>&regalosDad
         sol[k] = regalos[k][i];
 
         if (regalosDados[i] == -1) {     // valida si ese chaval tiene regalo o no
-            // marca
+            // marca el regalo y suma al valor la felicidad
             valor += sol[k];
             regalosDados[i] = k;
 
@@ -28,16 +28,21 @@ void resolver(vector<int>& sol, const int n, const int k, vector<int>&regalosDad
                     mejorSol = sol;
                 }
             }
-            else if (k < n - 1) {
-                // poda 
-
-                // mira el siguiente juguete
-                resolver(sol, n, k + 1, regalosDados, regalos, valor, mejorValor, mejorSol);
+            else if (k < n - 1) {   // si aun quedan chavales que regalar
+                // poda super divertida que 100% no me ha llevado 1h entender <3
+                // aka si el valor actual + el valor que tenemos en la estimacion en la sigueinte posicion a la actual es mejor
+                // que el mejor valor actrual seguimos ya que si el valor actual +  la estimacion da que es peor, y sabiendo que 
+                // la estimacion ignora los detalles del problema, imagina lo mierda que va a ser teniendo en cuenta los detalles
+                // del problema
+                if (valor + estimacionOptimista[k + 1] > mejorValor) {
+                    // mira el siguiente juguete
+                    resolver(sol, n, k + 1, estimacionOptimista, regalosDados, regalos, valor, mejorValor, mejorSol);
+                }
             }
-            // desmarca
+
+            // desmarca y desfeliza
             regalosDados[i] = -1;
             valor -= sol[k];
-
         }
     }
 }
@@ -50,12 +55,12 @@ bool resuelveCaso() {
     int a, b;
     cin >> a;   // num juguetes
     cin >> b;   // num chavales
-    int num;
 
+    // para que salga cuando no haya mas que leer
     if (!cin) return false;
 
     vector<vector<int>> regalos;
-
+    int num;
     for (int i = 0; i < b; i++) {
         vector<int> aux;
         for (int j = 0; j < a; j++) {
@@ -65,14 +70,39 @@ bool resuelveCaso() {
         regalos.push_back(aux);
     }
 
+    // vectores para el problema
     vector<int> regalosDados(a, -1);     // guarda la posicion (k) del regalo a ese chaval
     vector<int> mejorSol(b);
     vector<int> soluc(b);
     int mejorValor = 0;
 
-    resolver(soluc, a, 0, regalosDados, regalos, 0, mejorValor, mejorSol);
+
+    // PARA LA PODA
+    vector<int> maxFelicidad(b);
+    // calcula la felicidad maxima acumulada
+    for (int i = 0; i < b; i++) {   // cada chaval
+        for (int j = 0; j < a; j++) {   // cada juguete
+            if (regalos[i][j] > maxFelicidad[i]) maxFelicidad[i] = regalos[i][j];
+        }
+    }
+    vector<int> maxFelicidadAcc(b);
+    maxFelicidadAcc[b - 1] =  maxFelicidad[b - 1];
+    // calcula el acumulado
+    for (int i = maxFelicidad.size() - 2; i >= 0; i--) {
+        maxFelicidadAcc[i] = maxFelicidadAcc[i+1] + maxFelicidad[i];
+    }
+
+    // la poda (al menos esta) calcula el maximo de felicidad por chaval y luego la version acumulada.
+    // la version acumulada es para tenerla ya hecha pero realmente lo importante es la idea de lo primero
+    // porque calculas el mayor nivel de felicidad sin importar que se repitan regalos para tener la 
+    // estimacion aproximada.
+
+
+    // -------------
+    resolver(soluc, a, 0, maxFelicidadAcc, regalosDados, regalos, 0, mejorValor, mejorSol);
 
     cout << mejorValor << endl;
+
     // Salida
     return true;
 }
