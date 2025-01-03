@@ -9,9 +9,6 @@ using namespace std;
 const int NUM_MONEDAS = 8;
 const int valores[NUM_MONEDAS] = { 1,2,5,10,20,50,100,200 };
 
-bool isValid(vector<int>& soluc, int pos, int* monedas) {
-    return soluc[pos] < monedas[pos];
-}
 
 bool isSolution(vector<int>& soluc, int precio) {
     int sum = 0;
@@ -26,50 +23,50 @@ bool isBetter() {
 }
 
 // función que resuelve el problema
-void resolver(vector<int>& soluc, int k, int n, int* monedas, int cantActual, int cantFinal, int monedasUsadas, int& maxUsadas) {
-    for (int j = 0; j <= soluc[k]; j++) {
+void resolver(vector<int>& soluc, int k, int n, const int* monedas, int valor, int valorFinal, int monedasUsadas, int& maxUsadas, vector<int>& mejorSol) {
+    for (int j = 0; j <= monedas[k]; j++) {
        
-        int cant = cantActual + valores[k] * j;     // 
-        int usadas = monedasUsadas + j;             // 
+        // "marca"
+        soluc[k] = j;                         // suma la moneda
+        valor += valores[k] * j;            // 
+        monedasUsadas += j;                    // 
         
-        if (isValid(soluc, k, monedas)) {       // mira si tenemos monedas
-            if (isSolution(soluc, cantFinal)) {    // mira si es solucion
-                if (isBetter()) {               // lmfao
-                    
+        // si es valido
+        if (soluc[k] <= monedas[k] && valor <= valorFinal) {     // mira si tenemos monedas
+            if (valor == valorFinal) {                          // mira si es solucion
+                if (monedasUsadas > maxUsadas) {
+                    maxUsadas = monedasUsadas;
+                    mejorSol = soluc;
                 }
             }
             else if (k < n - 1) {
-                // falta la poda
-                int poda = 0;
+                // poda
+                // calcula el numero de monedas del siguiente tipo que harian falta, es optimista porque cuanto mas bajo sea el valor
+                // de la moneda mas haran falta
 
-                resolver(soluc, k + 1, NUM_MONEDAS, monedas, cantActual, cantFinal, 0, maxUsadas);
+                // un poco guarro pero va mirando hasta que encuentre unas que si tenga
+                int acc = 1;
+                int m = 0;
+                while (m == 0) {
+                    m = monedas[k + acc];// esto puede dar 0 y joderte la vida
+                    acc++;
+                }
+
+                // calculo de la estimacion
+                int estimacionOptimista = (valorFinal - valor) / m;   
+
+                //
+                if (valor + estimacionOptimista > maxUsadas) {      // si el valor actual + el siguiente tipo de moneda es menor sigue
+                    resolver(soluc, k + 1, NUM_MONEDAS, monedas, valor, valorFinal, monedasUsadas, maxUsadas, mejorSol);
+                }
+
             }
         }
-        
+
+        // "desmarca"
+        valor -= valores[k] * j;                    // 
+        monedasUsadas -= j;
     }
-
-
-    // ------------------
-    //for (int i = 0; i <= soluc[k]; i++)
-    //{
-    //    int cant = cantAct + valores[k] * i;
-    //    int usadas = monedasUsadas + i;
-
-    //    if (cant > cantFin) continue; // Poda si nos hemos pasado pasamos al siguiente
-    //    else { // no nos hemos pasado
-    //        if (cant == cantFin) // si hemos llegado al precio
-    //        {
-    //            if (usadas > maxUsadas) // si por este camino hemos usado mas monedas, se convierte en el nuevo maximo
-    //                maxUsadas = usadas;
-    //        }
-    //        else if (k + 1 < NUM_MONEDAS) // si no hemos llegado al maximo de monedas usables
-    //        {
-    //            resolver(soluc, k + 1, cant, cantFin, usadas, maxUsadas);
-    //        }
-    //    }
-    //}
-
-
 }
 
 
@@ -83,9 +80,15 @@ void resuelveCaso() {
     for (int i = 0; i < NUM_MONEDAS; ++i)
         cin >> monedas[i];
     vector<int> soluc(NUM_MONEDAS);
+    vector<int> mejorsoluc(NUM_MONEDAS);
     int maxusadas = 0;
-    resolver(soluc, 0, NUM_MONEDAS, monedas, precio, 0, 0, maxusadas);
+    resolver(soluc, 0, NUM_MONEDAS, monedas, 0, precio, 0, maxusadas, mejorsoluc);
     
+    if (maxusadas == 0)
+        cout << "IMPOSIBLE" << endl;
+    else
+        cout << maxusadas << endl;
+
     // Mostrar salida
 
 }
