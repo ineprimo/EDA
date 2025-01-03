@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-void resolver(vector<int>& sol, int n, int k, vector<int>regalosDados, vector<vector<int>> regalos,
+void resolver(vector<int>& sol, const int n, const int k, vector<int>&regalosDados, const vector<vector<int>>& regalos,
     int valor, int& mejorValor, vector<int>& mejorSol) {
 
     // k son los chavales
