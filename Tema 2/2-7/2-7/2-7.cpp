@@ -13,7 +13,7 @@ int minimo(const std::vector<int>& vec, int ini, int fin)
 	int size = fin - ini;
 
 	// Casos base:
-	if (size == 0) // Caso base 0 elementos edvolvemos 0.
+	if (size == 0) // Caso base 0 elementos devolvemos 0.
 	{
 		return 0;
 	}

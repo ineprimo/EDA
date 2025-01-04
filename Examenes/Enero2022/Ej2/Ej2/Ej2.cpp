@@ -15,7 +15,7 @@ std::pair<int, int> singulares(const bintree<int>& tree, int padreSuma)
 	{
 		return { 0, 0 };
 	}
-	// Caso es hoja entonces comporbamos si es singular y devolvemos el propio valor.
+	// Caso es hoja entonces comprobamos si es singular y devolvemos el propio valor.
 	if (tree.left().empty() && tree.right().empty())
 	{
 		if (padreSuma == 0) // Si es hoja la suma de sus hijos es 0 entonces solo hay que comprobar que la del padre es 0 tambien.
