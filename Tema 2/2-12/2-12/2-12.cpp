@@ -15,17 +15,35 @@ int perdido(const std::vector<int>& secPrim, const std::vector<int>& secSeg, int
 	int diff = fin - ini;
 	int mid = ((ini + fin) / 2);
 
-	// Casos:
-	switch (diff)
+	// Casos base:
+	if (diff == 0) // Si es vacio devolver 0.
 	{
-	case 0: // Si es vacio devolver 0.
 		return 0;
-	case 1: // Si hay 1 elemento delvolver ese elemento.
+	}
+	if (diff == 1) // Si es 1 elemento devolver el elemento.
+	{
 		return secPrim[ini];
-	case 2: // Si hay 2 elementos delvolver el emlemento si es el que le falta a secSeg y sino el siguiente.
-		return (secPrim[ini] == secSeg[ini]) ? secPrim[ini + 1] : secPrim[ini];
-	default: // Si los elementos de la mitad son diferentes sabemos que esta en el lado izquierdo y sino en el derecho.
-		return (secPrim[mid] != secSeg[mid]) ? perdido(secPrim, secSeg, ini, mid + 1) : perdido(secPrim, secSeg, mid, fin);
+	}
+	if (diff == 2) // Si son 2 elementos. 
+	{
+		if (secPrim[ini] == secSeg[ini]) // Si son iguales, devolver el siguiente.
+		{
+			return secPrim[ini + 1];
+		}
+		else // Si no son iguales entonces devolver ese elemento.
+		{
+			return secPrim[ini];
+		}
+	}
+
+	// Como estan ordenados, si secPrim[mid] != secSeg[mid] entonces sabemos que esta en la izquierda, 
+	if (secPrim[mid] != secSeg[mid])
+	{
+		return perdido(secPrim, secSeg, ini, mid + 1);
+	}
+	else // y si son iguales en la derecha.
+	{
+		return perdido(secPrim, secSeg, mid, fin);
 	}
 }
 
