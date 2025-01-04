@@ -18,7 +18,7 @@ std::pair<bool, std::pair<int, int>> puntoCorte(const std::vector<int>& vAsc, co
 	// Casos base:
 	if (elems == 0) // Caso base vector vacio.
 	{
-		return { false, {0, 0} };
+		return { false, {0, 0} }; // No hace nada pero aqui se queda.
 	}
 	if (elems == 1) // Caso base vector 1 elemento.
 	{
