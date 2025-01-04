@@ -10,35 +10,53 @@
 
 // 
 //
-std::pair<bool, std::pair<int, int>> puntoCorte(const std::vector<int>& vAsc, const std::vector<int>& vDes, int ini, int fin, int& min, int& max)
+std::pair<bool, std::pair<int, int>> puntoCorte(const std::vector<int>& vAsc, const std::vector<int>& vDes, int ini, int fin)
 {
 	int elems = fin - ini;
 
+	// Casos base:
 	if (elems == 0)
 	{
 		return { false, {0, 0} };
 	}
 	if (elems == 1)
 	{
-
+		if (vAsc[ini] == vDes[ini])
+		{
+			return { true, { ini,0 } };
+		}
+		else if (vAsc[ini] > vDes[ini])
+		{
+			return { false, { ini - 1, ini } };
+		}
+		else if (vAsc[ini] < vDes[ini])
+		{
+			return { false,  { ini, ini + 1 } };
+		}
 	}
 
 	int mid = (ini + fin) / 2;
 
+
 	if (vAsc[mid] == vDes[mid])
 	{
-
+		return { true, {mid, 0} };
 	}
-
-
-
+	if (vAsc[mid] < vDes[mid]) // Si el numero del ascendente es menor sabemos que el punto de corte estara a la derecha.
+	{
+		puntoCorte(vAsc, vDes, mid, fin);
+	}
+	else if (vAsc[mid] > vDes[mid]) // Y viceversa.
+	{
+		puntoCorte(vAsc, vDes, ini, mid);
+	}
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso()
 {
-	// LEctura:
+	// Lectura:
 	int nElems = 0;
 	std::cin >> nElems;
 
@@ -59,12 +77,20 @@ bool resuelveCaso()
 
 
 	// Resolucion:
-
+	std::pair<bool, std::pair<int, int>> sol;
+	sol = puntoCorte(ascendentes, descendentes, 0, nElems);
 
 
 	// Escritura:
 
-
+	if (sol.first)
+	{
+		std::cout << "SI" << " " << sol.second.first << std::endl;
+	}
+	else
+	{
+		std::cout << "NO" << " " << sol.second.first << " " << sol.second.second << std::endl;
+	}
 
 	return true;
 }
