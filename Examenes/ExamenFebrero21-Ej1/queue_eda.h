@@ -109,36 +109,29 @@ public:
 
    void cuela(const T& a, const T& b) {
        // busca la posicion de a
+       Nodo* aux = prim;     // primer nodo
 
        Nodo* auxa = nullptr;     // primer nodo
        Nodo* auxb = nullptr;     // primer nodo
-       Nodo* aux = prim;     // primer nodo
-       Nodo* auxhole = nullptr;     // primer nodo
 
 
+       while (aux != ult && (auxa == nullptr || auxb == nullptr)) {
 
-       while (aux != nullptr && (auxa == nullptr || auxb == nullptr)) {
-           if (aux->sig != nullptr && aux->sig->elem == b && auxa != nullptr) {
+           // si a tiene dato y b esta vacio y es el dato b
+           if (auxa != nullptr && auxb == nullptr && aux->sig->elem == b) {
+
                auxb = aux->sig;
-               auxhole = aux;
+               aux->sig = auxb->sig;
+
+               auxb->sig = auxa->sig;
+               auxa->sig = auxb;
            }
-           if (auxa == nullptr && aux->elem == a)
+           // si a esta vacio y es el elemento
+           if (auxa == nullptr && aux->elem == a) {
                auxa = aux;
+           }
 
            aux = aux->sig;
-       }
-
-
-       // coloca a b en la posicion
-       if (auxa != nullptr && auxb != nullptr) {
-           Nodo* anext = auxa->sig;
-           Nodo* bnext = auxb->sig;
-
-           auxa->sig = auxb;    //
-           auxb->sig = anext;   //
-
-           // falta reunir la cola donde dejas hueco
-           auxhole->sig = bnext;
        }
 
    }

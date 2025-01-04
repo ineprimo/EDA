@@ -10,8 +10,10 @@
 using namespace std;
 
 // función que resuelve el problema
-void resolver(int datos) {
+queue<int> resolver(queue<int> datos, int a, int b) {
 
+    datos.cuela(a, b);
+    return datos;
 
 }
 
@@ -19,6 +21,10 @@ void resolver(int datos) {
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     // leer los datos de la entrada
+
+    if (!std::cin)
+        return false;
+
     queue<int> datos;
     int first, second;
     int aux;
@@ -32,20 +38,14 @@ bool resuelveCaso() {
     cin >> first;
     cin >> second;
 
-    if (!std::cin)
-        return false;
+    auto sol = resolver(datos, first, second);
 
-    datos.cuela(first, second);
-
-    int size = datos.size();
     // escribir sol
-    for (int i = 0; i < size; i++) {
-        cout << datos.front() << " ";
-        datos.pop();
+    while(!sol.empty()) {
+        cout << sol.front() << " ";
+        sol.pop();
     }
-
     cout << endl;
-
 
     return true;
 
