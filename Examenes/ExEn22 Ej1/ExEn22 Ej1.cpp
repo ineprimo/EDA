@@ -14,6 +14,9 @@ class List_eda_plus : public list<T>
 	using Nodo = typename list<T>::Nodo;
 
 public:
+
+	// Complejidad: O(n) siendo n el numero de elementos de la lista
+
 	// n, pos, lon y k -> datos de entrada
 	void adelantar(int n, int pos, int lon, int k)
 	{
