@@ -116,16 +116,13 @@ public:
        Nodo* auxhole = nullptr;     // primer nodo
 
 
-       bool bFoundFirst = false;
-       while ((auxa == nullptr || auxb == nullptr) && !bFoundFirst) {
 
-           if (aux->elem == b)
-               bFoundFirst = true;
-           if (aux->sig->elem == b) {
+       while (aux != nullptr && (auxa == nullptr || auxb == nullptr)) {
+           if (aux->sig != nullptr && aux->sig->elem == b && auxa != nullptr) {
                auxb = aux->sig;
                auxhole = aux;
            }
-           if (aux->elem == a)
+           if (auxa == nullptr && aux->elem == a)
                auxa = aux;
 
            aux = aux->sig;
@@ -133,7 +130,7 @@ public:
 
 
        // coloca a b en la posicion
-       if (!bFoundFirst && auxa != nullptr && auxb != nullptr) {
+       if (auxa != nullptr && auxb != nullptr) {
            Nodo* anext = auxa->sig;
            Nodo* bnext = auxb->sig;
 
@@ -142,7 +139,6 @@ public:
 
            // falta reunir la cola donde dejas hueco
            auxhole->sig = bnext;
-
        }
 
    }
