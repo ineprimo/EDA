@@ -8,22 +8,23 @@
 #include <algorithm>
 
 
-// 
-//
+// Sease pair.first si hay un punto de corte entre los valores y pari.second un par que es pair.fist la primera coordenada y pair.second la segunda den entre que valores esta.
+// COMPLEJIDAD: O(log n) siendo n de elementos de ambos vectores pues es el mismo, va recorriendo por mitades.
+// Metodo que dado dos vectores de igual tamanyo uno ascendente y otro descendente dice entre que valores hay un punto de corte.
 std::pair<bool, std::pair<int, int>> puntoCorte(const std::vector<int>& vAsc, const std::vector<int>& vDes, int ini, int fin)
 {
 	int elems = fin - ini;
 
 	// Casos base:
-	if (elems == 0)
+	if (elems == 0) // Caso base vector vacio.
 	{
 		return { false, {0, 0} };
 	}
-	if (elems == 1)
+	if (elems == 1) // Caso base vector 1 elemento.
 	{
 		if (vAsc[ini] == vDes[ini])
 		{
-			return { true, { ini,0 } };
+			return { true, { ini, 0 } };
 		}
 		else if (vAsc[ini] > vDes[ini])
 		{
@@ -35,8 +36,8 @@ std::pair<bool, std::pair<int, int>> puntoCorte(const std::vector<int>& vAsc, co
 		}
 	}
 
-	int mid = (ini + fin) / 2;
 
+	int mid = (ini + fin) / 2;
 
 	if (vAsc[mid] == vDes[mid])
 	{
@@ -53,23 +54,27 @@ std::pair<bool, std::pair<int, int>> puntoCorte(const std::vector<int>& vAsc, co
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
+// configuracion, y escribiendo la respuesta
 bool resuelveCaso()
 {
 	// Lectura:
-	int nElems = 0;
+	int nElems = 0; // Numero de elementos de ambos vectores.
 	std::cin >> nElems;
 
-	if (nElems == 0) return false;
+	if (nElems == 0)
+	{
+		return false;
+	}
 
-	std::vector<int> ascendentes(nElems);
-	std::vector<int> descendentes(nElems);
+	std::vector<int> ascendentes(nElems); // Vector con valores ascendentes.
+	std::vector<int> descendentes(nElems); // Vector con valores descendentes.
 
+	// Vector 1:
 	for (int i = 0; i < nElems; i++)
 	{
 		std::cin >> ascendentes[i];
 	}
-
+	// Vector 2:
 	for (int i = 0; i < nElems; i++)
 	{
 		std::cin >> descendentes[i];
@@ -82,7 +87,6 @@ bool resuelveCaso()
 
 
 	// Escritura:
-
 	if (sol.first)
 	{
 		std::cout << "SI" << " " << sol.second.first << std::endl;
@@ -91,6 +95,7 @@ bool resuelveCaso()
 	{
 		std::cout << "NO" << " " << sol.second.first << " " << sol.second.second << std::endl;
 	}
+
 
 	return true;
 }
