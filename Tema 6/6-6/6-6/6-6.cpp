@@ -29,11 +29,11 @@ std::pair<int, bool> zurdo(const bintree<char> tree)
 	// Es zurdo si los hijos son zurdos y en el caso del lado derecho, tiene mas hijos en el lado izquierdo.
 	if (izq.second && der.second && izq.first > der.first)
 	{
-		return{ izq.first + der.first + 1,true };
+		return{ izq.first + der.first + 1, true };
 	}
 	else
 	{
-		return { izq.first + der.first + 1,false };
+		return { izq.first + der.first + 1, false };
 	}
 }
 
