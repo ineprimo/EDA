@@ -114,7 +114,7 @@ void resuelveCaso()
         {
 	        if(con[i][j] > maxGananciasPos[i])
 	        {
-                maxGananciasPos[i] = con[i][j];
+                maxGananciasPos[i] = rec[i][j];
 	        }
         }
     }
