@@ -5,57 +5,55 @@
 #include <fstream>
 #include "bintree_eda.h"
 
-//
-// COMPLEJIDAD: O(...) siendo n ... .
-// Sease pair.first el numero del camino y pair.second el numero de dragones de ese camino.
+
 std::pair<int, int> hiperborea(const bintree<int>& tree)
 {
-	// Caso base esta vacio.
+	// Casos base:
+	// Caso base es vacio.
 	if (tree.empty())
 	{
-		return { 0, 0 };
+		return { -1, 0 };
 	}
 	// Caso es hoja devolvemos el numero de camino y 0 dragones.
 	if (tree.left().empty() && tree.right().empty())
 	{
-		//std::cout << "HOJA: " << tree.root() << std::endl;
 		return { tree.root(), 0 };
 	}
 
+	// Recursion:
+	std::pair<int, int> izq = hiperborea(tree.left());
+	std::pair<int, int> der = hiperborea(tree.right());
 
-	std::pair<int, int>izq = hiperborea(tree.left()); // Lado izquierdo.
-	std::pair<int, int>der = hiperborea(tree.right()); // Lado derecho. 
-
-
-	int dragon = 0;
+	// Si el nodo tiene un 1 entonces hay dragon.
+	int dragones = 0;
 	if (tree.root() == 1)
 	{
-		dragon++;
+		dragones++;
 	}
 
-	izq.second += dragon;
-	der.second += dragon;
-	if (izq.second < der.second || (izq.second == der.second && izq.first < der.first)) 
+	// Casos:
+	// Si no llega un camido del lado izquierdo (no hay hijo izquierdo) devolvemos el derecho.
+	if (izq.first == -1)
 	{
-		//std::cout << "Gana izq " << izq.first << " a " << der.first << " con d: " << izq.second << std::endl;
-		return izq;
+		return{ der.first, der.second + dragones };
 	}
-	else {
-		//std::cout << "Gana der " << der.first << " a " << izq.first << " con d: " << der.second << std::endl;
-		return der;
-	}
-
-	/*if (izq.second <= der.second)
+	// Y si no llega del derecho (no hay hijo derecho) devolvemos el izquierdo.
+	if (der.first == -1)
 	{
-		//std::cout << "Gana izq " << izq.first << " a " << der.first << " con d: " << izq.second << std::endl;
-		return { izq.first, izq.second + dragon };
+		return{ izq.first, izq.second + dragones };
 	}
-	else if (izq.second > der.second)
+	// Habiendo los 2 hijos, comprobamos quien tiene menos dragones y en caso de empate se queda con el de la izquierda.
+	if (izq.second <= der.second)
 	{
-		//std::cout << "Gana der " << der.first << " a " << izq.first << " con d: " << der.second << std::endl;
-		return { der.first, der.second + dragon };
-	}*/
+		return { izq.first, izq.second + dragones };
+	}
+	else
+	{
+		return { der.first, der.second + dragones };
+	}
 }
+
+
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuracion, y escribiendo la respuesta
