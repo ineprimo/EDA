@@ -7,64 +7,61 @@
 #include "bintree_eda.h"
 
 
-// COMPLEJIDAD:
-std::pair<int, int> simetrico(const bintree<int>& arbol)
+template <class T>
+bool hijosSimetricos(const bintree<T>& ramaIzq, const bintree<T>& ramaDer)
 {
-	if (arbol.empty()) 
+	// Casos:
+	// Caso ambas ramas no tienen hijos entonces es simetrico.
+	if (ramaIzq.empty() && ramaDer.empty())
 	{
-
+		return true;
+	}
+	// Caso izquiquierda no tiene hijos y derecha si y veciversa no es simetrico.
+	if ((ramaIzq.empty() && !ramaDer.empty()) || (!ramaIzq.empty() && ramaDer.empty()))
+	{
+		return false;
 	}
 
+	// Cada rama se comprueba con su simetrico.
+	bool hijos = hijosSimetricos(ramaIzq.left(), ramaDer.right()) && hijosSimetricos(ramaIzq.right(), ramaDer.left());
 
+	return hijos;
+}
 
-
-	/*
-	// Caso base: arbol vacio
-	if (arbol.empty()) return{ 0, -1 };
-
-	// Caso hoja: Es singular si la suma de los anteriores es 0
-	// ya que esa es la suma de sus hijos siempre al ser hoja
-	// (es hoja si no tiene hijos)
-	if (arbol.left().empty() && arbol.right().empty())
+// COMPLEJIDAD:
+template <class T>
+bool simetrico(const bintree<T>& arbol)
+{
+	// Casos base:
+	// Caso es vacio es simetrico.
+	if (arbol.empty())
 	{
-		return{ arbol.root(), 0 };
+		return true;
 	}
 
-	// Recursion
-	std::pair<int, int> izq = hiperborea(arbol.left()); // evalua por la izq
-	std::pair<int, int> der = hiperborea(arbol.right()); // evalua por la der
+	bool hijos = hijosSimetricos(arbol.left(), arbol.right());
 
-	//
-	int dragon = 0;
-	if (arbol.root() == 1)
-	{
-		dragon++;
-	}
-
-	// si el camino de la izq tiene menos dragones o los mismos que el camino de la derecha
-	// devolver el camino de la izq
-	if ((izq.second <= der.second))
-	{
-		return { izq.first, izq.second + dragon };
-	}
-	// devolver el camino de la der
-	else
-	{
-		return { der.first, der.second + dragon };
-	}
-	*/
+	return hijos;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso()
 {
-	// lee arbol
 	bintree<char> arbol;
+
+	// Lectura:
 	arbol = leerArbol('.'); // '.' es la representacion de arbol vacio
 
-	// escribe solucion
 
+	// Resolucion:
+	bool esSimetrico = false;
+	esSimetrico = simetrico(arbol);
+
+
+	// Escritura:
+	(esSimetrico) ? std::cout << "SI" : std::cout << "NO";
+	std::cout << std::endl;
 }
 
 int main()
