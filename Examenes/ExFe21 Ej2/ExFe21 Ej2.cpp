@@ -2,56 +2,41 @@
 #include <fstream>
 #include "bintree_eda.h"
 
+template <class T>
+bool hijosSimetricos(const bintree<T>& ramaIzq, const bintree<T>& ramaDer)
+{
+    // si ninguna tiene hijos -> es simetrico
+    if (ramaIzq.empty() && ramaDer.empty()) return true;
+
+    // si tiene una y no su contraria -> no simetrico
+    if ((ramaIzq.empty() && !ramaDer.empty()) || (!ramaIzq.empty() && ramaDer.empty())) return false;
+
+    // se llama al metodo comparando cada rama con su simetrica
+    return hijosSimetricos(ramaIzq.left(), ramaDer.right()) && hijosSimetricos(ramaIzq.right(), ramaDer.left());
+}
+
 // Un arbol binario no vacio es simetrico respecto al eje vertical que pasa por la raiz
 // si al "doblarlo" por ese eje todo nodo de un lado coincide con un nodo del otro
 
-// Complejidad: 
-
-// 
-std::pair<bool, int> simetrico(const bintree<int>& arbol)
+// Complejidad: O(n) siendo el numero de elementos del arbol, solo pasas por cada nodo una vez
+template <class T>
+bool simetrico(const bintree<T>& arbol)
 {
+    // Caso base -> arbol vacio es simetrico
+	if(arbol.empty())
+	{
+        return true;
+	}
 
+    // Caso hijos -> si tiene hijos los comprobamos
+    bool hijos = hijosSimetricos(arbol.left(), arbol.right());
 
-
-    /*
-    // Caso base: arbol vacio
-    if (arbol.empty()) return{ 0, -1 };
-
-    // Caso hoja: Es singular si la suma de los anteriores es 0
-    // ya que esa es la suma de sus hijos siempre al ser hoja
-    // (es hoja si no tiene hijos)
-    if (arbol.left().empty() && arbol.right().empty())
-    {
-        return{ arbol.root(), 0 };
-    }
-
-    // Recursion
-    std::pair<int, int> izq = hiperborea(arbol.left()); // evalua por la izq 
-    std::pair<int, int> der = hiperborea(arbol.right()); // evalua por la der
-
-    //
-    int dragon = 0;
-    if (arbol.root() == 1)
-    {
-        dragon++;
-    }
-
-    // si el camino de la izq tiene menos dragones o los mismos que el camino de la derecha
-    // devolver el camino de la izq
-    if ((izq.second <= der.second))
-    {
-        return { izq.first, izq.second + dragon };
-    }
-    // devolver el camino de la der
-    else
-    {
-        return { der.first, der.second + dragon };
-    }
-    */
+    return hijos;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
+
 void resuelveCaso()
 {
     // lee arbol
@@ -59,7 +44,9 @@ void resuelveCaso()
     arbol = leerArbol('.'); // '.' es la representacion de arbol vacio
 
     // escribe solucion
-    
+    bool sol = simetrico(arbol);
+    if (sol) std::cout << "SI" << std::endl;
+    else std::cout << "NO" << std::endl;
 }
 
 int main()
