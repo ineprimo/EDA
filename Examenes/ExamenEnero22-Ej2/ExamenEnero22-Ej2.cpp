@@ -11,29 +11,25 @@ using namespace std;
 
 
 // función que resuelve el problema
-pair<int, int> resolver(const bintree<int>& datos, int parent, int& count) {
+int resolver(const bintree<int>& datos, int parent, int& count) {
 
     if (datos.empty()) {
-        return {0, 0};
+        return 0;
     }
     if (datos.left().empty() && datos.right().empty()) {
-        if(parent == 0)
-            return { 1, datos.root() };
-        else
-            return { 0, datos.root() };
+        if (parent == 0)
+            count++;
+        return datos.root();
     }
 
-    pair<int, int> izq = resolver(datos.left(), parent + datos.root(), count);
-    pair<int, int> der = resolver(datos.right(), parent + datos.root(), count);
-
-    int sing = izq.first + der.first; // Numero de singulares de los hijos.
-    int sum = izq.second + der.second; // Suma de los valores de los hijos.
+    int izq = resolver(datos.left(), parent + datos.root(), count);
+    int der = resolver(datos.right(), parent + datos.root(), count);
 
     // comparacion
-    if (sum == parent)
-        sing++;
+    if (izq + der == parent)
+        count++;
 
-    return { sing, sum + datos.root()};
+    return izq + der + datos.root();
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -43,9 +39,9 @@ void resuelveCaso() {
     bintree<int>datos;
     datos = leerArbol(-1);
     int sol = 0;
-    auto a = resolver(datos, 0, sol);
+    resolver(datos, 0, sol);
 
-    cout << a.first << endl;
+    cout << sol << endl;
 
 }
 
