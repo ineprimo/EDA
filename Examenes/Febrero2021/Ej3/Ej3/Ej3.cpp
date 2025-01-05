@@ -1,187 +1,159 @@
-// Pablo Iglesias Rodrigo.
-// EDA-GDV035
-
-
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <unordered_map>
+#include <vector>
+using namespace std;
 
+using artistaRec = std::vector<int>;
+using artistaCon = std::vector<int>;
 
-const int NUM_MONEDAS = 8;
-const int valores[NUM_MONEDAS] = { 1, 2, 5, 10, 20, 50, 100, 200 };
+using recaudaciones = std::unordered_map<int, artistaRec>;
+using consentimientos = std::unordered_map<int, artistaCon>;
 
+// Tupla solucion: [Gi, Gi+1, Gi+2, ... , G(i+n)-1]
+// siendo n el numero de artistas del concierto y siendo i la posicion en la que toca cada grupo(G)
 
-using Recaudacion = std::vector<int>; // Vector de las donaciones que recibe un artista.
-using Consentimiento = std::vector<int>; // Vector de los consentimientos de un artista.
-using Recaudaciones = std::unordered_map<int, Recaudacion>; // Mapa con el indice del artista y sus recaudacion.
-using Consentimientos = std::unordered_map<int, Consentimiento>; // Mapa con el indice del artista y sus consentimientos.
-
-
-bool esValida(std::vector<int>& sol, int candidatos, std::vector<bool>& vistos, Consentimientos& cons)
+bool esValida(vector<int>& soluc, int k, vector<bool>& vistos, consentimientos con)
 {
-	return ((!vistos[sol[candidatos]]) && (candidatos == 0 || (cons[sol[candidatos]][sol[candidatos - 1]] == 1)));
+    // es valida si el grupo no ha salido todavia y si encaja con los consentimientos de ese grupo
+    return ((!vistos[soluc[k]]) && (k == 0 || (con[soluc[k]][soluc[k - 1]] == 1)));
 }
 
-// función que resuelve el problema
-// parametros:
-// --- entrada:
-// sol				-> vector solucion.
-// candidatos(k)    -> posiciones del orden de tocar.
-//  la i del for los grupos que vas probando.
-// nArtistas(n)     -> numero de artistas.
-// recs				-> mapa con las recaudaciones.
-// cons				-> mapa con los consenitimientos.
+// --- paramatros:
+// - soluc -> vector solucion
+// - k     -> posiciones de orden en el que tocar
+// - i del for -> grupos que vas probando
+// - n     -> num max de conciertos
+// - rec   -> recaudaciones por artista en x pos
+// - con   -> consentimientos por artista
 // --- marcadores:
-// ganancias		-> ganancias de cada rama.
-// vistos			-> vector de los artistas que ya han sido vistos.
+// - ganancias -> ganancias que vas aumulando en una rama
+// - vistos    -> almacena si el concierto en la pos i ya ha sido visto
 
-// TUPLA SOLUCION: [Ai, Ai+1, Ai+2, ... , A(i+n)-1] 
-// siendo n el numero de artistas en i el indice del artista
-void concierto(std::vector<int>& sol, int candidatos, int nArtistas, int ganancias, int& maxGanancias,
-	Consentimientos& cons, Recaudaciones& recs, std::vector<bool>& vistos,
-	std::vector<int> estimacionPorPosicion)
+void concierto(vector<int>& soluc, int k, int n, int ganancias, int& maxGanancias,
+    recaudaciones rec, consentimientos con, vector<bool>& vistos, vector<int> optimistaPorPos)
 {
-	// ---- ESQUEMA DE BACKTRACKING ----
+    // 1) for de candidatos     -> 
+    // --- 2) guardar el indice del for que se va probando en el vect solucion
+    // --- 3) if esValida       -> ver si lo que acabas de guardar ha sido una eleccion valida
+    // ------ 4) if esSolucion  -> se ha llegado al final del arbol
+    // --------- 5) if esMejor  -> si lo recaudado supera la mejor recaudacion anterior
+    // ------ 6) else / else if noSolucion (depende de si la condicion de final es llegar al final del arbol)
+    // --------- 7) if poda     ->
+    // ------------ 8) llamada recursiva k+1
 
-	// !!!! marcar en el mismo ambito en el que se desmarca
+    for (int i = 0; i < n; i++)
+    {
+        soluc[k] = i;
 
-	// 1) for de candidatos     -> candidatos = num de monedas de valor k
-	// --- 2) guardar el indice del for que se va probando en el vect solucion
-	// --- 3) if esValida       -> ver si lo que acabas de guardar ha sido una eleccion valida
-	// ------ 4) if esSolucion  -> se ha llegado al precio a calcular
-	// --------- 5) if esMejor  -> si la cantidad de monedas que estoy usando es mayor que la ultima mayor cantidad
-	// ------ 6) else noSolucion (si tienes que llegar al final solo else)
-	// --------- 7) if poda     -> si las monedas que llevo + la estimacion supera el num max de monedas hasta ahora
-	// ------------ 8) llamada recursiva k+1
+        if (esValida(soluc, k, vistos, con))
+        {
+            // marcamos
+            ganancias += rec[i][k];
+            vistos[i] = true;
 
-	for (int i = 0; i < nArtistas; i++)
-	{
-		sol[candidatos] = i;
+            // comprobar final del arbol
+            if (k == n - 1)
+            {
+                if (ganancias > maxGanancias) maxGanancias = ganancias;
+            }
+            else
+            {
+                if (ganancias + optimistaPorPos[k] > maxGanancias)
+                {
+                    concierto(soluc, k + 1, n, ganancias, maxGanancias, rec, con, vistos, optimistaPorPos);
+                }
+            }
 
-		if (esValida(sol, candidatos, vistos, cons))
-		{
-			// Esto para marcar.
-			ganancias += recs[i][candidatos];
-			vistos[i] = true;
-			// Para comprobar si es solucion.
-			if (candidatos == nArtistas - 1)
-			{
-				// Para actualizar las ganancias si son mayores que las ganancias acumuladas.
-				if (ganancias > maxGanancias)
-				{
-					maxGanancias = ganancias;
-				}
-				else
-				{
-					// Solo si merece la pena hacemos la llamada.
-					if ((ganancias + estimacionPorPosicion[candidatos]) > maxGanancias)
-					{
-						// Llamada recursiva.
-						concierto(sol, candidatos + 1, nArtistas, ganancias, maxGanancias, cons, recs, vistos, estimacionPorPosicion);
-					}
-				}
-				// Desmarcar.
-				ganancias -= recs[i][candidatos];
-				vistos[i] = false;
-			}
-		}
-	}
+            // desmarcamos
+            ganancias -= rec[i][k];
+            vistos[i] = false;
+        }
+    }
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso()
 {
-	int nArtistas = 0; // Numero de artistas del festival.
-	std::cin >> nArtistas;
+    int n = 0;
 
-	Recaudaciones recs; // Mapa con las recaudaciones de los artistas.
-	Consentimientos cons; // Mapa con los consentimientos de los artistas.
+    cin >> n;
 
-	// Lectura:
-	for (int i = 0; i < nArtistas; i++)
-	{
-		Recaudacion rec(nArtistas);
-		for (int j = 0; j < nArtistas; j++)
-		{
-			std::cin >> rec[j];
-		}
-		recs.insert({ i, rec });
-	}
-	for (int i = 0; i < nArtistas; i++)
-	{
-		Consentimiento con(nArtistas);
-		for (int j = 0; j < nArtistas; j++)
-		{
-			std::cin >> con[j];
-		}
-		cons.insert({ i, con });
-	}
+    artistaCon aCon(n);
 
-	// Estimacion optimista antes de llamar al algoritmo.
-	int max = 0;
-	std::vector<int> maxGananciasPorPos(nArtistas);
-	// Nos guardamos las maximas ganancias posibles de cada hueco.
-	for (int i = 0; i < nArtistas; i++)
-	{
-		for (int j = 0; j < nArtistas; j++)
-		{
-			if (recs[i][j] > max)
-			{
-				maxGananciasPorPos[i] = recs[i][j];
-			}
-		}
-	}
-	std::vector<int> estimacionOptimista(nArtistas);
-	estimacionOptimista[nArtistas - 1] = maxGananciasPorPos[nArtistas - 1];
-	for (int i = nArtistas - 2; i >= 0; i--)
-	{
-		estimacionOptimista[i] += estimacionOptimista[i + 1];
-	}
+    recaudaciones rec;
+    consentimientos con;
 
+    for (int i = 0; i < n; i++)
+    {
+        artistaRec aRec(n);
+        for (int j = 0; j < n; j++)
+        {
+            std::cin >> aRec[j];
+        }
 
-	// Resolucion:
-	std::vector<int>sol(nArtistas);
-	int maxGanancias = -1;
-	std::vector<bool>vistos(nArtistas);
-	concierto(sol, 0, nArtistas, 0, maxGanancias, cons, recs, vistos, estimacionOptimista);
+        rec.insert({ i, aRec });
+    }
+    for (int i = 0; i < n; i++)
+    {
+        artistaCon aCon(n);
+        for (int j = 0; j < n; j++)
+        {
+            std::cin >> aCon[j];
+        }
 
+        con.insert({ i, aCon });
+    }
 
-	// Escritura:
-	if (maxGanancias == -1)
-	{
-		std::cout << "NEGOCIA CON LOS ARTISTAS" << std::endl;
-	}
-	else
-	{
-		std::cout << maxGanancias << std::endl;
-	}
+    std::vector<int> maxGananciasPos(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (con[i][j] > maxGananciasPos[i])
+            {
+                maxGananciasPos[i] = rec[i][j];
+            }
+        }
+    }
+
+    std::vector<int> optimistaPorPos(n);
+
+    optimistaPorPos[n - 1] = maxGananciasPos[n - 1];
+
+    for (int i = n - 2; i >= 0; i--)
+    {
+        optimistaPorPos[i] += optimistaPorPos[i + 1];
+    }
+
+    vector<int> soluc(n);
+    vector<bool> vistos(n);
+    int maxGanancias = -1;
+    concierto(soluc, 0, n, 0, maxGanancias, rec, con, vistos, optimistaPorPos);
+    if (maxGanancias == -1) std::cout << "NEGOCIA CON LOS ARTISTAS" << std::endl;
+    else std::cout << maxGanancias << std::endl;
 }
 
 //#define DOMJUDGE
 int main() {
-	// Para la entrada por fichero.
-	// Comentar para acepta el reto
+    // Para la entrada por fichero.
+    // Comentar para acepta el reto
 #ifndef DOMJUDGE
-	std::ifstream in("datos.txt");
-	auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
+    int numCasos;
+    std::cin >> numCasos;
+    for (int i = 0; i < numCasos; ++i)
+        resuelveCaso();
 
-
-	int nCasos;
-	std::cin >> nCasos;
-	for (int i = 0; i < nCasos; ++i)
-	{
-		resuelveCaso();
-	}
-
-
-	// Para restablecer entrada. Comentar para acepta el reto
+    // Para restablecer entrada. Comentar para acepta el reto
 #ifndef DOMJUDGE // para dejar todo como estaba al principio
-	std::cin.rdbuf(cinbuf);
-	//system("PAUSE");
+    std::cin.rdbuf(cinbuf);
+    //system("PAUSE");
 #endif
 
-	return 0;
+    return 0;
 }
