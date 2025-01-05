@@ -12,6 +12,8 @@ class queue_plus : public queue<T>
 
 public:
 
+	// Complejidad: O(n) siendo n el numero de elementos de la cola
+
 	// mueve al elemento b de su pos a la pos inmediatamente detras del elemento a
 	// / en caso de haber multiples apariciones de los elementos a y/o b se considerara:
 	//		la primera aparicion de a
