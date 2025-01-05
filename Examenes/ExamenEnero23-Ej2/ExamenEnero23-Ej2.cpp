@@ -8,40 +8,39 @@
 #include "bintree_eda.h"
 
 using namespace std;
-
 // función que resuelve el problema
-int resolver(bintree<int> datos, int& dragones) {
+//<id, dragones>
+pair<int, int> resolver(bintree<int> datos) {
 
     if (datos.empty()) {
-        return -1;
+        return { -1, 0 };
     }
     if (datos.right().empty() && datos.left().empty()) {
-        return datos.root();
+        return { datos.root(), 0 };
     }
 
-    int dragonesDER = 0;
-    int dragonesIZQ = 0;
+    pair<int, int> izq = resolver(datos.left());
+    pair<int, int> der = resolver(datos.right());
 
-    int izq = resolver(datos.left(), dragonesIZQ);
-    int der = resolver(datos.right(), dragonesDER);
-
+    int dragones = 0;
     if (datos.root() == 1) {
         dragones++;
     }
+
     // caso en el que uno no sea una hoja
-    if (izq == -1) 
-        return der;
-    else if(der == -1) 
-        return izq;
+    if (izq.first == -1) 
+        return { der.first, der.second + dragones };
+    else if(der.first == -1) 
+        return { izq.first, izq.second + dragones };
+
 
     // comparacion
-    if (dragonesIZQ > dragonesDER) {
-        dragones += dragonesDER;
-        return der;
+    if (izq.second > der.second) {
+
+        return {der.first, der.second + dragones};
     }
     else { 
-        dragones += dragonesIZQ;
-        return izq; 
+        return { izq.first, izq.second + dragones };
     }
 
 }
@@ -54,14 +53,14 @@ bool resuelveCaso() {
     bintree<int> datos;
     datos = leerArbol(-1);
     int dragones =  0;
-    int sol = 0;
-    sol = resolver(datos, dragones);
+    pair<int, int> sol;
+    sol = resolver(datos);
 
     // escribir sol
-    if(sol < 3)
+    if(sol.first < 3)
         cout << endl;
     else
-        cout << sol << endl;
+        cout << sol.first << endl;
 
     return true;
 
