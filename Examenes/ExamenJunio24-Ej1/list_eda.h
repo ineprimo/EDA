@@ -133,35 +133,29 @@ public:
 
    void partition(int pivote) {
 
-       iterator ini = begin();
-       iterator fin = end();
-       int cont = 0;
-
-       // size....
-       while (ini != fin) {
-           ini++;
-           cont++;
-       }
-
-       iterator lastPivot = end();
+       Nodo* lastPivot = this->fantasma->ant;
        Nodo* holdPrev;
+       Nodo* curr = begin().act;
+       holdPrev = curr->ant;
 
-       for (ini; ini != fin;) {
-           if (*ini > pivote) {
+       for (int i = 0; curr != this->fantasma; i++) {
+           if (curr->elem > pivote) {
                // si es mayor esta a la izquierda del pivote asi que hay que cambiarlo
+               holdPrev = curr->ant;
 
-               holdPrev = ini.act->ant;
-               auto anterior = lastPivot.act->ant;
-               ini.act->ant->sig = ini.act->sig;
-               anterior->sig = ini.act;
-               ini.act->ant = anterior;
-               ini.act->sig = this->fantasma;
+               curr->ant->sig = curr->sig;
+               lastPivot->sig = curr;
+               curr->ant = lastPivot;
+               curr->sig = this->fantasma;
+               lastPivot = curr;
 
                //ini++; 
+               curr = holdPrev->sig;
                holdPrev = holdPrev->sig;
            } 
            else {
-               ini++;
+               curr = curr->sig;
+
            }
        }
 
