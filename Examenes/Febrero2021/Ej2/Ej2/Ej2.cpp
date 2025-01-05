@@ -28,7 +28,7 @@ bool hijosSimetricos(const bintree<T>& ramaIzq, const bintree<T>& ramaDer)
 	return hijos;
 }
 
-// COMPLEJIDAD:
+// COMPLEJIDAD: O(n) siendo n el numero de elementos del arbol el cual solo recorre 1 vez.
 template <class T>
 bool simetrico(const bintree<T>& arbol)
 {
