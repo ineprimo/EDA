@@ -43,6 +43,8 @@ bool resuelveCaso() {
         cout << *it << " ";
         it++;
     }
+    cout << endl;
+
 
     return true;
 }

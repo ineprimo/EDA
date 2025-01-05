@@ -133,29 +133,46 @@ public:
 
    void partition(int pivote) {
 
+       bool pastPivot = false;
+
        Nodo* lastPivot = this->fantasma->ant;
+       Nodo* last = this->fantasma->ant;
        Nodo* holdPrev;
        Nodo* curr = begin().act;
        holdPrev = curr->ant;
 
-       for (int i = 0; curr != this->fantasma; i++) {
-           if (curr->elem > pivote) {
+       for (int i = 0; i < this->size(); i++) {
+           if (!pastPivot && curr->elem > pivote) {
                // si es mayor esta a la izquierda del pivote asi que hay que cambiarlo
                holdPrev = curr->ant;
 
                curr->ant->sig = curr->sig;
-               lastPivot->sig = curr;
+               last->sig = curr;
                curr->ant = lastPivot;
                curr->sig = this->fantasma;
-               lastPivot = curr;
+               last = curr;
 
                //ini++; 
                curr = holdPrev->sig;
                holdPrev = holdPrev->sig;
-           } 
+           }
+           else if (pastPivot && curr->elem < pivote) {
+               // si es mayor esta a la izquierda del pivote asi que hay que cambiarlo
+               holdPrev = curr->ant;
+
+               curr->ant->sig = curr->sig;
+               last->sig = curr;
+               curr->ant = lastPivot;
+               curr->sig = this->fantasma;
+               last = curr;
+
+               //ini++; 
+               curr = holdPrev->sig;
+               holdPrev = holdPrev->sig;
+           }
+           else if (curr->elem == pivote) pastPivot = true;
            else {
                curr = curr->sig;
-
            }
        }
 
