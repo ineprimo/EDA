@@ -9,13 +9,13 @@
 
 // first -> numero del camino
 // second -> numero de dragones en ese camino
+
 std::pair<int, int> hiperborea(const bintree<int>& arbol)
 {
     // Caso base: arbol vacio
-    if (arbol.empty()) return{ 0, -1 };
+    if (arbol.empty()) return{ -1, 0 };
 
-    // Caso hoja: Es singular si la suma de los anteriores es 0
-    // ya que esa es la suma de sus hijos siempre al ser hoja
+    // Caso hoja: devolvemos el num del camino y 0 dragones
     // (es hoja si no tiene hijos)
     if (arbol.left().empty() && arbol.right().empty())
     {
@@ -23,7 +23,7 @@ std::pair<int, int> hiperborea(const bintree<int>& arbol)
     }
 
     // Recursion
-    std::pair<int, int> izq = hiperborea(arbol.left()); // evalua por la izq 
+    std::pair<int, int> izq = hiperborea(arbol.left()); // evalua por la izq
     std::pair<int, int> der = hiperborea(arbol.right()); // evalua por la der
 
     //
@@ -31,6 +31,17 @@ std::pair<int, int> hiperborea(const bintree<int>& arbol)
     if(arbol.root() == 1)
     {
         dragon++;
+    }
+
+    // cuando solo tiene un hijo
+    // si no existe uno de los hijos devuelves el contrario
+    if(izq.first == -1)
+    {
+        return { der.first, der.second + dragon };
+    }
+    if(der.first == -1)
+    {
+        return { izq.first, izq.second + dragon };
     }
 
     // si el camino de la izq tiene menos dragones o los mismos que el camino de la derecha
