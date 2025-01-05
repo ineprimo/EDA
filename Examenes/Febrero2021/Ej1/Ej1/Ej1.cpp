@@ -23,7 +23,7 @@ class queue_plus : public queue<T>
 	using Nodo = typename queue<T>::Nodo;
 
 public:
-	// COMPLEJIDAD: O(...) siendo n ... .
+	// COMPLEJIDAD: O(n) siendo n el numero de elementos de la cola la cual en el caso peor la recorre entera.
 	void cuela(const T& a, const T& b)
 	{
 		// Comprobamos primero que no este vacia la cola.
