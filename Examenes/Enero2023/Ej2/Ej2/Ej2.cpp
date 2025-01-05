@@ -18,7 +18,7 @@ std::pair<int, int> hiperborea(const bintree<int>& tree)
 	// Caso es hoja devolvemos el numero de camino y 0 dragones.
 	if (tree.left().empty() && tree.right().empty())
 	{
-		std::cout << "HOJA: " << tree.root() << std::endl;
+		//std::cout << "HOJA: " << tree.root() << std::endl;
 		return { tree.root(), 0 };
 	}
 
@@ -33,16 +33,28 @@ std::pair<int, int> hiperborea(const bintree<int>& tree)
 		dragon++;
 	}
 
-	if (izq.second <= der.second)
+	izq.second += dragon;
+	der.second += dragon;
+	if (izq.second < der.second || (izq.second == der.second && izq.first < der.first)) 
 	{
-		std::cout << "Gana izq " << izq.first << " a " << der.first << " con d: " << izq.second << std::endl;
+		//std::cout << "Gana izq " << izq.first << " a " << der.first << " con d: " << izq.second << std::endl;
+		return izq;
+	}
+	else {
+		//std::cout << "Gana der " << der.first << " a " << izq.first << " con d: " << der.second << std::endl;
+		return der;
+	}
+
+	/*if (izq.second <= der.second)
+	{
+		//std::cout << "Gana izq " << izq.first << " a " << der.first << " con d: " << izq.second << std::endl;
 		return { izq.first, izq.second + dragon };
 	}
 	else if (izq.second > der.second)
 	{
-		std::cout << "Gana der " << der.first << " a " << izq.first << " con d: " << der.second << std::endl;
+		//std::cout << "Gana der " << der.first << " a " << izq.first << " con d: " << der.second << std::endl;
 		return { der.first, der.second + dragon };
-	}
+	}*/
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
