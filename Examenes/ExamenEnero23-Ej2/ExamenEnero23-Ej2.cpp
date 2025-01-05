@@ -10,38 +10,45 @@
 using namespace std;
 // función que resuelve el problema
 //<id, dragones>
+// complejidad: O(n) siendo n el numero de nodos del arbol ya que este se recorre
+// solo una vez
 pair<int, int> resolver(bintree<int> datos) {
 
+    // caso en el que este vacio, -1 para representar que no hay id
     if (datos.empty()) {
         return { -1, 0 };
     }
+    // si no tiene hijos es un inicio de camino, no tiene dragones
     if (datos.right().empty() && datos.left().empty()) {
         return { datos.root(), 0 };
     }
 
+    // divide et impera
     pair<int, int> izq = resolver(datos.left());
     pair<int, int> der = resolver(datos.right());
 
+    // contador de dragones (se podra simplificar pero no voy a darle vueltas)
     int dragones = 0;
     if (datos.root() == 1) {
         dragones++;
     }
 
-    // caso en el que uno no sea una hoja
+    // caso en el que uno no sea una hoja, para tratar el -1 que he usado antes
     if (izq.first == -1) 
         return { der.first, der.second + dragones };
     else if(der.first == -1) 
         return { izq.first, izq.second + dragones };
 
-
-    // comparacion
+    // comparacion cuando no hay casos de -1
     if (izq.second > der.second) {
-
         return {der.first, der.second + dragones};
     }
     else { 
         return { izq.first, izq.second + dragones };
     }
+
+    // no olvideis sumar el dragones a la cuenta que ya teneis porque me ha pasado
+    // y es un fallo tonto que luego no ves en el examen
 
 }
 
