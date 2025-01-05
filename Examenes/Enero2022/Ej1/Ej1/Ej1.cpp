@@ -8,7 +8,7 @@
 #include "list_eda.h"
 
 
-// Clase extendida con operacion interna duplicar que reaprovecha nodos existentes
+/*// Clase extendida con operacion interna duplicar que reaprovecha nodos existentes
 template <class T>
 class list_eda_plus : public list<T>
 {
@@ -70,7 +70,69 @@ public:
 		nUltLon->sig = nDest; //g->c
 		nDest->ant = nUltLon; // g<-c
 	}
-};
+};*/
+
+
+list<char> adelantar(const list<char>& datos, int nElems, int pos, int lon, int kPos)
+{
+	list<char> sol;
+	// Caso esta vacia no hace nada.
+	if (datos.empty() || kPos == datos.size() - 1 || kPos == 0 || lon == 0 || pos - kPos < 0)
+	{
+		return datos;
+	}
+	// Si el segmento es mas largo que el numero de elementos acortamos el segmento.
+	if ((pos + lon) > nElems)
+	{
+		lon = nElems - pos;
+	}
+
+	int dest = pos - kPos; // Posicion de destino.
+
+	auto itDest = datos.begin();
+	auto itPos = datos.begin();
+	auto itLon = datos.begin();
+
+	for (int i = 0; i < pos + lon - 1; i++)
+	{
+		if (i < dest)
+		{
+			++itDest;
+		}
+		if (i < pos)
+		{
+			++itPos;
+		}
+		++itLon;
+	}
+
+	bool segFin = false;
+	auto itAct = datos.begin();
+	for (int i = 0; i < nElems-1; i++)
+	{
+		if ((*itAct) == (*itDest))
+		{
+			itAct = itPos;
+		}
+		if ((*itAct) == (*itLon))
+		{
+			sol.push_back((*itAct));
+			itAct = itDest;
+			segFin = true;
+		}
+		if ((*itAct) == (*itPos) && segFin)
+		{
+			if ((pos + lon) <= nElems - 1)
+			{
+				itAct = ++itLon;
+			}
+		}
+		sol.push_back((*itAct));
+		++itAct;
+	}
+	return sol;
+}
+
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuracion, y escribiendo la respuesta.
@@ -82,7 +144,8 @@ void resuelveCaso()
 	int segLon = 0;
 	int kPos = 0;
 
-	list_eda_plus<char> datos;
+	//list_eda_plus<char> datos;
+	list<char> datos;
 
 	std::cin >> nElems;
 	std::cin >> pos;
@@ -98,11 +161,13 @@ void resuelveCaso()
 
 
 	// Resolucion:
-	datos.adelantar(nElems, pos, segLon, kPos);
+	//datos.adelantar(nElems, pos, segLon, kPos);
 	//std::cout << nElems << " " << pos << " " << segLon << " " << kPos << " " << std::endl;
+	list<char> sol;
+	sol = adelantar(datos, nElems, pos, segLon, kPos);
 
 	// Escritura:
-	for (auto e : datos)
+	for (auto e : sol)
 	{
 		std::cout << e << " ";
 	}
