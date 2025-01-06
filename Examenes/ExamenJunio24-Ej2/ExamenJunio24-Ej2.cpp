@@ -9,12 +9,19 @@
 
 using namespace std;
 
+
+
 // con backtracking (WIP)
 void resolverBacktracking(const vector<int>& datos, bool& existe, int i, int& sum, const int& sumDeseada) {
 
+    if (existe) return;
+    if (datos.size() == 0) {
+        existe = true;
+    }
+
     int j = 0;
     // 
-    while (j<2 && !existe) {
+    while (j<2) {
         if (i < datos.size()) {
             if (j == 0)
                 sum += datos[i];
@@ -28,6 +35,8 @@ void resolverBacktracking(const vector<int>& datos, bool& existe, int i, int& su
             }
             else {
 
+                if (i == 0)
+                    sum = datos[i];
                 // backtracking
                 resolverBacktracking(datos, existe, i + 1, sum, sumDeseada);
             }
