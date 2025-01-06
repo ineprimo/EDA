@@ -5,11 +5,27 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include "bintree_eda.h"
+
+using namespace std;
+
 
 
 // función que resuelve el problema
-TipoSolucion resolver(TipoDatos datos) {
+bool resolver(const bintree<char>& left, const bintree<char>& right) {
 
+    if (left.empty() && right.empty()) {
+        return true;
+    }
+    // mira las ramas de fuera y las de dentro
+    if ((right.empty() && !left.empty()) || (left.empty() && !right.empty())) {
+        return false;
+    }
+
+    bool out = resolver(left.left(), right.right());
+    bool in = resolver(left.right(), right.left());
+
+    return in && out;
 
 }
 
@@ -18,11 +34,16 @@ TipoSolucion resolver(TipoDatos datos) {
 void resuelveCaso() {
     // leer los datos de la entrada
 
+    bintree<char> datos;
+    datos = leerArbol('.');
 
-    TipoSolucion sol = resolver(datos);
+    bool sol = resolver(datos.left(), datos.right());
+
     // escribir sol
-
-
+    if (sol)
+        cout << "SI" << endl;
+    else
+        cout << "NO" << endl;
 }
 
 int main() {
