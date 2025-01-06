@@ -21,40 +21,45 @@ bool isSolution(int indiceTareasCompletas, int t) {
 void resolver(vector<vector<int>>& sol, const vector<vector<int>>& datos, int k, int n, int t, int felicidad, vector<int>& tareasPorChaval, vector<int>& tareasComlpetas, 
     int indiceTareasCompletas, vector<vector<int>>& mejorSol, int& mejorFelicidad) {
 
-    // n (i) -> tareas
-    // k -> chavales, cada vez que baja de nivel en el arbol de opciones
+    // n (i) -> chavales
+    // k -> tareas, cada vez que baja de nivel en el arbol de opciones
     // t -> max por chaval
 
     for (int i = 0; i < n; i++) {
-        // suma a sol
-        sol[i][k] = datos[k][i];    // PLACEHOLDER
 
-        // si es valida
-        if (tareasPorChaval[k] < t) {
+        if (k < t) {
+            // suma a sol
+            sol[i][k] = k + 1;    // PLACEHOLDER
+            tareasPorChaval[i]++;
 
-            // marca para probar la solucion
+            // si es valida
+            if (tareasPorChaval[k] < t) {
+
+                // marca para probar la solucion
 
 
-            // si es solucion
-            if (isSolution(indiceTareasCompletas, t)) {
-                // si mejora solucion
-                if (felicidad > mejorFelicidad) {
-                    mejorFelicidad = felicidad;
-                    mejorSol = sol;
+                // si es solucion
+                if (isSolution(indiceTareasCompletas, t)) {
+                    // si mejora solucion
+                    if (felicidad > mejorFelicidad) {
+                        mejorFelicidad = felicidad;
+                        mejorSol = sol;
+                    }
                 }
+                else {
+                    // poda
+
+                    // backtracking
+                    resolver(sol, datos, k + 1, n, t, felicidad, tareasPorChaval, tareasComlpetas, indiceTareasCompletas, mejorSol, mejorFelicidad);
+                }
+
+                // desmarca la solucion anterior
+
+
             }
-            else {
-                // poda
-
-                // backtracking
-                resolver(sol, datos, k + 1, n, t, felicidad, tareasPorChaval, tareasComlpetas, indiceTareasCompletas, mejorSol, mejorFelicidad);
-            }
-
-            // desmarca la solucion anterior
-
 
         }
-
+        
     }
 
 }
@@ -72,19 +77,17 @@ bool resuelveCaso() {
             cin >> preferencias[i][j];
         }
 
-
-    vector<vector<int>> datos;
-    vector<int> tareasPorChaval(n);     // vector auxiliar para contar el numero de tareas de cada chaval
+    vector<int> tareasPorChaval(a);     // vector auxiliar para contar el numero de tareas de cada chaval
     vector<int> tareasComlpetas(n);     // tareas completadas
 
 
     int felicidad = 0;
-    vector<vector<int>> soluc(a);
-    vector<vector<int>> mejorSoluc(a);
+    vector<vector<int>> soluc(a, vector<int>(t));
+    vector<vector<int>> mejorSoluc(a, vector<int>(t));
     // tupla solucion: vector<vector<int>>
     // para guardar que tareas tiene cada estudiante
 
-    resolver(soluc, datos, 0, n, t, 0, tareasPorChaval, tareasComlpetas, 0, mejorSoluc, felicidad);
+    resolver(soluc, preferencias, 0, n, t, 0, tareasPorChaval, tareasComlpetas, 0, mejorSoluc, felicidad);
 
     // escribir sol
 
