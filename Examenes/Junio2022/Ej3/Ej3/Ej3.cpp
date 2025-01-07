@@ -11,11 +11,30 @@
 // COMPLEJIDAD: O( ... ) siendo n ... .
 int serie(const std::vector<int>& datos, int ini, int fin)
 {
+	int size = fin - ini;
 
+	// Casos base:
+	// Caso vector vacio. Tecnicamente no hace falta por enunciado.
+	if (size == 0)
+	{
+		return -1;
+	}
+	// Caso vector 1 elemento.
+	if (size == 1)
+	{
+		return datos[ini];
+	}
 
+	int mid = (fin + ini) / 2;
 
-
-
+	if ((datos[mid]) > ((datos[0] + mid))) // Si el elemento de la mitad es mayor al elemento que deberia haber en la mitad dado el primero entonces miramos en la izquierda.
+	{
+		return serie(datos, ini, mid);
+	}
+	else
+	{
+		return serie(datos, mid, fin);
+	}
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -35,8 +54,12 @@ void resuelveCaso()
 
 
 	// Resolucion:
-	serie()
+	int sol = 0;
+	sol = serie(datos, 0, nElems);
 
+
+	// Escritura
+	std::cout << sol << std::endl;
 
 
 }
