@@ -12,15 +12,23 @@ using namespace std;
 // función que resuelve el problema
 pair<int, int> resolver(pair<vector<int>, vector<int>> rectas) {
 
-    // casos base
+    int i = 0;
+    while (i<rectas.first.size()) {
+        if (rectas.first[i] == rectas.second[i]) {
+            return { i, i };
+        }
+        else if ( i+1 < rectas.first.size() && rectas.first[i] < rectas.second[i] && rectas.first[i + 1] > rectas.second[i + 1]) {
+            return {i, i+1};
+        }
+        i++;
+    }
+
+    // casos especiales
+    if (rectas.first[0] > rectas.second[0])
+        return { -1, 0 };
 
 
-    // 
-    pair<int, int> izq;
-
-
-    
-
+    return {i - 1,i};
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -45,11 +53,14 @@ bool resuelveCaso() {
         }
     }
 
-
-
-    TipoSolucion sol = resolver(datos);
+    pair<int, int> sol = resolver(rectas);
 
     // escribir sol
+    if (sol.first == sol.second)
+        cout << "SI " << sol.first << endl;
+    else
+        cout << "NO " << sol.first << " " << sol.second << endl;
+
 
     return true;
 
