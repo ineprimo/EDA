@@ -57,12 +57,12 @@ list<char> adelantar(int n, int pos, int lon, int k, list<char> datos)
 	auto itAct = datos.begin();
 	for(int i = 0; i < n-1; i++)
 	{
-		if (*itAct == *itDest) 
+		if (*itAct == *itDest && !segFin) 
 		{
 			itAct = itPos;
 		}
 
-		if (*itAct == *itLon) 
+		if (*itAct == *itLon && !segFin) 
 		{
 			sol.push_back(*itAct);
 			itAct = itDest;
@@ -71,7 +71,11 @@ list<char> adelantar(int n, int pos, int lon, int k, list<char> datos)
 
 		if(*itAct == *itPos && segFin)
 		{
-			itAct = ++itLon;
+			if (i >= (pos + lon) - 1)
+			{
+				itAct = ++itLon;
+
+			}
 		}
 
 		sol.push_back(*itAct);

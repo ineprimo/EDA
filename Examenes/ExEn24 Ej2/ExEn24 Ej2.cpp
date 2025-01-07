@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-#include <algorithm>
 
 std::pair<bool, std::pair<int,int>> cruce(const std::vector<int>& ascendente, const std::vector<int>& descendente, int ini, int fin)
 {
@@ -21,15 +20,15 @@ std::pair<bool, std::pair<int,int>> cruce(const std::vector<int>& ascendente, co
         // si es false nos interesan los dos valores del pair indice si no solo el primero
         return { cortan, {ini, fin} };
     }
-    // se salen por la izq
+    // se cortan por la izq
     if(descendente[0] < ascendente[0])
     {
-        return { false, {-1, 0} };
+        return { false, { -1, 0 } };
     }
-    // se sale por la der
+    // se cortan por la der
     if(descendente[ascendente.size()-1] > ascendente[ascendente.size()-1])
     {
-        return { false, {ascendente.size()-1, ascendente.size()} };
+        return { false, { ascendente.size()-1, ascendente.size() } };
     }
 
     int mit = (ini + fin) / 2;
@@ -45,11 +44,10 @@ std::pair<bool, std::pair<int,int>> cruce(const std::vector<int>& ascendente, co
         return cruce(ascendente, descendente, ini, mit);
     }
     // mirar der
-    else if(descendente[mit] > ascendente[mit])
+    if(descendente[mit] > ascendente[mit])
     {
         return cruce(ascendente, descendente, mit, fin);
     }
-
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
