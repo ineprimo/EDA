@@ -5,7 +5,7 @@
 
 using namespace std;
 
-multimap<int, string, greater<int>> resolver(string const& primerDeporte, map<string, int>& deportes, map<string, string>& estudiantes) {
+multimap<int, string, greater<int>> resolver(string const& primerDeporte, map<string, int>& deportes, map<string, pair<string, bool>>& estudiantes) {
     string deporte, alumno;
     deporte = primerDeporte;
 
@@ -16,12 +16,16 @@ multimap<int, string, greater<int>> resolver(string const& primerDeporte, map<st
 
             // si el alumno no tiene deporte
             if (estudiantes.find(alumno) == estudiantes.end()) {
-                estudiantes.insert({alumno, deporte});
+                estudiantes.insert({ alumno, {deporte, false} });
                 deportes.find(deporte)->second++;
             }
             else {
-                if (estudiantes[alumno] != deporte) {
-                    deportes[estudiantes[alumno]]--;
+                if (estudiantes[alumno].first != deporte) {
+                    if (!estudiantes[alumno].second) {
+                        deportes[estudiantes[alumno].first]--;
+                        estudiantes[alumno].second = true;
+                    }
+
                 }
             }
             cin >> alumno;
@@ -48,7 +52,7 @@ bool resuelveCaso() {
     if (!cin) return false;
     // 
     map<string, int> deportes;      // mapa con el recuento por deporte
-    map<string, string> estudiantes;    // mapa con el recuento por alumnos
+    map<string, pair<string, bool>> estudiantes;    // mapa con el recuento por alumnos
 
     multimap<int, string, greater<int>> ordenado = resolver(primerDeporte, deportes, estudiantes);
 
