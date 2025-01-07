@@ -40,6 +40,9 @@
     <Filter Include="Archivos de origen\Tema3">
       <UniqueIdentifier>{00a36c06-bada-4077-b9ce-8bb9d030660e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Examen">
+      <UniqueIdentifier>{912c467e-d51b-48df-a1d5-096ec3aaa3d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tema0-1.cpp">
@@ -123,7 +126,7 @@
     <ClCompile Include="Tema4-01.cpp">
       <Filter>Archivos de origen\Tema4</Filter>
     </ClCompile>
-    <ClCompile Include="Tema4-2.cpp">
+    <ClCompile Include="Tema4-02.cpp">
       <Filter>Archivos de origen\Tema4</Filter>
     </ClCompile>
     <ClCompile Include="Tema4-05.cpp">
@@ -207,8 +210,23 @@
     <ClCompile Include="Tema3-03.cpp">
       <Filter>Archivos de origen\Tema3</Filter>
     </ClCompile>
-    <ClCompile Include="Tema3-014.cpp">
+    <ClCompile Include="Tema3-15.cpp">
       <Filter>Archivos de origen\Tema3</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema3-14.cpp">
+      <Filter>Archivos de origen\Tema3</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema2-13.cpp">
+      <Filter>Archivos de origen\Tema2</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema4-03.cpp">
+      <Filter>Archivos de origen\Tema4</Filter>
+    </ClCompile>
+    <ClCompile Include="Tema5-06.cpp">
+      <Filter>Archivos de origen\Tema5</Filter>
+    </ClCompile>
+    <ClCompile Include="ExamenEneroEj-.cpp">
+      <Filter>Archivos de origen\Examen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

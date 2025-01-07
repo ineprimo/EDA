@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ExamenEneroEj-.cpp" />
     <ClCompile Include="Tema2-05.cpp" />
     <ClCompile Include="Tema0-1.cpp" />
     <ClCompile Include="Tema0-2.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Tema2-10.cpp" />
     <ClCompile Include="Tema2-11.cpp" />
     <ClCompile Include="Tema2-12.cpp" />
+    <ClCompile Include="Tema2-13.cpp" />
     <ClCompile Include="Tema2-2.cpp" />
     <ClCompile Include="Tema3-01.cpp" />
     <ClCompile Include="Tema3-14.cpp" />
@@ -159,16 +161,18 @@
     <ClCompile Include="Tema3-03.cpp" />
     <ClCompile Include="Tema3-15.cpp" />
     <ClCompile Include="Tema4-01.cpp" />
+    <ClCompile Include="Tema4-03.cpp" />
     <ClCompile Include="Tema4-05.cpp" />
     <ClCompile Include="Tema4-06.cpp" />
     <ClCompile Include="Tema4-07.cpp" />
-    <ClCompile Include="Tema4-2.cpp" />
+    <ClCompile Include="Tema4-02.cpp" />
     <ClCompile Include="Tema4-8.cpp" />
     <ClCompile Include="Tema5-01.cpp" />
     <ClCompile Include="Tema5-02.cpp" />
     <ClCompile Include="Tema5-03.cpp" />
     <ClCompile Include="Tema5-04.cpp" />
     <ClCompile Include="Tema5-05.cpp" />
+    <ClCompile Include="Tema5-06.cpp" />
     <ClCompile Include="Tema5-10.cpp" />
     <ClCompile Include="Tema6-01.cpp" />
     <ClCompile Include="Tema6-02.cpp" />

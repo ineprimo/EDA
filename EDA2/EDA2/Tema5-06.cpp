@@ -11,48 +11,71 @@
 //
 //using namespace std;
 //
-//template<class T>
-//class queuePlus : public queue<T> {
+//template <class T>
+//class queuePlus : public queue<T>
+//{
 //	using Nodo = typename queue<T>::Nodo;
+//
 //public:
 //
 //	// La complejidad es lineal O(n) donde n es el numero de elementos de la cola
-//	void invertir() {
+//	void colarse(T pringao, queue<T>& colegas) {
+//		// si no esta pringao en la cola
+//		if (pringao >= this->ult->elem) return;
+//
+//		Nodo* nodPring = this->prim;
 //		Nodo* ant = nullptr;
-//		Nodo* act = queue<T>::prim;
-//		Nodo* sig = nullptr;
-//
-//		queue<T>::prim = queue<T>::ult;
-//		queue<T>::ult = act;
-//
-//		for (int i = 0; i < queue<T>::nelems; i++)
+//		// cogemos el nodo pringao
+//		while (nodPring->elem != pringao)
 //		{
-//			sig = act->sig;
-//			act->sig = ant;
-//			ant = act;
-//			act = sig;
+//			ant = nodPring;
+//			nodPring = nodPring->sig;
 //		}
+//		ant = nodPring;
+//		nodPring = nodPring->sig;
+//
+//		Nodo* colega = colegas.prim;
+//		int i = 0;
+//		while (colega != nullptr)
+//		{
+//			i++;
+//			colega = colega->sig;
+//		}
+//
+//		colegas.ult->sig = nodPring->sig;
+//		ant->sig = colegas.prim;
+//
+//		this->nelems += i;
 //	}
 //};
 //
 //// Resuelve un caso de prueba, leyendo de la entrada la
 //// configuración, y escribiendo la respuesta
 //bool resuelveCaso() {
-//	int n = 0;
+//	int n = 0, pringao = 0;
 //	std::cin >> n;
 //
 //	if (!std::cin)
 //		return false;
 //
-//	queuePlus<int> cola;
+//	queuePlus<int> cola, colegas;
 //
-//	while (n != 0)
+//	while (n != -1)
 //	{
 //		cola.push(n);
 //		std::cin >> n;
 //	}
 //
-//	cola.invertir();
+//	std::cin >> pringao;
+//
+//	std::cin >> n;
+//	while (n != -1)
+//	{
+//		cola.push(n);
+//		std::cin >> n;
+//	}
+//
+//	cola.colarse(pringao, colegas);
 //
 //	while (!cola.empty())
 //	{
@@ -72,8 +95,11 @@
 //	auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 //#endif
 //
-//	while (resuelveCaso())
-//		;
+//
+//	int numCasos;
+//	std::cin >> numCasos;
+//	for (int i = 0; i < numCasos; ++i)
+//		resuelveCaso();
 //
 //	// Para restablecer entrada. Comentar para acepta el reto
 //#ifndef DOMJUDGE // para dejar todo como estaba al principio
