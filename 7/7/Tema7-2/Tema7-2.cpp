@@ -43,7 +43,9 @@ void resolver(Diccionario& viejo, Diccionario& nuevo, map<int, vector<string>>& 
 
         // si coinciden es que no ha cambiado nada (*/2)
         if (itv->first == itn->first) {
-            changes[2].push_back(itv->first);
+
+            if(itv->second != itn->second)
+                changes[2].push_back(itv->first);
 
             itv++;
             itn++;
@@ -56,12 +58,24 @@ void resolver(Diccionario& viejo, Diccionario& nuevo, map<int, vector<string>>& 
                 itv++;
             }
             else {
-                changes[0].push_back(itv->first);
+                changes[0].push_back(itn->first);
 
                 itn++;
             }
 
         }
+    }
+
+    // 
+    while (itv != viejo.end()) {
+        changes[1].push_back(itv->first);
+
+        itv++;
+    }
+    while(itn != nuevo.end()) {
+        changes[0].push_back(itn->first);
+
+        itn++;
     }
 }
 
@@ -86,14 +100,15 @@ void resuelveCaso() {
         cout << "SIN CAMBIOS" << endl;
     else {
         for (auto t : changes) {
-            if (t.first == 0) cout << "+ ";
-            else if (t.first == 1) cout << "- ";
-            else if (t.first == 2) cout << "* ";
+            if (t.second.size() > 0 && t.first == 0) cout << "+ ";
+            else if (t.second.size() > 0 && t.first == 1) cout << "- ";
+            else if (t.second.size() > 0 && t.first == 2) cout << "* ";
 
             for (auto c : t.second) {
                 cout << c << " ";
             }
-            cout << endl;
+            if (t.second.size() > 0)
+                cout << endl;
         }
     }
     cout << "---" << endl;
