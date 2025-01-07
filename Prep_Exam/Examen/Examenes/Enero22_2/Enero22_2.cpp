@@ -4,82 +4,17 @@
 #include "bintree_eda.h"
 using namespace std;
 
-void sumaAscendientes(bintree<int> tree, int& sumaAnt, bool& primeraVez) 
-{
-
-
-
-}
-
-void sumaDescendientes(bintree<int> tree, int& sumaDes, bool& primeraVez)
-{
-	//Si no hay raiz
-	if (tree.empty()) {
-		return;
-	}
-	else 
-	{
-		if (primeraVez) {
-			primeraVez = false;
-		}
-		else 
-		{
-			sumaDes += tree.root();
-		}
-
-	}
-
-	sumaDescendientes(tree.left(), sumaDes, primeraVez);
-	sumaDescendientes(tree.right(), sumaDes, primeraVez);
-}
 
 // función que resuelve el problema
-void resolver(bintree<int> tree, int& singulares, int& sumaAnt, int& sumaDes, bool& primeraVez) {
-	//Si no hay raiz
-	if (tree.empty()) 
-	{
-		//sumaAnt = 0; 
-		return;
+int resolver(bintree<int> tree, int& singular, int ant) {
+
+	if (tree.empty()) return 0;
+	else {
+		int sumIzq = resolver(tree.left(), singular, ant + tree.root());
+		int sumDer = resolver(tree.right(), singular, ant + tree.root());
+		if (ant == (sumIzq + sumDer)) singular++;
+		return sumIzq + sumDer + tree.root();
 	}
-
-	//Si hay derecha e izquierda vacías
-	/*if (tree.left().empty() && tree.right().empty()) {
-
-		return;
-	}*/
-
-	sumaDescendientes(tree, sumaDes, primeraVez);
-
-	//sumaAscendientes(tree, sumaAnt, primeraVez);
-	// escribir sol
-	cout << "despues: " << sumaDes << ", antes: " << sumaAnt << endl;
-	
-	sumaDes = 0; 
-	primeraVez = true;
-	
-	resolver(tree.left(), singulares, sumaAnt, sumaDes, primeraVez);
-	//Si no hay raiz
-	if (tree.left().empty())
-	{
-		sumaAnt -= tree.root();
-
-	}
-	else sumaAnt += tree.root();
-	
-	sumaDes = 0;
-	primeraVez = true;
-
-	resolver(tree.right(), singulares, sumaAnt, sumaDes, primeraVez);
-	//Si no hay raiz
-	if (tree.right().empty())
-	{
-		sumaAnt -= tree.root();
-
-	}
-	else sumaAnt += tree.root();
-
-
-
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -91,13 +26,13 @@ void resuelveCaso()
 	tree = leerArbol(-1); // -1 es vacío
 
 	int singulares = 0;
-	//Sumatorios de los nodos anteriores y posteriores, para comparar luego
-	int sumaAnt = 0, sumaDes = 0;
-	bool primeraVez = true;
-	resolver(tree, singulares, sumaAnt, sumaDes, primeraVez);
+	//Sumatorios de los nodos anteriores
+	int sumaAnt = 0;
+
+	resolver(tree, singulares, sumaAnt);
 
 	// escribir sol
-	//cout << sumaDes << endl;
+	cout << singulares << endl;
 }
 
 int main()
@@ -111,8 +46,8 @@ int main()
 
 	int numCasos;
 	std::cin >> numCasos;
-	//for (int i = 0; i < numCasos; ++i) resuelveCaso();
-	resuelveCaso();
+	for (int i = 0; i < numCasos; ++i) resuelveCaso();
+
 	// Para restablecer entrada. Comentar para acepta el reto
 #ifndef DOMJUDGE // para dejar todo como estaba al principio
 	std::cin.rdbuf(cinbuf);
