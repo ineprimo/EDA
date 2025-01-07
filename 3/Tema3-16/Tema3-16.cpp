@@ -13,7 +13,7 @@ struct Cancion {
 };
 
 
-void updateCinta(vector<Cancion>& cinta, int i, int k, const vector<Cancion>& canciones, int& espacioCinta) {
+void updateCinta(vector<Cancion>& cinta, const int i, const int k, const vector<Cancion>& canciones, int& espacioCinta) {
     // la mete y la marca como usada
     cinta[k] = canciones[i];
 
@@ -22,22 +22,22 @@ void updateCinta(vector<Cancion>& cinta, int i, int k, const vector<Cancion>& ca
 }
 
 
-void desmarcarCinta(vector<Cancion> cinta, int i, int k, const vector<Cancion>& canciones, int& espacioCinta) {
+void desmarcarCinta(vector<Cancion> cinta, const int i, const int k, const vector<Cancion>& canciones, int& espacioCinta) {
 
     // la duracion actual se actualiza
     espacioCinta -= canciones[i].duracion;
 }
 
 
-void resolver(pair<vector<Cancion>, vector<Cancion>>& sol, pair<vector<Cancion>, vector<Cancion>>& mejorSol, const vector<Cancion>& canciones, int k, int duracion,
-    pair<int, int>& espacioCinta, pair<bool, bool> cintaUsada, vector<bool> cancionesUsadas, int& rizz, int& mejorRizz) {
-
-    //
+void resolver(pair<vector<Cancion>, vector<Cancion>>& sol, pair<vector<Cancion>, vector<Cancion>>& mejorSol, const vector<Cancion>& canciones, int k, const int duracion,
+    pair<int, int>& espacioCinta, vector<bool>& cancionesUsadas, int& rizz, int& mejorRizz) {
 
     for (int i = 0; i < canciones.size(); i++) {
 
         // si la cancion no ha sido usada
         if(!cancionesUsadas[i]) {
+
+            //
             bool first = espacioCinta.first + canciones[i].duracion <= duracion;
             bool second = espacioCinta.second + canciones[i].duracion <= duracion;
 
@@ -61,7 +61,7 @@ void resolver(pair<vector<Cancion>, vector<Cancion>>& sol, pair<vector<Cancion>,
             }
 
             // si es solucion
-            if (((cintaUsada.first && cintaUsada.second) || (!first && !second))) {
+            if ((!first && !second)) {
                 if (rizz > mejorRizz) {
                     mejorRizz = rizz;
                     mejorSol = sol;
@@ -71,7 +71,7 @@ void resolver(pair<vector<Cancion>, vector<Cancion>>& sol, pair<vector<Cancion>,
                 // poda
 
                 // backtracking
-                resolver(sol, mejorSol, canciones, k + 1, duracion, espacioCinta, cintaUsada, cancionesUsadas, rizz, mejorRizz);
+                resolver(sol, mejorSol, canciones, k + 1, duracion, espacioCinta, cancionesUsadas, rizz, mejorRizz);
 
             }
 
@@ -116,7 +116,6 @@ bool resuelveCaso() {
     // tupla solucion: 
     pair<vector<Cancion>, vector<Cancion>> sol(n, n);
     pair<vector<Cancion>, vector<Cancion>> mejorSol;
-    pair<bool, bool> cintaUsada(false, false); 
     vector<bool> cancionesUsadas(n);
 
 
@@ -124,7 +123,7 @@ bool resuelveCaso() {
     int mejorRizz = 0;
     pair<int, int> espacioCinta(0,0);
 
-    resolver(sol, mejorSol, canciones, 0, duracion, espacioCinta, cintaUsada, cancionesUsadas, rizz, mejorRizz);
+    resolver(sol, mejorSol, canciones, 0, duracion, espacioCinta, cancionesUsadas, rizz, mejorRizz);
 
     cout << mejorRizz << endl;
 
