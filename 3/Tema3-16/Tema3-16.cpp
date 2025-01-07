@@ -29,28 +29,28 @@ void desmarcarCinta(vector<Cancion> cinta, const int i, const int k, const vecto
 }
 
 
-void resolver(vector<vector<int>>& sol, vector<vector<int>>& mejorSol, const vector<Cancion>& canciones, int k, const int duracion,
-    vector<int>& espacioCinta, vector<bool>& cancionesUsadas, int cinta, int& rizz, int& mejorRizz) {
+void resolverCinta(vector<vector<int>>& sol, vector<vector<int>>& mejorSol, const vector<Cancion>& canciones, int k, const int duracion,
+    vector<int>& espacioCinta, vector<bool>& cancionesUsadas, int cinta, int& rizz, int& mejorRizz, vector<int>& mejorEspacioCinta, vector<bool>& mejorCancionesUsadas) {
 
     // i cinta
     // k cancion
     for (int i = 0; i < canciones.size(); i++) {
         if (k < canciones.size()) {
             // si la cancion no ha sido usada
-            if (!cancionesUsadas[k]) {
+            if (!cancionesUsadas[i]) {
 
                 // la mete y la marca como usada
-                sol[cinta][k] = canciones[k].puntos;
+                sol[cinta][k] = canciones[i].puntos;
 
                 // la duracion actual se actualiza
-                espacioCinta[cinta] += canciones[k].duracion;
+                espacioCinta[cinta] += canciones[i].duracion;
                 int dur = espacioCinta[cinta];
 
                 // la cancion se marca
-                cancionesUsadas[k] = true;
+                cancionesUsadas[i] = true;
 
                 // se aumenta la puntuacion
-                rizz += canciones[k].puntos;
+                rizz += canciones[i].puntos;
 
                 // si la cinta cara no esta llena
                 if (espacioCinta[cinta] <= duracion) {
@@ -59,6 +59,8 @@ void resolver(vector<vector<int>>& sol, vector<vector<int>>& mejorSol, const vec
                         if (rizz > mejorRizz) {
                             mejorRizz = rizz;
                             mejorSol = sol;
+                            mejorEspacioCinta = espacioCinta;
+                            mejorCancionesUsadas = cancionesUsadas;
                         }
                     }
                     // si esta en la primera cinta
@@ -66,7 +68,7 @@ void resolver(vector<vector<int>>& sol, vector<vector<int>>& mejorSol, const vec
                         // poda
 
                         // backtracking a la siguiente cancion (?) pero misma cinta
-                        resolver(sol, mejorSol, canciones, k + 1, duracion, espacioCinta, cancionesUsadas, cinta, rizz, mejorRizz);
+                        resolverCinta(sol, mejorSol, canciones, k + 1, duracion, espacioCinta, cancionesUsadas, cinta, rizz, mejorRizz, mejorEspacioCinta, mejorCancionesUsadas);
                     }
                 }
 
@@ -75,20 +77,38 @@ void resolver(vector<vector<int>>& sol, vector<vector<int>>& mejorSol, const vec
                 sol[cinta][k] = 0;
 
                 // la duracion actual se actualiza
-                espacioCinta[cinta] -= canciones[k].duracion;
+                espacioCinta[cinta] -= canciones[i].duracion;
 
                 // la cancion se marca
-                cancionesUsadas[k] = false;
+                cancionesUsadas[i] = false;
 
                 // se aumenta la puntuacion
-                rizz -= canciones[k].puntos;
+                rizz -= canciones[i].puntos;
             }
         }
     }
 
 }
 
+void resolver(vector<vector<int>>& sol, vector<vector<int>>& mejorSol, const vector<Cancion>& canciones, int n, int k, const int duracion,
+    vector<int>& espacioCinta, vector<bool>& cancionesUsadas, int cinta, int& rizz, int& mejorRizz) 
+{
+    vector<vector<int>> mejorSol1(2, vector<int>(n));
+    vector<vector<int>> mejorSol2(2, vector<int>(n));
 
+    vector<int> mejorEspacioCinta = espacioCinta;
+    vector<bool> mejorCancionesUsadas = cancionesUsadas;
+
+    int rizz2 = 0;
+    int mejorRizz2 = 0;
+
+    resolverCinta(sol, mejorSol1, canciones, 0, duracion, espacioCinta, cancionesUsadas, 0, rizz, mejorRizz, mejorEspacioCinta, mejorCancionesUsadas);
+    resolverCinta(sol, mejorSol2, canciones, 0, duracion, mejorEspacioCinta, mejorCancionesUsadas, 1, rizz2, mejorRizz2, mejorEspacioCinta, mejorCancionesUsadas);
+
+    sol[0] = mejorSol1[0];
+    sol[1] = mejorSol2[1];
+
+}
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
@@ -116,7 +136,7 @@ bool resuelveCaso() {
     int mejorRizz = 0;
     vector<int> espacioCinta(cinta);
 
-    resolver(sol, mejorSol, canciones, 0, duracion, espacioCinta, cancionesUsadas, 0, rizz, mejorRizz);
+    resolver(sol, mejorSol, canciones, n, 0, duracion, espacioCinta, cancionesUsadas, 0, rizz, mejorRizz);
     cout << mejorRizz << endl;
 
     // Salida
