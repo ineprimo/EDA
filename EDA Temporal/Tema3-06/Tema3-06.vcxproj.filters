@@ -15,13 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExamenFebrero21-Ej3.cpp">
+    <ClCompile Include="Tema3-06.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="datos.txt">
-      <Filter>Archivos de recursos</Filter>
-    </Text>
   </ItemGroup>
 </Project>
