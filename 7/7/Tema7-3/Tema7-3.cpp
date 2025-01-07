@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void resolver(string const& primerDeporte, map<string, int>& deportes, map<string, string>& estudiantes) {
+multimap<int, string, greater<int>> resolver(string const& primerDeporte, map<string, int>& deportes, map<string, string>& estudiantes) {
     string deporte, alumno;
     deporte = primerDeporte;
 
@@ -29,6 +29,14 @@ void resolver(string const& primerDeporte, map<string, int>& deportes, map<strin
         }
         deporte = alumno;
     }
+
+    // ordenacion
+    multimap<int, string, greater<int>> ordenado;
+    for (auto d : deportes) {
+        ordenado.insert({d.second, d.first});
+    }
+
+    return ordenado;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -42,10 +50,10 @@ bool resuelveCaso() {
     map<string, int> deportes;      // mapa con el recuento por deporte
     map<string, string> estudiantes;    // mapa con el recuento por alumnos
 
-    resolver(primerDeporte, deportes, estudiantes);
+    multimap<int, string, greater<int>> ordenado = resolver(primerDeporte, deportes, estudiantes);
 
-    for (auto d : deportes) {
-        cout << d.first << " " << d.second << endl;
+    for (auto d : ordenado) {
+        cout << d.second << " " << d.first << endl;
     }
         cout << "---\n";
     return true;
