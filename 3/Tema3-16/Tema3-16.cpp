@@ -13,7 +13,7 @@ struct Cancion {
 };
 
 
-void updateCinta(vector<Cancion> cinta, int i, int k, const vector<Cancion>& canciones, int& espacioCinta) {
+void updateCinta(vector<Cancion>& cinta, int i, int k, const vector<Cancion>& canciones, int& espacioCinta) {
     // la mete y la marca como usada
     cinta[k] = canciones[i];
 
@@ -42,7 +42,7 @@ void resolver(pair<vector<Cancion>, vector<Cancion>>& sol, pair<vector<Cancion>,
             bool second = espacioCinta.second + canciones[i].duracion <= duracion;
 
             // si la primera cara no esta llena
-            if ( first || second) {
+            if (first || second) {
 
                 if (first) {
                     // actualiza la primera cinta
@@ -58,29 +58,31 @@ void resolver(pair<vector<Cancion>, vector<Cancion>>& sol, pair<vector<Cancion>,
 
                 // se aumenta la puntuacion
                 rizz += canciones[i].puntos;
+            }
 
-                // si es solucion
-                if ((cintaUsada.first && cintaUsada.second)) {
-                    if (rizz > mejorRizz) {
-                        mejorRizz = rizz;
-                        mejorSol = sol;
-                    }
+            // si es solucion
+            if (((cintaUsada.first && cintaUsada.second) || (!first && !second))) {
+                if (rizz > mejorRizz) {
+                    mejorRizz = rizz;
+                    mejorSol = sol;
                 }
-                else {
-                    // poda
+            }
+            else {
+                // poda
 
-                    // backtracking
-                    resolver(sol, mejorSol, canciones, k + 1, duracion, espacioCinta, cintaUsada, cancionesUsadas, rizz, mejorRizz);
+                // backtracking
+                resolver(sol, mejorSol, canciones, k + 1, duracion, espacioCinta, cintaUsada, cancionesUsadas, rizz, mejorRizz);
 
-                }
+            }
 
+            if (first || second) {
                 // desmarca todo
-                if (first) {
-                    desmarcarCinta(sol.first, i, k, canciones, espacioCinta.first);
-                }
-                else if (second) {
-                    desmarcarCinta(sol.second, i, k, canciones, espacioCinta.second);
-                }
+                    if (first) {
+                        desmarcarCinta(sol.first, i, k, canciones, espacioCinta.first);
+                    }
+                    else if (second) {
+                        desmarcarCinta(sol.second, i, k, canciones, espacioCinta.second);
+                    }
 
                 // la cancion se marca
                 cancionesUsadas[i] = false;
@@ -89,9 +91,6 @@ void resolver(pair<vector<Cancion>, vector<Cancion>>& sol, pair<vector<Cancion>,
                 rizz -= canciones[i].puntos;
             }
         }
-
-        
-
 
     }
 
@@ -118,7 +117,7 @@ bool resuelveCaso() {
     pair<vector<Cancion>, vector<Cancion>> sol(n, n);
     pair<vector<Cancion>, vector<Cancion>> mejorSol;
     pair<bool, bool> cintaUsada(false, false); 
-    vector<bool> cancionesUsadas(false);
+    vector<bool> cancionesUsadas(n);
 
 
     int rizz = 0;
