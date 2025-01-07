@@ -77,7 +77,7 @@ list<char> adelantar(const list<char>& datos, int nElems, int pos, int lon, int 
 {
 	list<char> sol;
 	// Caso esta vacia no hace nada.
-	if (datos.empty() || kPos == datos.size() - 1 || kPos == 0 || lon == 0 || pos - kPos < 0)
+	if (datos.empty() || kPos == datos.size() - 1 || kPos == 0 || lon == 0 || pos - kPos < 0 || pos > nElems)
 	{
 		return datos;
 	}
@@ -108,25 +108,26 @@ list<char> adelantar(const list<char>& datos, int nElems, int pos, int lon, int 
 
 	bool segFin = false;
 	auto itAct = datos.begin();
-	for (int i = 0; i < nElems-1; i++)
+	for (int i = 0; i < nElems - 1; i++)
 	{
-		if ((*itAct) == (*itDest))
+		if ((itAct) == (itDest)) // Solo hace este y el siguiente caso
 		{
 			itAct = itPos;
 		}
-		if ((*itAct) == (*itLon))
+		if ((itAct) == (itLon))
 		{
 			sol.push_back((*itAct));
 			itAct = itDest;
 			segFin = true;
 		}
-		if ((*itAct) == (*itPos) && segFin)
+		if ((itAct) == (itPos) && segFin)
 		{
-			if ((pos + lon) <= nElems - 1)
+			if (i >= (pos + lon) - 1)
 			{
 				itAct = ++itLon;
 			}
 		}
+		//std::cout << (*itAct) << std::endl;
 		sol.push_back((*itAct));
 		++itAct;
 	}
