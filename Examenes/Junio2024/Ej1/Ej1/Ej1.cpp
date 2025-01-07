@@ -35,6 +35,7 @@ public:
 
 		for (int i = 0; i < this->size(); i++)
 		{
+			// Cambia si el elemento
 			if (act->elem > pivot)
 			{
 				if (act != ult) // No mueve al final el nodo si ya es el final.
