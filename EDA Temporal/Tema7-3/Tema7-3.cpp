@@ -13,8 +13,7 @@ void resolver(string const& primerDeporte)
 
     while (deporte != "_FIN_") 
     {
-
-            cin >> alumno;
+        cin >> alumno;
         while (!isupper(alumno[0]) && alumno != "_FIN_") {
             
             // mete alumno
