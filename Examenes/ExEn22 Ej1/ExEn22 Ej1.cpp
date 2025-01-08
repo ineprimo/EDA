@@ -12,7 +12,7 @@
 // Complejidad: O(n) siendo n el numero de elementos de la lista
 
 // n, pos, lon y k -> datos de entrada
-list<char> adelantar(int n, int pos, int lon, int k, list<char> datos)
+list<char> adelantar(int n, int pos, int lon, int k, list<char>& datos)
 {
 	list<char> sol;
 
@@ -21,7 +21,7 @@ list<char> adelantar(int n, int pos, int lon, int k, list<char> datos)
 	// - lo quieres mover el mismo num de posiciones que elementos tiene la lista / lon del segmento a mover = 0
 	// - pos mayor que la ultima pos de la lista
 	// - k == 0
-	if(datos.empty() || k == datos.size()-1 || pos >= n-1 || k == 0 || lon == 0 || pos - k < 0 || k == n)
+	if(datos.empty() || lon == 0 || pos == 0 || pos >= n || k == 0 || pos - k < 0)
 	{
 		return datos;
 	}
