@@ -11,6 +11,7 @@ Qué has conseguido hacer y qué no:
 #include <vector>
 #include <fstream>
 #include <iomanip>
+#include <climits>
 
 using namespace std;
 
@@ -83,7 +84,7 @@ public:
 		if (!lEspera[cod].empty())
 		{
 			int i = 0;
-			while (!lEspera[cod].empty() && i < cant)
+			while (!lEspera[cod].empty() && i <= cant)
 			{
 				clientesServidos.push_back(lEspera[cod].front());
 				lEspera[cod].pop();
@@ -178,7 +179,7 @@ public:
 
 	bool hay_esperando(Codigo const& cod) const
 	{
-		if (!exis.count(cod) || lEspera.count(cod) || (*lEspera.find(cod)).second.empty())
+		if (!exis.count(cod) || !lEspera.count(cod) || (*lEspera.find(cod)).second.empty())
 		{
 			return false;
 		}
