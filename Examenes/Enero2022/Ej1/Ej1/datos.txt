@@ -1,4 +1,4 @@
-9
+11
 7 5 2 3
 a b c d e f g
 7 5 4 1
@@ -17,3 +17,7 @@ h c e a x w l v d
 w e z e f j m s w
 9 10 0 5
 o z a c r o m q y
+5 5 1 1
+p w v a b
+1 1 1 1
+b

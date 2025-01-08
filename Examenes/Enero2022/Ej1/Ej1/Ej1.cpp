@@ -77,7 +77,7 @@ list<char> adelantar(const list<char>& datos, int nElems, int pos, int lon, int 
 {
 	list<char> sol;
 	// Caso esta vacia no hace nada.
-	if (datos.empty() || kPos == datos.size() - 1 || kPos == 0 || lon == 0 || pos - kPos < 0 || pos > nElems)
+	if (datos.empty() || kPos == datos.size() - 1 || kPos == 0 || lon == 0 || pos - kPos < 0 || pos >= nElems - 1 || kPos == nElems)
 	{
 		return datos;
 	}
@@ -110,11 +110,11 @@ list<char> adelantar(const list<char>& datos, int nElems, int pos, int lon, int 
 	auto itAct = datos.begin();
 	for (int i = 0; i < nElems - 1; i++)
 	{
-		if ((itAct) == (itDest)) // Solo hace este y el siguiente caso
+		if ((itAct) == (itDest) && !segFin) // Solo hace este y el siguiente caso
 		{
 			itAct = itPos;
 		}
-		if ((itAct) == (itLon))
+		if ((itAct) == (itLon) && !segFin)
 		{
 			sol.push_back((*itAct));
 			itAct = itDest;
@@ -122,7 +122,7 @@ list<char> adelantar(const list<char>& datos, int nElems, int pos, int lon, int 
 		}
 		if ((itAct) == (itPos) && segFin)
 		{
-			if (i >= (pos + lon) - 1)
+			if (i >= ((pos + lon) - 1))
 			{
 				itAct = ++itLon;
 			}

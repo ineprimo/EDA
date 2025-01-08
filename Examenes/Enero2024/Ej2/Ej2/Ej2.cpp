@@ -15,41 +15,45 @@ std::pair<bool, std::pair<int, int>> puntoCorte(const std::vector<int>& vAsc, co
 {
 	int elems = fin - ini;
 
-	// Casos base:
-	if (elems == 0) // Caso base vector vacio.
+	// caso base
+	if (elems == 1)
 	{
-		return { false, {0, 0} }; // No hace nada pero aqui se queda.
-	}
-	if (elems == 1) // Caso base vector 1 elemento.
-	{
-		if (vAsc[ini] == vDes[ini])
+		bool cortan = false;
+
+		if (vDes[ini] == vAsc[ini]) cortan = true;
+
+		// se cortan por la izq
+		if (vDes[0] < vAsc[0])
 		{
-			return { true, { ini, 0 } };
+			return { false, { -1, 0 } };
 		}
-		else if (vAsc[ini] > vDes[ini])
+
+		// se cortan por la der
+		if (vDes[vAsc.size() - 1] > vAsc[vAsc.size() - 1])
 		{
-			return { false, { ini - 1, ini } };
+			return { false, { vAsc.size() - 1, vAsc.size() } };
 		}
-		else if (vAsc[ini] < vDes[ini])
-		{
-			return { false,  { ini, ini + 1 } };
-		}
+
+		// si es false nos interesan los dos valores del pair indice si no solo el primero
+		return { cortan, {ini, fin} };
 	}
 
+	int mit = (ini + fin) / 2;
 
-	int mid = (ini + fin) / 2;
-
-	if (vAsc[mid] == vDes[mid])
+	// Si coinciden en la mitad
+	if (vDes[mit] == vAsc[mit])
 	{
-		return { true, {mid, 0} };
+		return { true, {mit, mit} };
 	}
-	if (vAsc[mid] < vDes[mid]) // Si el numero del ascendente es menor sabemos que el punto de corte estara a la derecha.
+	// Mirar izq
+	if (vDes[mit] < vAsc[mit])
 	{
-		puntoCorte(vAsc, vDes, mid, fin);
+		return puntoCorte(vAsc, vDes, ini, mit);
 	}
-	else if (vAsc[mid] > vDes[mid]) // Y viceversa.
+	// Mirar der
+	if (vDes[mit] > vAsc[mit])
 	{
-		puntoCorte(vAsc, vDes, ini, mid);
+		return puntoCorte(vAsc, vDes, mit, fin);
 	}
 }
 
