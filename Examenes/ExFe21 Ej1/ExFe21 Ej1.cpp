@@ -26,54 +26,41 @@ public:
 
 		Nodo* act = this->prim; // nodo para recorrer cola
 
-		int i = 0;
 		bool encontradoA = false;
+		bool encontradoB = false;
+
 		Nodo* nA = nullptr;
-		while(!encontradoA && i < this->size())
+		Nodo* nB = nullptr;
+
+		int i = 0;
+		while (!encontradoB && i < this->size())
 		{
-			if(act->elem == a)
+			// encuentras a
+			if (act->elem == a && !encontradoA)
 			{
 				encontradoA = true;
 				nA = act;
 			}
 
-			Nodo* sig = act->sig;
-			act = sig;
-			i++;
-		}
-
-		Nodo* despA = nullptr;
-		if (encontradoA) despA = nA->sig;
-
-		bool encontradoB = false;
-		Nodo* nB = nullptr;
-		Nodo* antB = nullptr; // te lo vas guardando por si acaso para cuando aparezca
-		while (!encontradoB && i < this->size())
-		{
-			if (act->elem == b)
+			// encuentras b
+			if (encontradoA && (act != this->ult) && act->sig->elem == b)
 			{
 				encontradoB = true;
-				nB = act;
+				nB = act->sig;
+
+				// se salta b
+				act->sig = nB->sig;
+
+				// se pone despues de a, apunta al siguiente del a
+				nB->sig = nA->sig;
+
+				// a apunta a b
+				nA->sig = nB;
 			}
-			else
-			{
-				antB = act; // lo guardas siempre mientras no hayas encontrado b
-			}
 
-			Nodo* sig = act->sig;
-			act = sig;
-			i++;
-		}
-
-		Nodo* despB = nullptr;
-		if(encontradoB) despB = nB->sig;
-
-		// reordenar nodos
-		if(encontradoA && encontradoB)
-		{
-			nA->sig = nB;
-			nB->sig = despA;
-			antB->sig = despB;
+			// avanza
+			++i;
+			act = act->sig;
 		}
 	}
 };
