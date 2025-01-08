@@ -13,7 +13,7 @@ using consentimientos = std::unordered_map<int, artistaCon>;
 // Tupla solucion: [Gi, Gi+1, Gi+2, ... , G(i+n)-1]
 // siendo n el numero de artistas del concierto y siendo i la posicion en la que toca cada grupo(G)
 
-bool esValida(vector<int>& soluc, int k, vector<bool>& vistos, consentimientos con)
+bool esValida(vector<int>& soluc, int k, const vector<bool>& vistos, consentimientos& con)
 {
     // es valida si el grupo no ha salido todavia y si encaja con los consentimientos de ese grupo
     return ((!vistos[soluc[k]]) && (k == 0 || (con[soluc[k]][soluc[k - 1]] == 1)));
@@ -31,7 +31,7 @@ bool esValida(vector<int>& soluc, int k, vector<bool>& vistos, consentimientos c
 // - vistos    -> almacena si el concierto en la pos i ya ha sido visto
 
 void concierto(vector<int>& soluc, int k, int n, int ganancias, int& maxGanancias, 
-    recaudaciones rec, consentimientos con, vector<bool>& vistos, vector<int> optimistaPorPos)
+    recaudaciones& rec, consentimientos& con, vector<bool>& vistos, vector<int> optimistaPorPos)
 {
     // 1) for de candidatos     -> 
     // --- 2) guardar el indice del for que se va probando en el vect solucion
@@ -59,7 +59,7 @@ void concierto(vector<int>& soluc, int k, int n, int ganancias, int& maxGanancia
             }
             else
             {
-                if(ganancias + optimistaPorPos[k] > maxGanancias)
+                if(ganancias + optimistaPorPos[k+1] > maxGanancias)
                 {
 					concierto(soluc, k+1, n, ganancias, maxGanancias, rec, con, vistos, optimistaPorPos);
                 }
@@ -112,9 +112,9 @@ void resuelveCaso()
     {
         for(int j = 0; j < n; j++)
         {
-	        if(con[i][j] > maxGananciasPos[i])
+	        if(rec[j][i] > maxGananciasPos[i])
 	        {
-                maxGananciasPos[i] = rec[i][j];
+                maxGananciasPos[i] = rec[j][i];
 	        }
         }
     }
@@ -125,7 +125,8 @@ void resuelveCaso()
 
     for(int i = n-2; i >= 0; i--)
     {
-        optimistaPorPos[i] += optimistaPorPos[i + 1];
+        optimistaPorPos[i] += maxGananciasPos[i + 1];
+        optimistaPorPos[i] += maxGananciasPos[i];
     }
 
     vector<int> soluc(n);

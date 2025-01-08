@@ -4,19 +4,13 @@
 #include <vector>
 using namespace std;
 
-using artistaRec = std::vector<int>;
-using artistaCon = std::vector<int>;
-
-using recaudaciones = std::unordered_map<int, artistaRec>;
-using consentimientos = std::unordered_map<int, artistaCon>;
-
 // Tupla solucion: [Gi, Gi+1, Gi+2, ... , G(i+n)-1]
 // siendo n el numero de artistas del concierto y siendo i la posicion en la que toca cada grupo(G)
 
-bool esValida(vector<int>& soluc, int k, vector<bool>& vistos, consentimientos con)
+bool esValida(vector<int>& soluc, int k, const vector<bool>& elegidos, const vector<vector<bool>>& consentimientos)
 {
     // es valida si el grupo no ha salido todavia y si encaja con los consentimientos de ese grupo
-    return ((!vistos[soluc[k]]) && (k == 0 || (con[soluc[k]][soluc[k - 1]] == 1)));
+    return ((!elegidos[soluc[k]]) && (k == 0 || (consentimientos[soluc[k]][soluc[k - 1]])));
 }
 
 // --- paramatros:
@@ -30,8 +24,8 @@ bool esValida(vector<int>& soluc, int k, vector<bool>& vistos, consentimientos c
 // - ganancias -> ganancias que vas aumulando en una rama
 // - vistos    -> almacena si el concierto en la pos i ya ha sido visto
 
-void concierto(vector<int>& soluc, int k, int n, int ganancias, int& maxGanancias,
-    recaudaciones rec, consentimientos con, vector<bool>& vistos, vector<int> optimistaPorPos)
+void concierto(vector<int>& soluc, int k, int n, int ingresos, int& mejoresIngresos, vector<bool>& elegidos, 
+    const vector<vector<int>>& beneficios, const vector<vector<bool>>& consentimientos, const vector<int>& mejoresBeneficios)
 {
     // 1) for de candidatos     -> 
     // --- 2) guardar el indice del for que se va probando en el vect solucion
@@ -42,32 +36,32 @@ void concierto(vector<int>& soluc, int k, int n, int ganancias, int& maxGanancia
     // --------- 7) if poda     ->
     // ------------ 8) llamada recursiva k+1
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; ++i)
     {
         soluc[k] = i;
 
-        if (esValida(soluc, k, vistos, con))
+        if (esValida(soluc, k, elegidos, consentimientos))
         {
             // marcamos
-            ganancias += rec[i][k];
-            vistos[i] = true;
+            ingresos += beneficios[i][k];
+            elegidos[i] = true;
 
             // comprobar final del arbol
             if (k == n - 1)
             {
-                if (ganancias > maxGanancias) maxGanancias = ganancias;
+                if (ingresos > mejoresIngresos) mejoresIngresos = ingresos;
             }
             else
             {
-                if (ganancias + optimistaPorPos[k] > maxGanancias)
+                if (ingresos + mejoresBeneficios[k+1] > mejoresIngresos)
                 {
-                    concierto(soluc, k + 1, n, ganancias, maxGanancias, rec, con, vistos, optimistaPorPos);
+                    concierto(soluc, k + 1, n, ingresos, mejoresIngresos, elegidos, beneficios, consentimientos, mejoresBeneficios);
                 }
             }
 
             // desmarcamos
-            ganancias -= rec[i][k];
-            vistos[i] = false;
+            ingresos -= beneficios[i][k];
+            elegidos[i] = false;
         }
     }
 }
@@ -79,63 +73,60 @@ void resuelveCaso()
 	int n = 0;
 	cin >> n;
 
-    vector<vector<int>> beneficios{ n, vector<int>(n) };
-    vector<vector<bool>> consentimientos{ n, vector<bool>(n) };
- 
-    artistaCon aCon(n);
-
-    recaudaciones rec;
-    consentimientos con;
+    vector<vector<int>> beneficios(n, vector<int>(n) );
+    vector<vector<bool>> consentimientos(n, vector<bool>(n));
 
     for (int i = 0; i < n; i++)
     {
-        artistaRec aRec(n);
         for (int j = 0; j < n; j++)
         {
-            std::cin >> aRec[j];
+            std::cin >> beneficios[i][j];
         }
-
-        rec.insert({ i, aRec });
     }
     for (int i = 0; i < n; i++)
     {
-        artistaCon aCon(n);
         for (int j = 0; j < n; j++)
         {
-            std::cin >> aCon[j];
+            int b;
+            std::cin >> b;
+            consentimientos[i][j] = b;
         }
-
-        con.insert({ i, aCon });
     }
 
-    std::vector<int> maxGananciasPos(n);
+    // poda calculada desde fuera
+    std::vector<int> maxBenefs(n);
 
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
         {
-            if (con[i][j] > maxGananciasPos[i])
+            if (beneficios[j][i] > maxBenefs[i])
             {
-                maxGananciasPos[i] = rec[i][j];
+                maxBenefs[i] = beneficios[j][i];
             }
         }
     }
 
-    std::vector<int> optimistaPorPos(n);
+    std::vector<int> mejoresBeneficiosDesde(n);
 
-    optimistaPorPos[n - 1] = maxGananciasPos[n - 1];
+    mejoresBeneficiosDesde[n - 1] = maxBenefs[n - 1];
+
 
     for (int i = n - 2; i >= 0; i--)
     {
-        optimistaPorPos[i] += optimistaPorPos[i + 1];
+        mejoresBeneficiosDesde[i] += maxBenefs[i + 1];
+        mejoresBeneficiosDesde[i] += maxBenefs[i];
     }
 
     vector<int> soluc(n);
-    vector<bool> vistos(n);
-    int maxGanancias = -1;
-    concierto(soluc, 0, n, 0, maxGanancias, rec, con, vistos, optimistaPorPos);
-    if (maxGanancias == -1) std::cout << "NEGOCIA CON LOS ARTISTAS" << std::endl;
-    else std::cout << maxGanancias << std::endl;
+    int k = 0;
+    int ingresos = 0;
+    int mejoresIngresos = -1;
+    vector<bool> elegidos(n);
+    concierto(soluc, k, n, ingresos, mejoresIngresos, elegidos, beneficios, consentimientos, mejoresBeneficiosDesde);
+
+    if (mejoresIngresos == -1) std::cout << "NEGOCIA CON LOS ARTISTAS" << std::endl;
+    else std::cout << mejoresIngresos << std::endl;
 }
 
 //#define DOMJUDGE
