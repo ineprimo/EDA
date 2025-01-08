@@ -12,76 +12,40 @@
 // Complejidad: O(n) siendo n el numero de elementos de la lista
 
 // n, pos, lon y k -> datos de entrada
-list<char> adelantar(int n, int pos, int lon, int k, list<char>& datos)
+void adelantar(int n, int pos, int lon, int k, list<char>& datos)
 {
-	list<char> sol;
-
 	// no es valida si:
 	// - lista vacia
 	// - lo quieres mover el mismo num de posiciones que elementos tiene la lista / lon del segmento a mover = 0
 	// - pos mayor que la ultima pos de la lista
 	// - k == 0
-	if(datos.empty() || lon == 0 || pos == 0 || pos >= n || k == 0 || pos - k < 0)
+	if (datos.empty() || lon == 0 || pos == 0 || pos >= n || k == 0 || pos - k < 0) {}
+	else
 	{
-		return datos;
+		// si el segmento se sale de la lista
+		if (pos + lon > n)
+		{
+			// se tomara el segmento de los ultimos n − pos elementos
+			lon = n - pos;
+		}
+
+		const int dest = pos - k;
+
+		// se coloca el itDest apuntando a dest
+		auto itDest = datos.begin();
+		for (int i = 0; i < dest; ++i) ++itDest;
+
+		// se coloca el itPos apuntando a pos
+		auto itPos = datos.begin();
+		for (int i = 0; i < pos; ++i) ++itPos;
+
+		// mover los elementos haciendo insert+erase usando itDest y itPos
+		for (int i = 0; i < lon; ++i)
+		{
+			datos.insert(itDest, *itPos);
+			itPos = datos.erase(itPos);
+		}
 	}
-
-	// si el segmento se sale de la lista
-	if (pos + lon > n) 
-	{
-		// se tomara el segmento de los ultimos n − pos elementos
-		lon = n - pos;
-	}
-
-	const int dest = pos - k;
-
-	auto itDest = datos.begin();
-	auto itPos = datos.begin();
-	auto itLon = datos.begin();
-
-	for(int i = 0; i < pos + lon - 1; i++)
-	{
-		if(i < dest)
-		{
-			++itDest;
-		}
-		if(i < pos)
-		{
-			++itPos;
-		}
-
-		++itLon;
-	}
-
-	bool segFin = false;
-	auto itAct = datos.begin();
-	for(int i = 0; i < n-1; i++)
-	{
-		if ((itAct == itDest) && !segFin) 
-		{
-			itAct = itPos;
-		}
-
-		if ((itAct == itLon) && !segFin) 
-		{
-			sol.push_back(*itAct);
-			itAct = itDest;
-			segFin = true;
-		}
-
-		if((itAct == itPos) && segFin)
-		{
-			if (i >= (pos + lon) - 1)
-			{
-				itAct = ++itLon;
-			}
-		}
-
-		sol.push_back(*itAct);
-		++itAct;
-	}
-
-	return sol;
 }
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuracion, y escribiendo la respuesta.
@@ -103,10 +67,10 @@ void resuelveCaso()
 	}
 
 	// resolver problema
-	list<char> sol = adelantar(n, pos, lon, k, datos);
+	adelantar(n, pos, lon, k, datos);
 
 	// escribir salida
-	for(auto e : sol)
+	for(auto e : datos)
 	{
 		std::cout << e << " ";
 	}
