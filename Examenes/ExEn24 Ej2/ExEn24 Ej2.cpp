@@ -17,18 +17,20 @@ std::pair<bool, std::pair<int,int>> cruce(const std::vector<int>& ascendente, co
 
         if (descendente[ini] == ascendente[ini]) cortan = true;
 
+        // se cortan por la izq
+        if (descendente[0] < ascendente[0])
+        {
+            return { false, { -1, 0 } };
+        }
+
+        // se cortan por la der
+        if (descendente[ascendente.size() - 1] > ascendente[ascendente.size() - 1])
+        {
+            return { false, { ascendente.size() - 1, ascendente.size() } };
+        }
+
         // si es false nos interesan los dos valores del pair indice si no solo el primero
         return { cortan, {ini, fin} };
-    }
-    // se cortan por la izq
-    if(descendente[0] < ascendente[0])
-    {
-        return { false, { -1, 0 } };
-    }
-    // se cortan por la der
-    if(descendente[ascendente.size()-1] > ascendente[ascendente.size()-1])
-    {
-        return { false, { ascendente.size()-1, ascendente.size() } };
     }
 
     int mit = (ini + fin) / 2;
