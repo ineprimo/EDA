@@ -21,7 +21,7 @@ list<char> adelantar(int n, int pos, int lon, int k, list<char> datos)
 	// - lo quieres mover el mismo num de posiciones que elementos tiene la lista / lon del segmento a mover = 0
 	// - pos mayor que la ultima pos de la lista
 	// - k == 0
-	if(datos.empty() || k == datos.size()-1 || pos > datos.size()-1 || k == 0 || lon == 0 || pos - k < 0 )
+	if(datos.empty() || k == datos.size()-1 || pos >= n-1 || k == 0 || lon == 0 || pos - k < 0 || k == n)
 	{
 		return datos;
 	}
@@ -57,24 +57,23 @@ list<char> adelantar(int n, int pos, int lon, int k, list<char> datos)
 	auto itAct = datos.begin();
 	for(int i = 0; i < n-1; i++)
 	{
-		if (*itAct == *itDest && !segFin) 
+		if ((itAct == itDest) && !segFin) 
 		{
 			itAct = itPos;
 		}
 
-		if (*itAct == *itLon && !segFin) 
+		if ((itAct == itLon) && !segFin) 
 		{
 			sol.push_back(*itAct);
 			itAct = itDest;
 			segFin = true;
 		}
 
-		if(*itAct == *itPos && segFin)
+		if((itAct == itPos) && segFin)
 		{
 			if (i >= (pos + lon) - 1)
 			{
 				itAct = ++itLon;
-
 			}
 		}
 
