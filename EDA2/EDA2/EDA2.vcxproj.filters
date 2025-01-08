@@ -228,6 +228,12 @@
     <ClCompile Include="ExamenEneroEj-.cpp">
       <Filter>Archivos de origen\Examen</Filter>
     </ClCompile>
+    <ClCompile Include="ExamenEnero22Ej-2.cpp">
+      <Filter>Archivos de origen\Examen</Filter>
+    </ClCompile>
+    <ClCompile Include="ExamenEnero23Ej-2.cpp">
+      <Filter>Archivos de origen\Examen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Set.h">
