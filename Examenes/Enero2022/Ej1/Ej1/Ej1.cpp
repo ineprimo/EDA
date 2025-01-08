@@ -8,6 +8,8 @@
 #include "list_eda.h"
 
 
+using listIt = list<char>::iterator;
+
 /*// Clase extendida con operacion interna duplicar que reaprovecha nodos existentes
 template <class T>
 class list_eda_plus : public list<T>
@@ -77,7 +79,7 @@ list<char> adelantar(const list<char>& datos, int nElems, int pos, int lon, int 
 {
 	list<char> sol;
 	// Caso esta vacia no hace nada.
-	if (datos.empty() || kPos == datos.size() - 1 || kPos == 0 || lon == 0 || pos - kPos < 0 || pos >= nElems - 1 || kPos == nElems)
+	if (datos.empty() || lon == 0 || pos == 0 || pos >= nElems || kPos == 0 || pos - kPos < 0)
 	{
 		return datos;
 	}
@@ -127,13 +129,11 @@ list<char> adelantar(const list<char>& datos, int nElems, int pos, int lon, int 
 				itAct = ++itLon;
 			}
 		}
-		//std::cout << (*itAct) << std::endl;
 		sol.push_back((*itAct));
 		++itAct;
 	}
 	return sol;
 }
-
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuracion, y escribiendo la respuesta.

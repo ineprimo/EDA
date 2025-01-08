@@ -33,63 +33,35 @@ public:
 		}
 
 		Nodo* act = this->prim; // Hacemos un nodo para recorrer la lista.
-		Nodo* ant = nullptr; // Nodo para tener referencia al anterior al actual.
 
 		Nodo* nA = nullptr; // Nodo donde esta A.
 		Nodo* nB = nullptr; // Nodo donde esta B.
 
-		// Buscamos el A.
-		int i = 0;
 		bool encontradoA = false;
-		while (!encontradoA && i < this->nelems)
+		bool encontradoB = false;
+
+		int i = 0;
+		while (!encontradoB && i < this->nelems)
 		{
-			if (act->elem == a)
+			// Para encontrar A.
+			if (act->elem == a && !encontradoA)
 			{
 				encontradoA = true;
 				nA = act;
 			}
-			else
+			// Para encontrar B. Solo si se ha encotrado A, no se ha llegado al ultimo elemento y el siguiente al actual es el que buscamos. Nos quedamos antes del que buscamos.
+			if (encontradoA && act != this->ult && act->sig->elem == b)
 			{
-				Nodo* sig = act->sig;
-				act = sig;
-				i++;
-			}
-		}
-		// Buscamos al B.
-		bool encontradoB = false;
-		while (!encontradoB && i < this->nelems)
-		{
-			if (act->elem == b)
-			{
+				// Reordenar los nodos. (Para caso 1)
+				nB = act->sig; // nB = 3. // act = 1
+				act->sig = nB->sig; // 2->4
+				nB->sig = nA->sig; // 3->2
+				nA->sig = nB; // 1->3
 				encontradoB = true;
-				nB = act;
 			}
-			else
-			{
-				Nodo* sig = act->sig;
-				ant = act; // Nos guardamos el anterior por si acaso.
-				act = sig;
-				i++;
-			}
+			++i;
+			act = act->sig;
 		}
-
-		if (encontradoA && i >= this->nelems)
-		{
-			return;
-		}
-
-		// Nuevos nodos auxiliares para mover las cosas.
-		Nodo* nASig = nA->sig; // El siguiente al A.
-		Nodo* nBSig = (nB->sig == nullptr) ? nBSig = nullptr : nBSig = nB->sig; // El siguiente al B.
-		Nodo* nBAnt = ant; // El anterior al B.
-
-		// Reordenar nodos.
-		nA->sig = nB;
-		nB->sig = nASig;
-		nBAnt->sig = nBSig;
-
-		// Por si acaso hay que cambiar el ultimo.
-		this->ult = (nB->sig == nullptr) ? this->ult = nBAnt : this->ult = nBSig;
 	}
 };
 
