@@ -55,11 +55,11 @@ public:
 bool resuelveCaso() {
     // leer los datos de la entrada
     string comando;
+    cin >> comando;
 
     if (!std::cin)
         return false;
 
-    cin >> comando;
     carnet_puntos carnetsPuntos;
 
     while (comando != "FIN") {

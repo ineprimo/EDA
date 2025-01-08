@@ -10,10 +10,41 @@ ostream& operator<<(ostream& out, const vector<T>& v) {
     return out;
 }
 
+bool esSolucion(vector<int>& sol, int n, int k) {
+    return k == n - 1;
+}
+
+bool esValido(vector<int>& sol, int n, int k, int t, int c, vector<int>& candidatosUsados) {
+    if (candidatosUsados[c] > t) return false;
+    
+    if (k % 2 != 0 && sol[k] == sol[k-1]) return false;
+
+    return true;
+}
 
 // función que resuelve el problema
-void resolver(vector<int>& sol, int n, int k, const vector<vector<int>> preferencias, const vector<int> candidatos) {
-    
+//  n --> nº tareas  // k --> ind  // t --> tareasMaximas/Alumno
+void resolver(vector<int>& sol, int n, int k, int t, int& comboActual,
+    int& comboMejor, const vector<vector<int>> preferencias, const vector<int> candidatos, vector<int>& candidatosUsados) {
+
+    for (int c : candidatos) {
+        sol.push_back(c);
+        comboActual += preferencias[c][k];
+        candidatosUsados[c]++;
+
+        if (esValido(sol, n, k, t, c, candidatosUsados)) {
+            if (esSolucion(sol, n, k)) {
+                comboMejor = max(comboActual, comboMejor);
+            }
+            else if (k < n - 1) {
+                resolver(sol, n, k + 1, t, comboActual, comboMejor, preferencias, candidatos, candidatosUsados);
+            }
+        }
+
+        comboActual -= preferencias[c][k];
+        candidatosUsados[c]--;
+        sol.pop_back();
+    }
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -31,8 +62,16 @@ bool resuelveCaso() {
         }
 
     vector<int> sol;
-    resolver(sol);
+    vector<int> candidatos(a);
+    for (int i = 0; i < a; ++i) candidatos[i] = i;
+
+    int comboActual = 0;
+    int comboMejor = 0;
+    vector<int> candidatosUsados(a, 0);
+
+    resolver(sol, n, 0, t, comboActual, comboMejor, preferencias, candidatos, candidatosUsados);
     // Imprimir solucion
+    cout << comboMejor << endl;
     return true;
 }
 
