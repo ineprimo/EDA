@@ -1,0 +1,23 @@
+11
+7 5 2 3
+a b c d e f g
+7 5 4 1
+x y z p r s t
+7 2 4 2
+x y z p r s t
+7 2 2 3
+a b c d e f g
+9 8 1 6
+z u n d i m a n i
+6 4 1 4
+c i p e p j
+9 6 0 2 
+h c e a x w l v d
+9 7 3 2
+w e z e f j m s w
+9 10 0 5
+o z a c r o m q y
+5 5 1 1
+p w v a b
+1 1 1 1
+b
