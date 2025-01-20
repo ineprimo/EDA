@@ -129,7 +129,11 @@
   <ItemGroup>
     <ClCompile Include="ExamenEnero22Ej-2.cpp" />
     <ClCompile Include="ExamenEnero23Ej-2.cpp" />
-    <ClCompile Include="ExamenEneroEj-.cpp" />
+    <ClCompile Include="ExamenEnero24-Ej2.cpp" />
+    <ClCompile Include="ExamenEnero22-Ej1.cpp" />
+    <ClCompile Include="ExamenFebrero21-Ej1.cpp" />
+    <ClCompile Include="ExamenFebrero21-Ej3.cpp" />
+    <ClCompile Include="ExamenJunio22-Ej3.cpp" />
     <ClCompile Include="Tema2-05.cpp" />
     <ClCompile Include="Tema0-1.cpp" />
     <ClCompile Include="Tema0-2.cpp" />
