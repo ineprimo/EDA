@@ -6,52 +6,43 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-#include <cmath>
-
 using namespace std;
 
-int numComplementario(int datos, int unidad, bool& ult, int& cum) {
-    int digito = datos % 10;
-    if (digito == 9) ++cum;
-    else cum = 0;
-
-    if (datos < 10) {
-        if (datos == 9) ult = true;
-        return (9 - datos) * unidad;
+// El algoritmo tiene una complejidad O(log(n))
+int resolverRec(vector<int>& vec1, vector<int>& vec2, int ini, int fin) {
+    if (ini == fin) {
+        return vec1[ini];
     }
 
-    int complementario = 9 - digito;
+    int mitad = (ini + fin) / 2;
 
-    return numComplementario(datos / 10, unidad * 10, ult, cum) + complementario * unidad;
+    if (vec1[mitad] == vec2[mitad]) return resolverRec(vec1, vec2, mitad + 1, fin);
+    else return resolverRec(vec1, vec2, ini, mitad);
 }
 
-int numInverso(int datos, int inverso, bool ult, int cum) {
-    if (datos == 0) {
-        if (ult) inverso = inverso * std::pow(10, cum);
-        return inverso;
-    }
-
-    int digito = datos % 10;
-
-    return numInverso(datos / 10, inverso * 10 + digito, ult, cum);
-}
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
-    int datos;
-    cin >> datos;
 
-    bool ultNum = false;
-    int acumFinal = 0;
+    int n, m;
 
-    int complemento = numComplementario(datos, 1, ultNum, acumFinal);
+    cin >> n;
+    m = n - 1;
+    vector<int> vector1(n);
+    vector<int> vector2(m);
 
-    int inverso = numInverso(complemento, 0, ultNum, acumFinal);
-    // escribir sol
+    for (int i = 0; i < n; ++i) {
+        cin >> vector1[i];
+    }
+    for (int i = 0; i < m; ++i) {
+        cin >> vector2[i];
+    }
 
-    cout << complemento << " " << inverso << endl;
+    cout << resolverRec(vector1, vector2, 0, n - 1) << endl;
+
+
 }
 
 int main() {

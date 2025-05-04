@@ -8,39 +8,36 @@
 #include <vector>
 using namespace std;
 
-// El algoritmo tiene una complejidad O(log(n))
-int resolverRec(vector<int>& vec1, vector<int>& vec2, int ini, int fin) {
-    if (ini == fin) {
-        return vec1[ini];
-    }
+char resolverRec(vector<char>& presos, int ini, int fin, char inicioPresos){
+    if (ini == fin) return inicioPresos + ini;
 
     int mitad = (ini + fin) / 2;
 
-    if (vec1[mitad] == vec2[mitad]) return resolverRec(vec1, vec2, mitad + 1, fin);
-    else return resolverRec(vec1, vec2, ini, mitad);
+    if (presos[mitad] == inicioPresos + mitad) return resolverRec(presos, mitad + 1, fin, inicioPresos);
+    else return resolverRec(presos, ini, mitad, inicioPresos);
 }
 
+// función que resuelve el problema
+char resolver(vector<char>& sol, char ini) {
+    return resolverRec(sol, 0, sol.size() - 1, ini);
+}
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
 
-    int n, m;
+    char ini, fin;
+    cin >> ini >> fin;
 
-    cin >> n;
-    m = n - 1;
-    vector<int> vector1(n);
-    vector<int> vector2(m);
+    int n = fin - ini;
+    vector<char> presos(n);
 
     for (int i = 0; i < n; ++i) {
-        cin >> vector1[i];
-    }
-    for (int i = 0; i < m; ++i) {
-        cin >> vector2[i];
+        cin >> presos[i];
     }
 
-    cout << resolverRec(vector1, vector2, 0, n) << endl;
+    cout << resolver(presos, ini) << endl;
 
 
 }

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7c334822-ed13-4c70-932a-e7ec28b4dd34}</ProjectGuid>
-    <RootNamespace>Tema23</RootNamespace>
+    <ProjectGuid>{caa8d6ef-f52a-4d73-9d77-1820f0916309}</ProjectGuid>
+    <RootNamespace>MiBiblioteca</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,10 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Tema2-3.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="datos.txt" />
+    <ClCompile Include="MiBiblioteca.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
