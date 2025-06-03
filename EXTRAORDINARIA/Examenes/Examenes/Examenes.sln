@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 TADs", "01 TADs", "{B337
 		..\..\..\TADs\vector_eda.h = ..\..\..\TADs\vector_eda.h
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExEn24 Ej3", "ExEn24 Ej3\ExEn24 Ej3.vcxproj", "{C81572C9-17EE-498C-B1BC-500EEE58DBEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -58,6 +60,14 @@ Global
 		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Release|x64.Build.0 = Release|x64
 		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Release|x86.ActiveCfg = Release|Win32
 		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Release|x86.Build.0 = Release|Win32
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Debug|x64.ActiveCfg = Debug|x64
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Debug|x64.Build.0 = Debug|x64
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Debug|x86.ActiveCfg = Debug|Win32
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Debug|x86.Build.0 = Debug|Win32
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Release|x64.ActiveCfg = Release|x64
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Release|x64.Build.0 = Release|x64
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Release|x86.ActiveCfg = Release|Win32
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +75,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3} = {D4DDC237-0376-4871-8014-2FD6C118E926}
 		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C} = {D4DDC237-0376-4871-8014-2FD6C118E926}
+		{C81572C9-17EE-498C-B1BC-500EEE58DBEB} = {D4DDC237-0376-4871-8014-2FD6C118E926}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D80A4EF-86E1-43B9-9510-68A378343CBA}
