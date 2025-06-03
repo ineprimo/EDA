@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="ExEne24 Ej1.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bintree_eda.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
