@@ -1,11 +1,9 @@
 // Nieves Alonso Gilsanz
 // EDA-GDV03
 
-
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-
 
 // función que resuelve el problema
 TipoSolucion resolver(TipoDatos datos) {

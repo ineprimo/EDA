@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExEne24 Ej2", "..\ExEne24 Ej2\ExEne24 Ej2.vcxproj", "{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExamenEnero24", "ExamenEnero24", "{D4DDC237-0376-4871-8014-2FD6C118E926}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExEne24 Ej1", "..\ExEne24 Ej1\ExEne24 Ej1.vcxproj", "{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Plantillas", "00 Plantillas", "{699844C4-1A83-4003-A50F-32153E3F940A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\plantillas\tema 2\PlantillaBienSituado.cpp = ..\..\..\plantillas\tema 2\PlantillaBienSituado.cpp
+		..\..\..\plantillas\tema 2\PlantillaCaucasicos.cpp = ..\..\..\plantillas\tema 2\PlantillaCaucasicos.cpp
+		..\..\..\plantillas\tema 2\PlantillaCurvaConcava.cpp = ..\..\..\plantillas\tema 2\PlantillaCurvaConcava.cpp
+		..\..\..\plantillas\tema 2\PlantillaElemPerdido.cpp = ..\..\..\plantillas\tema 2\PlantillaElemPerdido.cpp
+		..\..\..\plantillas\generales\PlantillaJuezCentinela.cpp = ..\..\..\plantillas\generales\PlantillaJuezCentinela.cpp
+		..\..\..\plantillas\generales\PlantillaJuezNumeroCasos.cpp = ..\..\..\plantillas\generales\PlantillaJuezNumeroCasos.cpp
+		..\..\..\plantillas\tema 2\PlantillaParcialmenteOrdenado.cpp = ..\..\..\plantillas\tema 2\PlantillaParcialmenteOrdenado.cpp
+		..\..\..\plantillas\tema 2\PlantillaSoloUnImpar.cpp = ..\..\..\plantillas\tema 2\PlantillaSoloUnImpar.cpp
+		..\..\..\plantillas\tema 2\T2PlantillaFugaPrision.cpp = ..\..\..\plantillas\tema 2\T2PlantillaFugaPrision.cpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 TADs", "01 TADs", "{B337860A-DA68-45FA-A28E-8D0CA4F7123A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\TADs\bintree_eda.h = ..\..\..\TADs\bintree_eda.h
+		..\..\..\TADs\deque_eda.h = ..\..\..\TADs\deque_eda.h
+		..\..\..\TADs\LinkedListStack.h = ..\..\..\TADs\LinkedListStack.h
+		..\..\..\TADs\list_eda.h = ..\..\..\TADs\list_eda.h
+		..\..\..\TADs\queue_eda.h = ..\..\..\TADs\queue_eda.h
+		..\..\..\TADs\set_eda.h = ..\..\..\TADs\set_eda.h
+		..\..\..\TADs\stack_eda.h = ..\..\..\TADs\stack_eda.h
+		..\..\..\TADs\vector_eda.h = ..\..\..\TADs\vector_eda.h
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}.Debug|x64.ActiveCfg = Debug|x64
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}.Debug|x64.Build.0 = Debug|x64
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}.Debug|x86.ActiveCfg = Debug|Win32
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}.Debug|x86.Build.0 = Debug|Win32
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}.Release|x64.ActiveCfg = Release|x64
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}.Release|x64.Build.0 = Release|x64
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}.Release|x86.ActiveCfg = Release|Win32
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3}.Release|x86.Build.0 = Release|Win32
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Debug|x64.ActiveCfg = Debug|x64
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Debug|x64.Build.0 = Debug|x64
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Debug|x86.ActiveCfg = Debug|Win32
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Debug|x86.Build.0 = Debug|Win32
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Release|x64.ActiveCfg = Release|x64
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Release|x64.Build.0 = Release|x64
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Release|x86.ActiveCfg = Release|Win32
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3} = {D4DDC237-0376-4871-8014-2FD6C118E926}
+		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C} = {D4DDC237-0376-4871-8014-2FD6C118E926}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D80A4EF-86E1-43B9-9510-68A378343CBA}
+	EndGlobalSection
+EndGlobal
