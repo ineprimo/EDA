@@ -1,0 +1,35 @@
+aparece_villano seymour 10 6
+aparece_villano edea 12 10
+aparece_heroe tidus 30
+aprende_ataque tidus ataque_superpoderoso 10
+aprende_ataque tidus ataque_impresionante 20
+mostrar_ataques tidus
+mostrar_turnos
+villano_ataca seymour tidus
+villano_ataca edea tidus
+mostrar_turnos
+heroe_ataca tidus ataque_impresionante seymour
+villano_ataca edea tidus
+mostrar_turnos
+heroe_ataca tidus ataque_superpoderoso edea
+mostrar_turnos
+FIN
+aparece_villano v1 5 4
+aparece_heroe h1 3
+aparece_villano v1 7 20
+aparece_heroe h1 10
+aprende_ataque h2 a1 10
+aprende_ataque h1 a1 10
+mostrar_ataques h2
+villano_ataca v1 v2
+heroe_ataca h1 a1 h2
+villano_ataca v1 h1
+heroe_ataca h1 a1 v1
+aparece_heroe h1 10
+heroe_ataca h1 a1 v1
+villano_ataca v1 h1
+heroe_ataca h1 a1 v1
+aprende_ataque h1 a1 30
+heroe_ataca h1 a1 v1
+aparece_villano v1 5 4
+FIN

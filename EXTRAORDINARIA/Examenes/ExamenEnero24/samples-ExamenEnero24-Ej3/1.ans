@@ -1,0 +1,39 @@
+Ataques de tidus
+ataque_impresionante 20
+ataque_superpoderoso 10
+Turno:
+seymour 10
+edea 12
+tidus 30
+seymour ataca a tidus
+edea ataca a tidus
+Turno:
+tidus 14
+seymour 10
+edea 12
+tidus ataca a seymour
+seymour derrotado
+edea ataca a tidus
+Turno:
+tidus 4
+edea 12
+tidus ataca a edea
+Turno:
+edea 2
+tidus 4
+---
+ERROR: Personaje ya existente
+ERROR: Personaje ya existente
+ERROR: Heroe inexistente
+ERROR: Heroe inexistente
+ERROR: Heroe inexistente
+ERROR: Villano inexistente
+v1 ataca a h1
+h1 derrotado
+ERROR: Heroe inexistente
+ERROR: No es su turno
+v1 ataca a h1
+ERROR: Ataque no aprendido
+h1 ataca a v1
+v1 derrotado
+---
