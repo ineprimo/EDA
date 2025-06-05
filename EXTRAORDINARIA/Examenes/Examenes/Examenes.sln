@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Plantillas", "00 Plantil
 		..\..\..\plantillas\tema 2\PlantillaCaucasicos.cpp = ..\..\..\plantillas\tema 2\PlantillaCaucasicos.cpp
 		..\..\..\plantillas\tema 2\PlantillaCurvaConcava.cpp = ..\..\..\plantillas\tema 2\PlantillaCurvaConcava.cpp
 		..\..\..\plantillas\tema 2\PlantillaElemPerdido.cpp = ..\..\..\plantillas\tema 2\PlantillaElemPerdido.cpp
+		..\..\..\plantillas\generales\PlantillaJuezCasosIlimitados.cpp = ..\..\..\plantillas\generales\PlantillaJuezCasosIlimitados.cpp
 		..\..\..\plantillas\generales\PlantillaJuezCentinela.cpp = ..\..\..\plantillas\generales\PlantillaJuezCentinela.cpp
 		..\..\..\plantillas\generales\PlantillaJuezNumeroCasos.cpp = ..\..\..\plantillas\generales\PlantillaJuezNumeroCasos.cpp
 		..\..\..\plantillas\tema 2\PlantillaParcialmenteOrdenado.cpp = ..\..\..\plantillas\tema 2\PlantillaParcialmenteOrdenado.cpp
@@ -35,6 +36,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 TADs", "01 TADs", "{B337
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExEn24 Ej3", "ExEn24 Ej3\ExEn24 Ej3.vcxproj", "{C81572C9-17EE-498C-B1BC-500EEE58DBEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExamenJunio24", "ExamenJunio24", "{82374374-1393-41DB-AB1B-5CF85992AB94}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExJu24-Ej1", "ExJu24-Ej1\ExJu24-Ej1.vcxproj", "{708C0184-92D7-4140-9851-3FC7E2610D35}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExJu24-Ej3", "ExJu24-Ej3\ExJu24-Ej3.vcxproj", "{DA7759D2-822E-4161-8879-B56281801F63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +75,22 @@ Global
 		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Release|x64.Build.0 = Release|x64
 		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Release|x86.ActiveCfg = Release|Win32
 		{C81572C9-17EE-498C-B1BC-500EEE58DBEB}.Release|x86.Build.0 = Release|Win32
+		{708C0184-92D7-4140-9851-3FC7E2610D35}.Debug|x64.ActiveCfg = Debug|x64
+		{708C0184-92D7-4140-9851-3FC7E2610D35}.Debug|x64.Build.0 = Debug|x64
+		{708C0184-92D7-4140-9851-3FC7E2610D35}.Debug|x86.ActiveCfg = Debug|Win32
+		{708C0184-92D7-4140-9851-3FC7E2610D35}.Debug|x86.Build.0 = Debug|Win32
+		{708C0184-92D7-4140-9851-3FC7E2610D35}.Release|x64.ActiveCfg = Release|x64
+		{708C0184-92D7-4140-9851-3FC7E2610D35}.Release|x64.Build.0 = Release|x64
+		{708C0184-92D7-4140-9851-3FC7E2610D35}.Release|x86.ActiveCfg = Release|Win32
+		{708C0184-92D7-4140-9851-3FC7E2610D35}.Release|x86.Build.0 = Release|Win32
+		{DA7759D2-822E-4161-8879-B56281801F63}.Debug|x64.ActiveCfg = Debug|x64
+		{DA7759D2-822E-4161-8879-B56281801F63}.Debug|x64.Build.0 = Debug|x64
+		{DA7759D2-822E-4161-8879-B56281801F63}.Debug|x86.ActiveCfg = Debug|Win32
+		{DA7759D2-822E-4161-8879-B56281801F63}.Debug|x86.Build.0 = Debug|Win32
+		{DA7759D2-822E-4161-8879-B56281801F63}.Release|x64.ActiveCfg = Release|x64
+		{DA7759D2-822E-4161-8879-B56281801F63}.Release|x64.Build.0 = Release|x64
+		{DA7759D2-822E-4161-8879-B56281801F63}.Release|x86.ActiveCfg = Release|Win32
+		{DA7759D2-822E-4161-8879-B56281801F63}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +99,8 @@ Global
 		{31EE508D-12C1-4DAB-AD94-70B80E4C3EA3} = {D4DDC237-0376-4871-8014-2FD6C118E926}
 		{DEB8EBC2-035B-4C53-80E0-7A39622CB83C} = {D4DDC237-0376-4871-8014-2FD6C118E926}
 		{C81572C9-17EE-498C-B1BC-500EEE58DBEB} = {D4DDC237-0376-4871-8014-2FD6C118E926}
+		{708C0184-92D7-4140-9851-3FC7E2610D35} = {82374374-1393-41DB-AB1B-5CF85992AB94}
+		{DA7759D2-822E-4161-8879-B56281801F63} = {82374374-1393-41DB-AB1B-5CF85992AB94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D80A4EF-86E1-43B9-9510-68A378343CBA}

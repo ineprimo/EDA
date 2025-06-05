@@ -1,0 +1,15 @@
+Siguiente paciente: Eva
+Siguiente paciente: Ana
+Siguiente paciente: Luis
+La gravedad de Ivan es 2
+Lista de recuperados:
+Lista de recuperados: Ivan Luz
+---
+ERROR: Paciente repetido
+Lista de recuperados: Pedro
+La gravedad de Pedro es 2
+Siguiente paciente: Pedro
+ERROR: Paciente inexistente
+ERROR: Gravedad incorrecta
+ERROR: No hay pacientes
+---

@@ -1,0 +1,28 @@
+nuevo_paciente Luis 2
+nuevo_paciente Ana 3
+nuevo_paciente Eva 3
+nuevo_paciente Ivan 2
+mejora Ana
+siguiente
+siguiente
+siguiente
+gravedad_actual Ivan
+mejora Ivan
+recuperados
+mejora Ivan
+nuevo_paciente Luz 1
+mejora Luz
+recuperados
+FIN
+nuevo_paciente Pedro 1
+nuevo_paciente Pedro 2
+mejora Pedro
+recuperados
+nuevo_paciente Pedro 3
+mejora Pedro
+gravedad_actual Pedro
+siguiente
+gravedad_actual Pedro
+nuevo_paciente Pedro 4
+siguiente
+FIN
