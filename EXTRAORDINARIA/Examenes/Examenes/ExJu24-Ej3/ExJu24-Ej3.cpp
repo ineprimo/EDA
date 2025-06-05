@@ -40,7 +40,7 @@ protected:
     registrados registros;
 
     // mapa con los pacientes que se han recuperado
-    sanos sanos;
+    sanos pacientesSanos;
 
 public:
     // registra a un nuevo paciente (un string), que ya ha sido preevaluado por un médico que
@@ -100,9 +100,30 @@ public:
     // coste:
     paciente siguiente()
 	{
-        if (!graves.empty()) return graves.front().first;
-        if (!medias.empty()) return medias.front().first;
-        if (!leves.empty()) return leves.front().first;
+        if (!graves.empty())
+        {
+            paciente aux = graves.front().first;
+            graves.pop_front();
+            registros.erase(aux); // le elimina de registros
+	        return aux;
+        }
+
+        if (!medias.empty())
+        {
+            paciente aux = medias.front().first;
+            medias.pop_front();
+            registros.erase(aux); // le elimina de registros
+            return aux;
+        }
+
+        if (!leves.empty())
+        {
+            paciente aux = leves.front().first;
+            leves.pop_front();
+            registros.erase(aux); // le elimina de registros
+            return aux;
+        }
+
 		throw domain_error("No hay pacientes");
     }
 
@@ -130,12 +151,13 @@ public:
                 if (!leves.empty())
                 {
 		            auto i = leves.begin();
-		            while (i != leves.end() && i->first != itRegistrado->first) ++i;
+		            while (i != leves.end() && i->first != p) ++i;
 
                     if (i != leves.end())
                     {
+                        i->second = g - 1;
                         leves.erase(i);
-                        sanos[p] = 0; // lo mete al mapa de recuperados
+                        pacientesSanos[p] = 0; // lo mete al mapa de recuperados
                         registros.erase(p); // le elimina de registros
                     }
                 }
@@ -148,12 +170,13 @@ public:
                 if (!medias.empty())
                 {
 		            auto i = medias.begin();
-		            while (i != medias.end() && i->first != itRegistrado->first) ++i;
+		            while (i != medias.end() && i->first != p) ++i;
 
                     if (i != medias.end())
                     {
 			            leves.push_front(*i);
 			            medias.erase(i);
+                        registros[p] = g - 1;
                     }
                 }
 	        }
@@ -165,12 +188,13 @@ public:
                 if (!graves.empty())
                 {
 					auto i = graves.begin();
-			        while (i != graves.end() && i->first != itRegistrado->first) ++i;
+			        while (i != graves.end() && i->first != p) ++i;
 
                     if (i != graves.end())
                     {
                         medias.push_front(*i);
                         graves.erase(i);
+                        registros[p] = g - 1;
                     }
                 }
 	        }
@@ -185,10 +209,10 @@ public:
 	{
         list<paciente> r;
 
-        auto it = sanos.begin();
-        while (it != sanos.end())
+        auto it = pacientesSanos.begin();
+        while (it != pacientesSanos.end())
         {
-            r.emplace_back(it->first, it->second);
+            r.emplace_back(it->first );
             ++it;
         }
 
