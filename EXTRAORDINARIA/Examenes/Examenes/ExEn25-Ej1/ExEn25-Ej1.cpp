@@ -64,50 +64,47 @@ void resolver(vector<int>& soluc, int k, int n, int m, int l, vector<int>& kilos
     // --------- 7) if poda     -> si las monedas que llevo + la estimacion supera el num max de monedas hasta ahora
     // ------------ 8) llamada recursiva k+1
 
-    if (k > m)
+    if (k >= m) return;
+    for (int i = 0; i < n; i++)
     {
-        return;
-    }
-    else
-    {
-        for (int i = 0; i <= n; i++)
+        // es valido
+        if (asignados[i] == -1) // solo puedes asignarlos a 1 zona
         {
             // MARCAR
-            suma += kilosPorVoluntario[k][i]; // [fila][columna] // guardas la suma total
+            suma += kilosPorVoluntario[i][k]; // [fila][columna] // guardas la suma total
 
             soluc[k] = suma;
 
-            // es valido
-            if (asignados[i] == -1) // solo puedes asignarlos a 1 zona
+            int restante = kilosPorArea[k] - soluc[k];
+            if (restante <= 0)
             {
-                // MARCAR
-                asignados[i] = k;  // asignar a ese voluntario
-                if (soluc[k] >= kilosPorArea[k]) limpias++;
+                soluc[k] = kilosPorArea[k];
+            }
 
-                // es solucion: si ya has limpiado esas areas o mas
-                if (limpias >= l)
-                {
-                    // es mejor
-                    if (suma > maxSuma)
-                    {
-                        maxSuma = suma;
-                    }
-                }
-                // llegar al final del arbol
-                else if (k < n - 1)
-                {
-                    // llamada recursiva k+1
-                    resolver(soluc, k + 1, n, m, l, kilosPorArea, kilosPorVoluntario, suma, asignados, limpias, maxSuma);
-                }
+            // MARCAR
+            asignados[i] = k;  // asignar a ese voluntario
+            if (soluc[k] >= kilosPorArea[k]) limpias++;
 
-                // DESMARCAR
-                asignados[i] = -1;  // guardas a donde has asignado a este voluntario
-                if (soluc[k] >= kilosPorArea[k]) limpias--;
+            // es solucion: si ya has limpiado esas areas o mas
+            if (limpias >= l)
+            {
+                // es mejor
+                if (soluc[k] >= maxSuma) maxSuma = soluc[k];
+            }
+            // llegar al final del arbol
+            else if (k < n - 1)
+            {
+                // llamada recursiva k+1
+                resolver(soluc, k + 1, n, m, l, kilosPorArea, kilosPorVoluntario, suma, asignados, limpias, maxSuma);
             }
 
             // DESMARCAR
-            suma -= kilosPorVoluntario[k][i]; // [fila][columna] // guardas la suma total
+            if (soluc[k] >= kilosPorArea[k]) limpias--;
+            asignados[i] = -1;  // guardas a donde has asignado a este voluntario
         }
+
+        // DESMARCAR
+        suma -= kilosPorVoluntario[i][k]; // [fila][columna] // guardas la suma total
     }
 }
 
