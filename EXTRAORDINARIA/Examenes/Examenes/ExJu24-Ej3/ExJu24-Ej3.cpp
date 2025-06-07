@@ -34,7 +34,6 @@ protected:
     listaEspera graves;
     listaEspera medias;
     listaEspera leves;
-    //listas listas = { leves, graves, medias };
 
     // mapa con todos los pacientes en el hospital
     registrados registros;
@@ -49,7 +48,7 @@ public:
 
     // Si el paciente ya estaba registrado, lanzará una excepción domain_error con mensaje Paciente repetido.
     // Si la gravedad dada no es un número entre 1 y 3, se lanzará una excepción domain_error con el mensaje Gravedad incorrecta.
-    // coste:
+    // coste: O(n) en caso peor siendo n el tamaño del registros
     void nuevo_paciente(paciente p, gravedad g)
 	{
         auto itRegistrado = registros.find(p);
@@ -77,7 +76,7 @@ public:
     // devuelve el entero que representa la gravedad actual de paciente.
 
     // Si el paciente no está en la sala de espera, se lanzará una excepción domain_error con mensaje Paciente inexistente
-    // coste:
+    // coste: O(n) en caso peor siendo n el tamaño del registros
     int gravedad_actual(paciente p) const
 	{
         auto itRegistrado = registros.find(p);
@@ -97,7 +96,7 @@ public:
     // o el que provoca la operación mejora de cambio de gravedad, explicada a continuación.
 
     // Si no hay pacientes se lanzará una excepción domain_error con mensaje No hay pacientes
-    // coste:
+    // coste: O(n) en caso peor siendo n el tamaño del registros
     paciente siguiente()
 	{
         if (!graves.empty())
@@ -132,7 +131,7 @@ public:
     // Para el orden de atención se coloca como el más prioritario de los que tienen la nueva gravedad.
     // Si el paciente estaba leve, entonces se recupera y abandona las urgencias.
     // Si el paciente no existe, se lanzará una excepción domain_error con mensaje Paciente inexistente
-    // coste:
+    // coste: O(n) en caso peor siendo n el tamaño del registros -> por el find y el erase
     void mejora(paciente p)
 	{
         auto itRegistrado = registros.find(p);
@@ -204,7 +203,7 @@ public:
 
     // devuelve un tipo de datos lineal ordenado alfabéticamente (y sin repeticiones) con los pacientes que
     // han pasado alguna vez por el servicio de urgencias y se han recuperado del tod mientras esperaban
-    // coste:
+    // coste: O(n) en caso peor siendo n el tamaño de pacientesSanos
     list<paciente> recuperados() const
 	{
         list<paciente> r;
@@ -212,7 +211,7 @@ public:
         auto it = pacientesSanos.begin();
         while (it != pacientesSanos.end())
         {
-            r.emplace_back(it->first );
+            r.emplace_back(it->first);
             ++it;
         }
 
