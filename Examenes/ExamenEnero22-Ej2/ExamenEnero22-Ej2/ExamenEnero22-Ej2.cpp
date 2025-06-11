@@ -1,17 +1,33 @@
+// paula sierra luque
+// eda gdv 70
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include "bintree_eda.h"
+
 using namespace std;
 
-template <class T>
-int nodosSingulares(bintree<T> const& tree) 
+pair<int,int> nodosSingulares(bintree<int> const& tree, int antepasados) 
 {
-    if (tree.empty()) return 0;
-    if (tree.left().empty() && tree.right().empty()) return 0;
-    
+    // { singular , acumulado }
 
+    if (tree.empty()) return {0, 0};
+    if (tree.left().empty() && tree.right().empty()) 
+    {
+        if (antepasados == 0) return { 1, tree.root() }; // si encima tengo 0, y abajo (por ser hoja) hay 0, singular
+        else return { 0, tree.root() };
+    }
+
+    pair<int, int> izq = nodosSingulares(tree.left(), antepasados + tree.root());
+    pair<int, int> der = nodosSingulares(tree.right(), antepasados + tree.root());
+
+    int acumulado = izq.second + der.second;
+    int singulares = izq.first + der.first;
+
+    if (acumulado == antepasados) ++singulares;
+
+    return { singulares , acumulado + tree.root() };
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -22,7 +38,11 @@ void resuelveCaso() {
     bintree<int> tree;
     tree = leerArbol(-1);
 
-    cout << nodosSingulares(tree) << endl;
+    pair<int, int> sol = nodosSingulares(tree, 0);
+
+    // escribe sol
+    cout << sol.first << endl;
+
 }
 
 

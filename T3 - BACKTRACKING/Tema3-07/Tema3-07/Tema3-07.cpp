@@ -8,27 +8,25 @@
 
 using namespace std;
 
-bool esValida(vector<int> combi, int n, int a, int r, int v)
+bool esValida(vector<int>& combi, int n, vector<int>& disponibles, vector<int>& usados)
 {
     // tenemos fichas suficientes:
-    int contA = 0, contR = 0, contV = 0;
-    for (int i = 0; i < combi.size(); ++i) {
-        if (combi[i] == 0) ++contA;
-        if (combi[i] == 1) ++contR;
-        if (combi[i] == 2) ++contV;
-        if (contA > a || contR > r || contV > v) return false;
+    int i = 0;
+    while (i < disponibles.size()) {
+        if (disponibles[i] < 0) return false;
+        ++i;
     }
 
     // las verdes no pueden superar azules
-    if (contV > contA) return false;
+    if (usados[2] > usados[0]) return false;
 
     // las rojas deben ser mayores q la suma de azules y verdes
-    if (contA + contV >= contR) return false;
+    if (usados[0] + usados[2] >= usados[1]) return false;
 
     return combi.size() == n && n >= 2;
 }
 
-bool esSolucion(vector<int> combi, int k, int n) 
+bool esSolucion(vector<int>& combi, int k, int n)
 {    
     // si la base no es roja ya no vale
     if (combi[0] != 1) return false;
@@ -43,7 +41,7 @@ bool esSolucion(vector<int> combi, int k, int n)
     return true;
 }
 
-void tratarSolucion(vector<int> combi)
+void tratarSolucion(vector<int>& combi)
 {   
     for (int i = 0; i < combi.size(); ++i) {
         if (combi[i] == 0) cout << "azul" << " ";
@@ -54,13 +52,16 @@ void tratarSolucion(vector<int> combi)
 }
 
 // función que resuelve el problema
-void resolver(vector<int>& combi, vector<int> candidatos, int k, int n, int a, int r, int v, bool& haySol) 
+void resolver(vector<int>& combi, vector<int> candidatos, int k, int n, vector<int>& disponibles, vector<int>& usados, bool& haySol)
 {
     for (int i : candidatos) 
     {
+        disponibles[i]--;
+        usados[i]++;
+
         combi.push_back(i);
 
-        if (esValida(combi, n, a, r, v))
+        if (esValida(combi, n, disponibles, usados))
         {
             if (esSolucion(combi, k, n))
             {
@@ -70,10 +71,13 @@ void resolver(vector<int>& combi, vector<int> candidatos, int k, int n, int a, i
         }
         else if (k < n - 1) 
         {
-            resolver(combi, candidatos, k + 1, n, a, r, v, haySol);
+            resolver(combi, candidatos, k + 1, n, disponibles, usados, haySol);
         }
 
         combi.pop_back();
+        
+        disponibles[i]++;
+        usados[i]--;
     }
 }
 
@@ -88,12 +92,19 @@ bool resuelveCaso() {
     if (n == 0 && a == 0 && r == 0 && v == 0)
         return false;
 
+    vector<int> coloresDisponibles;
+    coloresDisponibles.push_back(a);
+    coloresDisponibles.push_back(r);
+    coloresDisponibles.push_back(v);
+
+    vector<int> coloresUsados { 0,0,0 };
+
     vector<int> candidatos;
     for (int i = 0; i < 3; ++i) candidatos.push_back(i);
 
     vector<int> combis; 
     bool haySolucion = false;
-    resolver(combis, candidatos, 0, n, a, r, v, haySolucion);
+    resolver(combis, candidatos, 0, n, coloresDisponibles, coloresUsados, haySolucion);
 
     // escribir sol
     if (!haySolucion) cout << "SIN SOLUCION" << endl;
