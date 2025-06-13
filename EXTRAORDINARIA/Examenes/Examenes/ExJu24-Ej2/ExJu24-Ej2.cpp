@@ -25,8 +25,72 @@
 // Tupla sol: [0, 1, ... , 1] 0 o 1 en funcion de si sumas o restas, de tamano n del vector
 
 // función que resuelve el problema
-void resolver(std::vector<int>& soluc, int k, int n, const int M, int suma, bool& obtenible, std::vector<int>& v)
+void resolver(std::vector<char>& soluc, int k, int n, const int M, int suma, bool& obtenible, std::vector<int>& v, std::vector<int>& sumaDesde)
 {
+    if (n == 0) 
+    {
+        obtenible = true;
+        return;
+    }
+
+    // pruebo con +
+    soluc[k] = '+';
+    suma += v[k];
+    if (k == n - 1)
+    {
+        // es solucion si suma == M
+        if (suma == M) obtenible = true;
+    }
+    else
+    {
+        if (suma < M)
+        {
+	        if ((suma + sumaDesde[k]) >= M)
+	        {
+                resolver(soluc, k + 1, n, M, suma, obtenible, v, sumaDesde);
+	        }
+        }
+        else
+        {
+            if ((suma - sumaDesde[k]) <= M)
+            {
+                resolver(soluc, k + 1, n, M, suma, obtenible, v, sumaDesde);
+            }
+        }
+    }
+    suma -= v[k];
+
+    // pruebo con -
+    if (k > 0 && !obtenible)
+    {
+        soluc[k] = '-';
+        suma -= v[k];
+
+        if (k == n - 1)
+        {
+            // es solucion si suma == M
+            if (suma == M) obtenible = true;
+        }
+        else
+        {
+            if (suma < M)
+            {
+                if ((suma + sumaDesde[k]) >= M)
+                {
+                    resolver(soluc, k + 1, n, M, suma, obtenible, v, sumaDesde);
+                }
+            }
+            else
+            {
+                if ((suma - sumaDesde[k]) <= M)
+                {
+                    resolver(soluc, k + 1, n, M, suma, obtenible, v, sumaDesde);
+                }
+            }
+        }
+    }
+
+    /*
     if (n == 0) obtenible = true;
     else {
     // ---- ESQUEMA DE BACKTRACKING ----
@@ -92,6 +156,7 @@ void resolver(std::vector<int>& soluc, int k, int n, const int M, int suma, bool
 
         }
     }
+	*/
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -113,9 +178,20 @@ void resuelveCaso()
         v.push_back(e);
     }
 
-    std::vector<int> soluc(n);
+    std::vector<int> sumaDesde(n, 0);
+    if (n > 1)
+    {
+        sumaDesde[n - 1] = v[n - 1];
+        for (int i = n - 2; i >= 0; --i)
+        {
+            sumaDesde[i] += v[i];
+            sumaDesde[i] += sumaDesde[i + 1];
+        }
+    }
+
+    std::vector<char> soluc(n);
     bool obtenible = false;
-    resolver(soluc, 0, n, M, 0, obtenible, v);
+    resolver(soluc, 0, n, M, 0, obtenible, v, sumaDesde);
 
     // escribir sol
     if (obtenible) std::cout << "SI";
