@@ -1,60 +1,50 @@
-// Paula Sierra Luque
-// EDA-GDV70
 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <vector>
-
 using namespace std;
 
 // función que resuelve el problema
-int resolver(vector<int> datos, vector<int> other, int ini, int fin) 
+int resolver(const vector<int>& v, int ini, int fin) 
 {
-    if (ini == fin) return datos[ini];
+    if (ini == fin) return ini;  // 1 elem
 
-    // igual o mas de dos elems
     int mitad = (ini + fin) / 2;
+    if (mitad % 2 != 0) mitad--; // para comparar los pares
 
-    if (datos[mitad] == other[mitad])
-        return resolver(datos, other, mitad+1, fin);
-    else 
-        return resolver(datos, other, ini, mitad);
+    if (v[mitad] == v[mitad+1])
+        return resolver(v, mitad + 2, fin); // dcha
+    else
+        return resolver(v, ini, mitad);     // izda
 }
+
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
-    int n; cin >> n;
-    
-    vector<int> og, other; 
-    int aux;
-    for (int i = 0; i < n; ++i)
-    {
-        cin >> aux;
-        og.push_back(aux);
-    }
-    for (int i = 0; i < n-1; ++i)
-    {
-        cin >> aux;
-        other.push_back(aux);
-    }
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (int& e : v) cin >> e;
 
-    int sol = resolver(og, other, 0, n-1);
-    
-    // escribir sol
+    // Llamada a la función resolver
+    int sol = resolver(v, 0, n - 1);
+
+    // Mostrar el resultado
     cout << sol << endl;
 }
 
+
+//#define DOMJUDGE
 int main() {
     // Para la entrada por fichero.
     // Comentar para acepta el reto
 #ifndef DOMJUDGE
     std::ifstream in("datos.txt");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
-#endif 
-
+#endif
 
     int numCasos;
     std::cin >> numCasos;
@@ -65,7 +55,7 @@ int main() {
     // Para restablecer entrada. Comentar para acepta el reto
 #ifndef DOMJUDGE // para dejar todo como estaba al principio
     std::cin.rdbuf(cinbuf);
-    system("PAUSE");
+    //system("PAUSE");
 #endif
 
     return 0;
