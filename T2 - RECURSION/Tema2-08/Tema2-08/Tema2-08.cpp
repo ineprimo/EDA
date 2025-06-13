@@ -12,7 +12,6 @@ using namespace std;
 int resolver(const vector<int>& datos, int ini, int fin) 
 {
     if (fin == ini) return datos[ini]; // 1 elem
-    if (fin - ini == 1)  return min(datos[ini], datos[fin]); // 2 elem
     
     int mitad = (fin + ini) / 2;
 
@@ -22,7 +21,7 @@ int resolver(const vector<int>& datos, int ini, int fin)
     }
 
     if (datos[ini] < datos[mitad]) 
-        return resolver(datos, ini, mitad);;
+        return resolver(datos, ini, mitad);
 
     return resolver(datos, mitad + 1, fin);
 }
