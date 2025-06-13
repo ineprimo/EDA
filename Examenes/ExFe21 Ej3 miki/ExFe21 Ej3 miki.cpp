@@ -111,7 +111,6 @@ void resuelveCaso()
 
     mejoresBeneficiosDesde[n - 1] = maxBenefs[n - 1];
 
-
     for (int i = n - 2; i >= 0; i--)
     {
         mejoresBeneficiosDesde[i] += maxBenefs[i + 1];

@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <climits>
+#include <ratio>
 using namespace std;
 
 template <class T>
@@ -17,8 +18,6 @@ ostream& operator<<(ostream& out, vector<T> const& v)
     for (auto& e : v) out << e << " ";
     return out;
 }
-
-// TUPLA SOLUCION = [[voluntario area 0],[voluntarios area 1],...,[voluntarios area n]]
 
 // función que resuelve el problema
 // PARAMETROS:
@@ -30,12 +29,6 @@ ostream& operator<<(ostream& out, vector<T> const& v)
 // l -> numero minimo de areas que deben quedar completamente limpias
 // kilos/area -> cantidad de lodo en kg presente en cada area
 // kilos/voluntario -> v[0] = kilos area 1 vol 0, kilos area 2 vol 0, ... , kilos area n vol 0
-// i de for -> voluntarios
-
-// --- marcadores
-// suma -> kilos totales
-// asignados -> v[n] = zona asignada a voluntario n
-// limpias -> cuantas areas limpias llevas
 
 // MAXIMIZAR la cantidad de lodo retirado, cumpliendo que al menos l areas queden completamente limpias (0 >= l >= m)
 // area completamente limpia si => cantidad de lodo que los voluntarios asignados a ese area pueden retirar es >= a la cantidad presente en ella
@@ -47,9 +40,14 @@ ostream& operator<<(ostream& out, vector<T> const& v)
 // Si no es posible cumplir la restriccion de dejar al menos l areas completamente limpias,
 // se debe imprimir en su lugar una linea con la cadena IMPOSIBLE.
 
+
+// TUPLA = soluc(n) // cada i es el area (0 a m-1) que le asignas a ese voluntario
+// [2, 1, 1, 1, 0] -> i=0 asignado a area 2, i=1 asignado a area 1
+
 // funcion que resuelve el problema
 void resolver(vector<int>& soluc, int k, int n, int m, int l, vector<int>& kilosPorArea, vector<vector<int>> const& kilosPorVoluntario,  // entrada
-			  int suma, vector<int>& asignados, int limpias, int& maxSuma)   // marcadores
+			  int suma, int limpias, int& maxSuma, vector<int>& kilosPorAreaRestantes, vector<bool>& elegidos, // marcadores
+				vector<int>& maxKilosDesde)
 {
     // ---- ESQUEMA DE BACKTRACKING ----
 
@@ -64,47 +62,68 @@ void resolver(vector<int>& soluc, int k, int n, int m, int l, vector<int>& kilos
     // --------- 7) if poda     -> si las monedas que llevo + la estimacion supera el num max de monedas hasta ahora
     // ------------ 8) llamada recursiva k+1
 
-    if (k >= m) return;
-    for (int i = 0; i < n; i++)
+    if (k >= n) return;
+    for (int area = 0; area < m; ++area) // for de areas
     {
-        // es valido
-        if (asignados[i] == -1) // solo puedes asignarlos a 1 zona
+        // es valida
+        if (!elegidos[k]) // solo puedes asignarlos a 1 zona
         {
+            soluc[k] = area; // k num de voluntario
+
+            elegidos[k] = true;
             // MARCAR
-            suma += kilosPorVoluntario[i][k]; // [fila][columna] // guardas la suma total
-
-            soluc[k] = suma;
-
-            int restante = kilosPorArea[k] - soluc[k];
+            int kilosRestantes = kilosPorAreaRestantes[area]; 
+            int restante = kilosPorAreaRestantes[area] - kilosPorVoluntario[k][area];
+            // si con el voluntario en ese area ya la limpias
             if (restante <= 0)
             {
-                soluc[k] = kilosPorArea[k];
+                suma += kilosPorAreaRestantes[area];
+                kilosPorAreaRestantes[area] = 0;
+                limpias++;
+            }
+            // si aun queda por limpiar
+            else
+            {
+                suma += kilosPorVoluntario[k][area];
+                kilosPorAreaRestantes[area] -= kilosPorVoluntario[k][area];
             }
 
-            // MARCAR
-            asignados[i] = k;  // asignar a ese voluntario
-            if (soluc[k] >= kilosPorArea[k]) limpias++;
-
-            // es solucion: si ya has limpiado esas areas o mas
-            if (limpias >= l)
+            // antes de saber si es solucion, comprobar si es final del arbol
+            if (k == n-1)
             {
-                // es mejor
-                if (soluc[k] >= maxSuma) maxSuma = soluc[k];
+                // es solucion: si ya has limpiado esas areas o mas
+                if (limpias >= l)
+                {
+                    // es mejor
+                    if (suma >= maxSuma) maxSuma = suma;
+                }
             }
-            // llegar al final del arbol
-            else if (k < n - 1)
+            else
             {
-                // llamada recursiva k+1
-                resolver(soluc, k + 1, n, m, l, kilosPorArea, kilosPorVoluntario, suma, asignados, limpias, maxSuma);
+                // si lo que llevo sumado mas los kilos maximos (optimista) van a mejorar mi mejor resultado
+                if (suma + maxKilosDesde[k] > maxSuma)
+                {
+                    // llamada recursiva k+1 -> siguiente voluntario
+                    resolver(soluc, k + 1, n, m, l, kilosPorArea, kilosPorVoluntario, suma, limpias, maxSuma, kilosPorAreaRestantes, elegidos, maxKilosDesde);
+                }
             }
 
             // DESMARCAR
-            if (soluc[k] >= kilosPorArea[k]) limpias--;
-            asignados[i] = -1;  // guardas a donde has asignado a este voluntario
-        }
+            elegidos[k] = false;
 
-        // DESMARCAR
-        suma -= kilosPorVoluntario[i][k]; // [fila][columna] // guardas la suma total
+            if (restante <= 0)
+            {
+                limpias--;
+                kilosPorAreaRestantes[area] = kilosRestantes;
+                suma -= kilosPorAreaRestantes[area];
+            }
+            // si aun queda por limpiar
+            else
+            {
+                suma -= kilosPorVoluntario[k][area];
+                kilosPorAreaRestantes[area] += kilosPorVoluntario[k][area];
+            }
+        }
     }
 }
 
@@ -131,18 +150,37 @@ void resuelveCaso()
         for (int j = 0; j < m; ++j)
             cin >> kilosPorVoluntario[i][j];
 
+    vector<int> maxKilos(n, 0);
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < m; ++j)
+        {
+            if (maxKilos[i] < kilosPorVoluntario[i][j])
+            {
+				maxKilos[i] = kilosPorVoluntario[i][j];
+            }
+        }
+    }
+
+    vector<int> maxKilosDesde(n, 0);
+    maxKilosDesde[n - 1] = maxKilos[n - 1];
+    for (int i = n-2; i >= 0; i--)
+    {
+        maxKilosDesde[i] += maxKilosDesde[i+1];
+        maxKilosDesde[i] += maxKilos[i];
+    }
 
     // Por cada caso de prueba, el programa debe imprimir una linea con la cantidad maxima de lodo retirado.
     // Si no es posible cumplir la restriccion de dejar al menos l areas completamente limpias,
     // se debe imprimir en su lugar una linea con la cadena IMPOSIBLE.
-    vector<int> soluc(m);
+    vector<int> soluc(n, -1);
     int k = 0;
-    vector<int> asignados(n, -1);
     int maxSuma = 0;
-    resolver(soluc, k, n, m, l, kilosPorArea, kilosPorVoluntario, 0, asignados, 0, maxSuma);
+    vector<bool> elegidos(n);
+    resolver(soluc, k, n, m, l, kilosPorArea, kilosPorVoluntario, 0, 0, maxSuma, kilosPorArea, elegidos, maxKilosDesde);
 
-    if (maxSuma <= 0) cout << "IMPOSIBLE" << endl;
-    else cout << maxSuma << endl;
+    if (maxSuma <= 0) std::cout << "IMPOSIBLE" << std::endl;
+    else std::cout << maxSuma << std::endl;
 }
 
 //#define DOMJUDGE

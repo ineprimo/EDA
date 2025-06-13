@@ -28,72 +28,68 @@
 void resolver(std::vector<int>& soluc, int k, int n, const int M, int suma, bool& obtenible, std::vector<int>& v)
 {
     if (n == 0) obtenible = true;
-    else
-    {
-        // ---- ESQUEMA DE BACKTRACKING ----
+    else {
+    // ---- ESQUEMA DE BACKTRACKING ----
 
-   // !!!! marcar en el mismo ambito en el que se desmarca
+    // !!!! marcar en el mismo ambito en el que se desmarca
 
-   // 1) for de candidatos     -> candidatos = + / -
-   // --- 2) guardar el indice del for que se va probando en el vect solucion
-   // --- 3) if esValida       -> ver si lo que acabas de guardar ha sido una eleccion valida
-   // ------ 4) if esSolucion  -> SOLO PUEDES COMPROBAR LA SOLUCION SI K == n-1
-   // --------- 5) if esMejor  -> si la cantidad de monedas que estoy usando es mayor que la ultima mayor cantidad
-   // ------ 6) else noSolucion
-   // --------- 7) if poda     -> si las monedas que llevo + la estimacion supera el num max de monedas hasta ahora
-   // ------------ 8) llamada recursiva k+1
-
-   // el primero siempre suma => lo metes al vector
+    // 1) for de candidatos     -> candidatos = + / -
+    // --- 2) guardar el indice del for que se va probando en el vect solucion
+    // --- 3) if esValida       -> ver si lo que acabas de guardar ha sido una eleccion valida
+    // ------ 4) if esSolucion  -> SOLO PUEDES COMPROBAR LA SOLUCION SI K == n-1
+    // --------- 5) if esMejor  -> si la cantidad de monedas que estoy usando es mayor que la ultima mayor cantidad
+    // ------ 6) else noSolucion
+    // --------- 7) if poda     -> si las monedas que llevo + la estimacion supera el num max de monedas hasta ahora
+    // ------------ 8) llamada recursiva k+1
+	
+	// el primero siempre suma => lo metes al vector
 
    // por cada elem del vector pruebas dos i -> i = 0 (suma) / i = 1 (resta)
-        for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 2 && !obtenible; i++)
+    {
+        soluc[k] = i; // lo que voy a probar ahora...
+
+        // MARCAS
+        // asumiendo que i es la sol para esta k, MARCAMOS
+        if (i == 0) suma += v[k]; // sumas -> sumas al marcador el dato en esa pos del vector v
+        else suma -= v[k]; // lo mismo pero restas
+
+        // solo es valida si para k == 0 estas sumando
+        // si estas en k != 0 sumar o restas son igual de validas
+        if ((k == 0 && i == 0) || k != 0)
         {
-            soluc[k] = i; // lo que voy a probar ahora...
-
-            // MARCAS
-            // asumiendo que i es la sol para esta k, MARCAMOS
-            if (i == 0) suma += v[k]; // sumas -> sumas al marcador el dato en esa pos del vector v
-            else suma -= v[k]; // lo mismo pero restas
-
-            // solo es valida si para k == 0 estas sumando
-            // si estas en k != 0 sumar o restas son igual de validas
-            if ((k == 0 && i == 0) || k != 0)
+            // antes de comprobar si puede ser solucion -> miras si es final de arbol
+            if (k == n - 1)
             {
-                // antes de comprobar si puede ser solucion -> miras si es final de arbol
-                if (k == n - 1)
+                // es solucion si suma == M
+                if (suma == M) obtenible = true;
+            }
+            else
+            {
+                // podar si estas en el penultimo nivel
+                if (k == n-2)
                 {
-                    // es solucion si suma == M
-                    if (suma == M)
-                    {
-                        obtenible = true;
-                        return;
-                    }
+                    int optimista = 0;
+                    // si M es mayor al numero que llevo acumulado -> calcular optimista sumando
+                    if (suma < M) optimista = suma + v[k + 1];
+                    // si M es menor al numero que llevo acumulado -> calcular optimista restando
+                    else optimista = suma - v[k + 1];
+
+                    // si con optimista llego a M -> llamada recursiva k+1
+                    if (optimista == M) resolver(soluc, k + 1, n, M, suma, obtenible, v);
                 }
                 else
                 {
-                    // podar si estas en el penultimo nivel
-                    if (k == n-2)
-                    {
-	                    int optimista = 0;
-	                    // si M es mayor al numero que llevo acumulado -> calcular optimista sumando
-	                    if (suma < M) optimista = suma + v[k + 1];
-                        // si M es menor al numero que llevo acumulado -> calcular optimista restando
-	                    else optimista = suma - v[k + 1];
-
-                        // si con optimista llego a M -> llamada recursiva k+1
-	                    if (optimista == M) resolver(soluc, k + 1, n, M, suma, obtenible, v);
-                    }
-                    else
-                    {
-                        // llamada recursiva k+1
-                        resolver(soluc, k + 1, n, M, suma, obtenible, v);
-                    }
+                    // llamada recursiva k+1
+                    resolver(soluc, k + 1, n, M, suma, obtenible, v);
                 }
             }
+        }
 
-            // DESMARCAS
-            if (i == 0) suma -= v[k];
-            else suma += v[k];
+        // DESMARCAS
+        if (i == 0) suma -= v[k];
+        else suma += v[k];
+
         }
     }
 }
