@@ -26,7 +26,7 @@ int resolver(const vector<int>& nums, int ini, int fin)
 
     if (nums[mitad] < nums[mitad + 1]) // izda
     {
-        return resolver(nums, ini, mitad); 
+        return resolver(nums, ini, mitad); // 2,1,3,4 
     }
     else // dcha
     { 

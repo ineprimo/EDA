@@ -1,0 +1,20 @@
+vender lapiz Ana
+adquirir lapiz 10/06/19 3
+vender lapiz Pedro
+adquirir boli 20/06/19 3
+adquirir boli 15/06/19 2
+vender boli Pedro
+vender boli Luis
+vender boli Marta
+cuantos boli
+hay_esperando boli
+FIN
+vender boli Ana
+hay_esperando boli
+hay_esperando lapiz
+vender boli Pedro
+vender boli Luis
+adquirir boli 20/06/19 2
+cuantos boli
+hay_esperando boli
+FIN

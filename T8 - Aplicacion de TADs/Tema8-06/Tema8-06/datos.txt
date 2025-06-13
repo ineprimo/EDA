@@ -1,0 +1,56 @@
+addSong HumanTouch BruceSpringsteen 392
+addSong BornToRun BruceSpringsteen 270
+addToPlaylist BornToRun
+addToPlaylist HumanTouch
+play
+totalTime
+addSong LuckyTown BruceSpringsteen 207
+addToPlaylist LuckyTown
+play
+play
+deleteSong HumanTouch
+recent 2
+FIN
+play
+current
+FIN
+addSong ThunderRoad BruceSpringsteen 250
+addSong ThunderRoad BruceSpringsteen 250
+FIN
+play
+current
+totalTime
+FIN
+addSong SongA Artist1 100
+addToPlaylist SongA
+deleteSong SongA
+play
+FIN
+addSong S1 A1 120
+addSong S2 A1 140
+addSong S3 A1 160
+addToPlaylist S1
+addToPlaylist S2
+addToPlaylist S3
+play
+play
+play
+recent 2
+recent 5
+FIN
+addSong X A 123
+addToPlaylist X
+play
+deleteSong X
+recent 1
+FIN
+addSong C1 A 100
+addSong C2 A 200
+addSong C3 A 300
+addToPlaylist C1
+addToPlaylist C2
+addToPlaylist C3
+deleteSong C2
+totalTime
+FIN
+
