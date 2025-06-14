@@ -1,3 +1,9 @@
+// Ejercicio 1: CUELA (3 puntos)
+// Tipo: TADs (cola)
+
+// Nieves Alonso Gilsanz
+// EDA-GDV03
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>

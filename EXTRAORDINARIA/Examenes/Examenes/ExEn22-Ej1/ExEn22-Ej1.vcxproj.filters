@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExEn25-Ej1.cpp">
+    <ClCompile Include="ExEn22-Ej1.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ExJu22-Ej2\deque_eda.h">
+    <ClInclude Include="deque_eda.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\ExJu22-Ej2\list_eda.h">
+    <ClInclude Include="list_eda.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
