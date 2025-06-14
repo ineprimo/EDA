@@ -4,7 +4,6 @@ ENERO 2022:
 - Ej3 => aplicaciones de TADs (películas) (:-|)
 
 ENERO 2023:
-- Ej2 => árboles (dragón) (:-D)
 - Ej3 => aplicaciones de TADs (concursos) (:-|)
 
 ENERO 2025: 
