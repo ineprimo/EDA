@@ -31,14 +31,14 @@ public:
 
         // buscar A
         Nodo* actA = this->prim;
-        while (actA->elem != a && actA != this->ult) actA = actA->sig;
-        // si has encontrado A
-        if (actA->elem != a) return;
+        while (actA != this->ult && actA->elem != a) actA = actA->sig;
+        // si no has encontrado A o si es el ultimo
+        if ((actA == this->ult) || (actA->elem != a)) return;
 
         // buscar B -> buscar a partir de a
         bool esUlt = false;
-        Nodo* actB = actA;
-        while (actB->elem != b && actB != this->ult) actB = actB->sig;
+        Nodo* actB = actA->sig;
+        while (actB != this->ult && actB->elem != b) actB = actB->sig; // buscar b a partir de a
         // si has encontrado B
         if (actB->elem != b) return;
         // si B es el ult
