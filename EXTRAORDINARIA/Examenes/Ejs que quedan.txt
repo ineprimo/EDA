@@ -1,7 +1,6 @@
 Ejs que quedan:
 
 ENERO 2022:
-- Ej2 => árboles (singular) (:-D)
 - Ej3 => aplicaciones de TADs (películas) (:-|)
 
 ENERO 2023:
@@ -12,8 +11,6 @@ ENERO 2025:
 - Ej3 (Revisitar) => aplicaciones de TADs (furbo) (:-D)
 
 FEBRERO 2021:
-- Ej1 (Revisitar) => TAD interno cola (cuela) (:-D)
-- Ej2 => árboles (simétrico) (:-D)
 - Ej3 => backtracking (artistas) (:-D)
 
 JUNIO 2022: 
