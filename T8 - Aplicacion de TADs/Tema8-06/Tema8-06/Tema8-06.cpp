@@ -22,7 +22,7 @@ private:
        int duracion;
 
        list<cancion>::iterator posPlaylist;
-       list<cancion>::iterator posReproducidas; 
+       list<cancion>::iterator posReproducidas; // apunta a cancion en lista de canciones reproducidas
    };
 
    unordered_map<cancion, InfoCancion> canciones;
@@ -81,7 +81,13 @@ public:
            cancion c = playlist.front();
            auto& infoC = canciones[c]; // {cancion, infoCancion} -> canciones[cancion] = infoCancion
 
-           reproducidas.push_front(c);
+           // si ya estaba en reproducidas se borra
+           if (infoC.posReproducidas != reproducidas.end()) 
+           {
+               reproducidas.erase(infoC.posReproducidas);
+           }
+
+           reproducidas.push_front(c); // la metemos al ppio
            infoC.posReproducidas = reproducidas.begin(); // actualizamos iterador
 
            // sacamos de la playlist
@@ -122,7 +128,6 @@ public:
    void deleteSong(const cancion& s) 
    {
        auto it = canciones.find(s);
-
        if (it != canciones.end())
        {
            const InfoCancion& infoC = it->second;
