@@ -1,0 +1,24 @@
+an_rio tajo
+an_rio ebro
+an_rio duero
+an_pantano tajo alcantara 100 80
+an_pantano tajo azutan 20 5
+an_pantano ebro cereceda 40 20
+an_pantano ebro flix 30 35
+embalsar tajo alcantara 30
+embalsado_pantano tajo alcantara
+reserva_cuenca tajo
+an_pantano duero cervera 100 10
+trasvase tajo alcantara duero cervera 20
+reserva_cuenca tajo
+reserva_cuenca duero
+embalsado_pantano tajo alcantara
+embalsado_pantano duero cervera
+FIN
+an_rio r1
+an_pantano r2 p1 10 10
+reserva_cuenca r1
+reserva_cuenca r2
+embalsado_pantano r1 p1
+embalsado_pantano r2 p1
+FIN

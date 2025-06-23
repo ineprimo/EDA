@@ -1,0 +1,22 @@
+nuevo 123A
+nuevo 456B
+nuevo 666
+cuantos_con_puntos 15
+cuantos_con_puntos 0
+lista_por_puntos 15
+quitar 666 15
+lista_por_puntos 0
+quitar 456B 9
+consultar 456B
+quitar 123A 10
+recuperar 123A 1
+lista_por_puntos 6
+recuperar 123A 1
+lista_por_puntos 6
+lista_por_puntos 7
+FIN
+nuevo 123A
+nuevo 123A
+cuantos_con_puntos 20
+quitar 456B 2
+FIN
